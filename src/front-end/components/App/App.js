@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import LoginPage from "components/Login/LoginPage";
 import MainPage from "components/Main/MainPage";
@@ -15,17 +15,19 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Switch>
-                <Route 
-                    path="/login" 
-                    render={ (props) => <LoginPage {...props} onLogin={ this.onLogin } /> } 
-                />
-                <PrivateRoute 
-                    path="/" 
-                    component={MainPage} 
-                    isAuthenticated={this.state.isAuthenticated} 
-                />
-            </Switch>
+            <BrowserRouter>
+                <Switch>
+                    <Route
+                        path="/login"
+                        render={ (props) => <LoginPage {...props} onLogin={ this.onLogin } /> }
+                    />
+                    <PrivateRoute 
+                        path="/"
+                        component={MainPage}
+                        isAuthenticated={this.state.isAuthenticated}
+                    />
+                </Switch>
+            </BrowserRouter>
         );
     }
 }
