@@ -4,12 +4,12 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const propTypes = {
-    match: PropTypes.object,
+    match:    PropTypes.object,
     location: PropTypes.object,
-    history: PropTypes.object 
+    history:  PropTypes.object 
 };
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
 
     state = {
         redirectToReferrer: false
@@ -37,3 +37,5 @@ export default class LoginPage extends React.Component {
 }
 
 LoginPage.propTypes = propTypes;
+
+export default LoginPage;

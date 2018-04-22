@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import LoginPage from "components/Login/LoginPage";
-import MainPage from "components/Main/MainPage";
+import LoginPage from "components/LoginPage/LoginPage";
+import MainPage from "components/MainPage/MainPage";
 import PrivateRoute from "components/Misc/PrivateRoute";
 
-export default class App extends React.Component {
+class App extends React.Component {
 
     state = {
         isAuthenticated: false
@@ -31,3 +31,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default App;
