@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Container } from "reactstrap";
 
-import LoginPage from "components/LoginPage/LoginPage";
+import AuthPage from "components/Auth/AuthPage/AuthPage";
 import MainPage from "components/MainPage/MainPage";
 import PrivateRoute from "components/Misc/PrivateRoute";
 
@@ -11,22 +12,24 @@ class App extends React.Component {
         isAuthenticated: false
     }
 
-    onLogin = () => this.setState({ isAuthenticated: true });
+    onAuth = () => this.setState({ isAuthenticated: true });
 
     render() {
         return (
             <BrowserRouter>
-                <Switch>
-                    <Route
-                        path="/login"
-                        render={ (props) => <LoginPage {...props} onLogin={ this.onLogin } /> }
-                    />
-                    <PrivateRoute 
-                        path="/"
-                        component={MainPage}
-                        isAuthenticated={this.state.isAuthenticated}
-                    />
-                </Switch>
+                <Container fluid className="h-100">
+                    <Switch>
+                        <Route
+                            path="/a"
+                            render={ (props) => <AuthPage {...props} onAuth={ this.onAuth } /> }
+                        />
+                        <PrivateRoute
+                            path="/"
+                            component={ MainPage }
+                            isAuthenticated={ this.state.isAuthenticated }
+                        />
+                    </Switch>
+                </Container>
             </BrowserRouter>
         );
     }
