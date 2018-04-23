@@ -40,15 +40,20 @@ class SignUp extends React.Component {
             })
             .then( resp => {
                 if (!resp.ok) {
-                    throw new Error("Response is not ok");
+                    throw new Error("A problem occured while trying to sign you up. " +
+                                    "Sorry for this, try again later, please");
                 }
     
                 return resp.json();
             })
             .then( json => {
                 console.log(json);
+                // save jwt to localStorage
+                // call auth function of App component
             })
-            .catch( err => console.error(err) );
+            .catch( err => {
+                this.props.onAlert({ type: "danger", msg: err.message });
+            });
         }
     }
 
