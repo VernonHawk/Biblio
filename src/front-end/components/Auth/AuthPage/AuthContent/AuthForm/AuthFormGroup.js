@@ -15,9 +15,8 @@ function AuthFormGroup({ id, label, help, error, ...rest }) {
             <Label for={id} sm={3}>{ label }</Label>
             <Col sm={9}>
                 <Input 
-                    required 
-                    size="40" 
-                    maxLength={50} 
+                    id={id} required 
+                    size="40" maxLength={50} 
                     invalid={Boolean(error)}
                     {...rest} 
                 />

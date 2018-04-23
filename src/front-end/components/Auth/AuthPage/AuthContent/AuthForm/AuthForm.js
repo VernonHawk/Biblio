@@ -38,11 +38,10 @@ class SignUp extends React.Component {
         const formGroups = [];
 
         for (const { id, ...rest } of params) {
-            
-
             formGroups.push(
                 <AuthFormGroup
                     key={id}
+                    id={id}
                     value={this.state[id]}
                     onChange={ e => this.setState({ [id]: e.target.value })}
                     error={ errors[id].trim() }
