@@ -7,9 +7,11 @@ import AuthButton    from "./AuthButton";
 
 const propTypes = {
     params: PropTypes.arrayOf( PropTypes.shape({
-        id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number]).isRequired
+        id:   PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired,
+        help: PropTypes.string
     })),
-    btnLabel: PropTypes.string.isRequired
+    btnLabel: PropTypes.string.isRequired,
+    errors: PropTypes.objectOf(PropTypes.string)
 };
 
 class SignUp extends React.Component {
@@ -31,16 +33,19 @@ class SignUp extends React.Component {
     }
     
     render() {
-        const { params, btnLabel } = this.props;
+        const { params, btnLabel, errors } = this.props;
 
         const formGroups = [];
 
         for (const { id, ...rest } of params) {
+            
+
             formGroups.push(
                 <AuthFormGroup
                     key={id}
                     value={this.state[id]}
                     onChange={ e => this.setState({ [id]: e.target.value })}
+                    error={ errors[id].trim() }
                     {...rest}
                 />
             );

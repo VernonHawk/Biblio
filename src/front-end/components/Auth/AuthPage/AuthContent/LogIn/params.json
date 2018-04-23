@@ -10,6 +10,7 @@
         "id": "pass",
         "type": "password",
         "placeholder": "For example: *********",
-        "minLength": 6
+        "minLength": 6,
+        "help": "Password must be longer than 5 characters"
     }
 ]

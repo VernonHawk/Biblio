@@ -1,21 +1,22 @@
 [
     {
+        "label": "Full name",
         "id": "name",
         "type": "text",
-        "label": "Full name",
         "placeholder": "For example: John Doe"
     },
     {
+        "label": "Email",
         "id": "email",
         "type": "email",
-        "label": "Email",
         "placeholder": "For example: example@mail.com"
     },
     {
+        "label": "Password",
         "id": "pass",
         "type": "password",
-        "label": "Password",
         "placeholder": "For example: *********",
-        "minLength": 6
+        "minLength": 6,
+        "help": "Password must be longer than 5 characters"
     }
 ]

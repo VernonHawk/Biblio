@@ -15,6 +15,7 @@ const propTypes = {
 
 class LogIn extends React.Component { 
     
+    // Keeps error messages!
     state = {
         email: "",
         pass:  ""
@@ -32,6 +33,7 @@ class LogIn extends React.Component {
                         params={params}
                         btnLabel="Log In"
                         onSubmit={this.onSubmit}
+                        errors={this.state}
                     />
                 </CardBody>
 
