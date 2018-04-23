@@ -4,8 +4,8 @@ import { Card } from "reactstrap";
 import PropTypes from "prop-types";
 
 import AuthHeader from "./AuthHeader";
-import LogIn  from "./LogIn";
-import SignUp from "./SignUp";
+import LogIn      from "./LogIn/LogIn";
+import SignUp     from "./SignUp/SignUp";
 
 const propTypes = {
     match:    PropTypes.object,

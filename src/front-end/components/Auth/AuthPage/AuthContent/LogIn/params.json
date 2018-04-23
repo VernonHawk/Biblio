@@ -1,0 +1,15 @@
+[
+    {
+        "label": "Email",
+        "id": "email",
+        "type": "email",
+        "placeholder": "For example: example@mail.com"
+    },
+    {
+        "label": "Password",
+        "id": "pass",
+        "type": "password",
+        "placeholder": "For example: *********",
+        "minLength": 6
+    }
+]
