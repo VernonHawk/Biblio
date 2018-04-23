@@ -11,6 +11,8 @@ const propTypes = {
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,
+
+    onAlert: PropTypes.func.isRequired
 };
 
 class LogIn extends React.Component { 
@@ -21,8 +23,28 @@ class LogIn extends React.Component {
         pass:  ""
     }
 
-    onSubmit = val => {
-        console.log(val);
+    onSubmit = ({ email, pass }) => {
+        fetch("/login", {
+            method: "POST",
+            body: JSON.stringify({ email, pass }),
+            headers : {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+        .then( resp => {
+            if (!resp.ok) {
+                throw new Error("Response is not ok");
+            }
+
+            return resp.json();
+        })
+        .then( json => {
+            console.log(json);
+        })
+        .catch( err => {
+            this.props.onAlert({ type: "danger", msg: err.message });
+        });
     }
 
     render() {

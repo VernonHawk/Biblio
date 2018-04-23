@@ -11,6 +11,8 @@ const propTypes = {
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,
+
+    onAlert: PropTypes.func.isRequired
 };
 
 class SignUp extends React.Component {
@@ -28,7 +30,25 @@ class SignUp extends React.Component {
         this.setState(validation.newState);
 
         if (validation.valid) {
-            console.log("valid", form);
+            fetch("/signup", {
+                method: "POST",
+                body: JSON.stringify({ name: form.name, email: form.email, pass: form.pass }),
+                headers : {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            })
+            .then( resp => {
+                if (!resp.ok) {
+                    throw new Error("Response is not ok");
+                }
+    
+                return resp.json();
+            })
+            .then( json => {
+                console.log(json);
+            })
+            .catch( err => console.error(err) );
         }
     }
 
@@ -55,7 +75,7 @@ class SignUp extends React.Component {
         }
 
         // TODO: send request to check if email is taken
-        const emailTaken = true;
+        const emailTaken = false;
 
         if (emailTaken) {
             newState.email = "This email is already taken";

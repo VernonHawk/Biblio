@@ -104,6 +104,9 @@
       "node"
     ]
   },
+  "nodemonConfig": {
+    "ignore": ["src/front-end/**"]
+  },
   "babel": {
     "presets": [
       "react-app"

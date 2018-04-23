@@ -11,6 +11,8 @@ const propTypes = {
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,
+
+    onAlert: PropTypes.func.isRequired
 };
 
 class AuthContent extends React.PureComponent {
@@ -22,8 +24,24 @@ class AuthContent extends React.PureComponent {
             <Card className="align-self-center border-warning">
                 <AuthHeader />
                 <Switch>
-                    <Route exact path={`${url}/signup`} component={SignUp} />
-                    <Route exact path={`${url}/login`}  component={LogIn} />
+                    <Route 
+                        exact path={`${url}/signup`} 
+                        render={ props => 
+                            <SignUp 
+                                {...props} 
+                                onAlert={ this.props.onAlert } 
+                            /> 
+                        }  
+                    />
+                    <Route 
+                        exact path={`${url}/login`} 
+                        render={ props => 
+                            <LogIn 
+                                {...props} 
+                                onAlert={ this.props.onAlert } 
+                            /> 
+                        }  
+                    />
                     <Redirect to={`${url}/signup`} />
                 </Switch>
             </Card>

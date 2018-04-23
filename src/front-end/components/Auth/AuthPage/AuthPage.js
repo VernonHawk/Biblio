@@ -12,7 +12,8 @@ const propTypes = {
     location: PropTypes.object,
     history:  PropTypes.object,
 
-    onAuth: PropTypes.func
+    onAuth:  PropTypes.func.isRequired,
+    onAlert: PropTypes.func.isRequired
 };
 
 class AuthPage extends React.Component {
@@ -35,7 +36,14 @@ class AuthPage extends React.Component {
 
         return (
             <Row className="justify-content-center h-100" id="auth-page">
-                <Route component={AuthContent} />
+                <Route 
+                    render={ props => 
+                        <AuthContent 
+                            {...props} 
+                            onAlert={ this.props.onAlert } 
+                        /> 
+                    } 
+                />
             </Row>
         );
     }

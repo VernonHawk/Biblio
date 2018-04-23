@@ -13,8 +13,12 @@ function mapRoutes() {
         res.sendFile("index.html");
     });
 
-    app.get("/tst", (req, res) => {
-        res.send("abc");
+    app.post("/login", (req, res) => {
+        res.status(200).json(req.body);
+    });
+
+    app.post("/signup", (req, res) => {
+        res.status(200).json(req.body);
     });
 }
 
