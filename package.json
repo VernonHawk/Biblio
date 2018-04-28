@@ -11,6 +11,28 @@
     "email": "Igor.Morenec@gmail.com"
   },
   "license": "Apache-2.0",
+  "scripts": {
+    "dev-server": "set NODE_ENV=development&& nodemon src/back-end/startServer.js",
+    "dev-client": "set NODE_ENV=development&& node scripts/start.js",
+    "dev-s": "npm run dev-server",
+    "dev-c": "npm run dev-client",
+    "server": "set NODE_ENV=production&& node src/back-end/startServer.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/front-end/**"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^4.1.0",
@@ -27,12 +49,6 @@
     "react-router-dom": "^4.2.2",
     "reactstrap": "^5.0.0",
     "whatwg-fetch": "^2.0.4"
-  },
-  "scripts": {
-    "server": "nodemon src/back-end/startServer.js",
-    "dev-client": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
     "autoprefixer": "^8.3.0",
@@ -103,18 +119,5 @@
       "jsx",
       "node"
     ]
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "src/front-end/**"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }
