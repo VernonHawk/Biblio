@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 
 import AuthForm from "../AuthForm/AuthForm";
 
-import params from "./params.json";
+import alertTypes from "components/GlobalAlert/alert-types.json";
+import params from "./params-signup.json";
 
 const propTypes = {
     match:    PropTypes.object,
@@ -17,7 +18,7 @@ const propTypes = {
 
 class SignUp extends React.Component {
 
-    // Keeps error messages!
+    // Keeps error messages
     state = {
         name:  "",
         email: "",
@@ -49,10 +50,10 @@ class SignUp extends React.Component {
             .then( json => {
                 console.log(json);
                 // save jwt to localStorage
-                // call auth function of App component
+                // call auth function of App component 
             })
             .catch( err => {
-                this.props.onAlert({ type: "danger", msg: err.message });
+                this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
             });
         }
     }

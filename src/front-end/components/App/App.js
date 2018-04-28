@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 import AuthPage     from "components/Auth/AuthPage/AuthPage";
 import MainPage     from "components/MainPage/MainPage";
 import PrivateRoute from "components/Misc/PrivateRoute";
-import GlobalAlert  from "components/Misc/GlobalAlert";
+import GlobalAlert  from "components/GlobalAlert/GlobalAlert";
 
 class App extends React.Component {
 
