@@ -4,6 +4,9 @@ const express    = require("express");
 const bodyParser = require("body-parser");
 const helmet     = require("helmet");
 
+const authRouter   = require("./routers/authRouter");
+const commonRouter = require("./routers/commonRouter");
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -13,19 +16,8 @@ function mapRoutes() {
         res.sendFile("index.html");
     });
 
-    app.post("/login", (req, res) => {
-        res.status(200).json(req.body);
-    });
-
-    app.post("/signup", (req, res) => {
-        res.status(200).json(req.body);
-    });
-
-    app.get("/userByEmail/:email", (req, res) => {
-        //make mongo request
-        const user = { id: 1};
-        res.status(200).json(user);
-    });
+    app.use("/", authRouter);
+    app.use("/", commonRouter);
 }
 
 function startServer() {

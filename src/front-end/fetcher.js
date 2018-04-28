@@ -1,6 +1,6 @@
-function request({ url, data }) {
-    return fetch(url, {
-        method: "POST",
+function request({ url, data, method }) {
+    return fetch( url, {
+        method,
         body: JSON.stringify(data),
         headers : {
             "Accept": "application/json",
