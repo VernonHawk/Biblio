@@ -1,12 +1,14 @@
+"use strict";
+
 const mongoose = require("mongoose");
 
 const notEmpty = value => new Promise( resolve => resolve(Boolean(value.trim().length)) );
 
 const userSchema = mongoose.Schema({
-    fullName: { 
+    username: { 
         type: String, 
-        required: [ true, "Name required" ], 
-        validate: { validator: notEmpty, message: "Name can't consist only of whitespace" }
+        required: [ true, "Username required" ], 
+        validate: { validator: notEmpty, message: "Username can't consist only of whitespace" }
     },
     email: { 
         type: String, 
@@ -14,7 +16,7 @@ const userSchema = mongoose.Schema({
         unique: true,
         validate: { validator: notEmpty, message: "Email can't consist only of whitespace" }
     },
-    password: { 
+    pass: { 
         type: String, 
         required: [ true, "Password required" ] 
     },

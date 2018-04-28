@@ -27,8 +27,14 @@ class LogIn extends React.Component {
     }
 
     onSubmit = data => {
-        fetcher.post({ url: "/login", data })
+        this.setState({ email: "", pass: "" });
+
+        return fetcher.post({ url: "/login", data })
             .then( resp => {
+                if (resp.status == 404) {
+                    return resp.json();
+                }
+                
                 if (!resp.ok) {
                     throw new Error("A problem occured while trying to log you in. " +
                                     "Sorry for this, try again later, please");
@@ -37,9 +43,15 @@ class LogIn extends React.Component {
                 return resp.json();
             })
             .then( json => {
-                console.log(json);
-                // save jwt to localStorage
-                // call auth function of App component
+                const error = json.error;
+
+                if (error) {
+                    this.setState({ [error.cause]: error.msg });
+                } else {
+                    console.log(json);
+                    // TODO: save jwt to localStorage
+                    // TODO: call auth function of App component 
+                }
             })
             .catch( err => {
                 this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });

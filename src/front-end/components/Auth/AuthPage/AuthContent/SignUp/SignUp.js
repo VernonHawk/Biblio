@@ -22,7 +22,7 @@ class SignUp extends React.Component {
 
     // Keeps error messages
     state = {
-        name:  "",
+        username:  "",
         email: "",
         pass:  ""
     }
@@ -33,8 +33,14 @@ class SignUp extends React.Component {
                 this.setState(newState);
         
                 if (valid) {
-                    fetcher.post({ url: "/signup", data })
+                    this.setState({ username: "", email: "", pass: "" });
+
+                    return fetcher.post({ url: "/signup", data })
                         .then( resp => {
+                            if (resp.status == 404) {
+                                return resp.json();
+                            }
+
                             if (!resp.ok) {
                                 throw new Error("A problem occured while trying to sign you up. " +
                                                 "Sorry for this, try again later, please");
@@ -43,9 +49,15 @@ class SignUp extends React.Component {
                             return resp.json();
                         })
                         .then( json => {
-                            console.log(json);
-                            // save jwt to localStorage
-                            // call auth function of App component 
+                            const error = json.error;
+
+                            if (error) {
+                                this.setState({ [error.cause]: error.msg });
+                            } else {
+                                console.log(json);
+                                // TODO: save jwt to localStorage
+                                // TODO: call auth function of App component 
+                            }
                         });
                 }
             })
@@ -54,39 +66,17 @@ class SignUp extends React.Component {
             });
     }
 
-    getStateAfterValidation = ({ name: fullName, email, pass }) => {
+    getStateAfterValidation = ({ username, pass }) => {
         const newState = { 
-            name:  "",
+            username:  "",
             email: "",
             pass:  "" 
         };
         
-        function validateEmail() {
-            return fetch(`/userByEmail/${email}`)
-                    .then( resp => {
-                        if (!resp.ok) {
-                            throw new Error("There were some problems. " +
-                                            "Sorry for this, try again later, please");
-                        }
-
-                        return resp.json();
-                    })
-                    .then( user => {
-                        if (user) {
-                            newState.email = "This email is already taken";
-                            
-                            return Promise.resolve(false);
-                        }
-
-                        return Promise.resolve(true);
-                    })
-                    .catch( err => Promise.reject(err) );
-        }
-        
         function validateName() {
             return new Promise( resolve => {
-                if (!fullName.trim().length) {
-                    newState.name = "Name can't consist only of whitespaces";
+                if (!username.trim().length) {
+                    newState.username = "Username can't consist only of whitespaces";
 
                     return resolve(false);
                 }
@@ -111,7 +101,7 @@ class SignUp extends React.Component {
             });
         }
 
-        return Promise.all([validateEmail(), validateName(), validatePassword()])
+        return Promise.all([validateName(), validatePassword()])
             .then( results => ({ newState, valid: results.every(res => res) }) );
     }
 

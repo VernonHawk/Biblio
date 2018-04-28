@@ -17,7 +17,7 @@ function mapRoutes() {
     });
 
     app.use("/", authRouter);
-    app.use("/", commonRouter);
+    //app.use("/", commonRouter);
 }
 
 function startServer() {

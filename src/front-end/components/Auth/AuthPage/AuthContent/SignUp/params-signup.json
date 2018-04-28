@@ -1,7 +1,7 @@
 [
     {
-        "label": "Full name",
-        "id": "name",
+        "label": "Username",
+        "id": "username",
         "type": "text",
         "placeholder": "For example: John Doe"
     },

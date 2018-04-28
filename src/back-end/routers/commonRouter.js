@@ -1,15 +1,18 @@
+"use strict";
+
 const express = require("express");
 
-const User = require("../models/User");
+const { getByEmail } = require("../DAL/UserDAL");
 
 const router = express.Router();
 
 router.get("/userByEmail/:email", (req, res) => {
-    User.findOne({ email: req.params.email })
+    getByEmail(req.params.email)
         .then( user => {
             res.status(200).json(user);
         })
-        .catch( err => res.status(500).json(err));
+        .catch( err => res.status(500)
+                        .json({ error: { cause: "email", msg: err.message } }) );
 });
 
 module.exports = exports = router;

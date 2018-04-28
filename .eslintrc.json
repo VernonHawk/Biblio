@@ -90,7 +90,7 @@
         ],
 
         "no-shadow": [
-            "error", 
+            "warn", 
             { "builtinGlobals": true }
         ],
         "no-undef": [
