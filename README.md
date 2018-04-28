@@ -33,13 +33,20 @@ After you have installed [Node.js](https://nodejs.org) and [MongoDB](https://www
 
 ### Development and build
 
-After installing the packages, you could run commands `npm run server` to launch the server (don't forget to launch the mongodb server `mongod` first!), `npm run dev-client` to launch a webpack-dev-server and `npm run build` to create a production build of a client. Examples:
+After installing the packages, you could run these commands:
+
+- `npm run dev-server` OR `npm run dev-s` to launch a dev server (don't forget to launch mongodb server `mongod` first!)
+- `npm run dev-client` OR `npm run dev-c` to launch a webpack-dev-server
+- `npm run build` to create a production build of a client
+- `npm run server` to launch a production server. 
+
+Examples:
 
 ```bash
-> npm run server
+> npm run dev-server
 
 biblio@version server Disk:\path\to\the\project\Biblio
-nodemon src/back-end/startServer.js
+set NODE_ENV=development&& nodemon src/back-end/startServer.js
 
 [nodemon] 1.17.3
 [nodemon] to restart at any time, enter `rs`
@@ -74,6 +81,16 @@ node scripts/build.js
 
 Creating an optimized production build...
 Compiled successfully.
+```
+
+```bash
+> npm run server
+
+> biblio@0.1.0 server Disk:\path\to\the\project\Biblio
+> set NODE_ENV=production&& node src/back-end/startServer.js
+
+App listening on port 3000!
+Connected to MongoDB
 ```
 
 ## Running the tests
