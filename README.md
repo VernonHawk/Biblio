@@ -38,7 +38,7 @@ After installing the packages, you could run these commands:
 - `npm run dev-server` OR `npm run dev-s` to launch a dev server (don't forget to launch mongodb server `mongod` first!)
 - `npm run dev-client` OR `npm run dev-c` to launch a webpack-dev-server
 - `npm run build` to create a production build of a client
-- `npm run server` to launch a production server. 
+- `npm run server` to launch a production server.
 
 Examples:
 
@@ -99,12 +99,13 @@ To run the tests open CLI and run `npm run test`. It will run [Jest](https://fac
 
 ## Built With
 
-* [Node.js](https://nodejs.org) - JavaScript runtime powering the server
-* [Express](http://expressjs.com/) - The web framework
-* [MongoDB](https://www.mongodb.com/) - NoSQL Database
-* [React](https://reactjs.org/) - Main UI Library
-* [Bootstrap](https://getbootstrap.com/) - Additional UI Library, mainly used for it's CSS classes
-* [Webpack](https://webpack.js.org/) - Powerful bundler
+- [Node.js](https://nodejs.org) - JavaScript runtime powering the server
+- [Express](http://expressjs.com/) - The web framework
+- [MongoDB](https://www.mongodb.com/) - NoSQL Database
+- [React](https://reactjs.org/) - Main UI Library
+- [Reactstrap](https://reactstrap.github.io/) - Bootstrap 4 with React
+- [Bootstrap](https://getbootstrap.com/) - Mainly used by Reactstrap
+- [Webpack](https://webpack.js.org/) - Powerful module bundler
 
 ## Versioning
 
@@ -112,7 +113,7 @@ We use [Git](https://git-scm.com) for versioning. For the versions available, se
 
 ## Authors
 
-* **Igor Morenec** - *Main developer* - [VernonHawk](https://github.com/VernonHawk)
+- **Igor Morenec** - *Main developer* - [VernonHawk](https://github.com/VernonHawk)
 
 See also the list of [contributors](https://github.com/VernonHawk/Biblio/contributors) who participated in this project.
 

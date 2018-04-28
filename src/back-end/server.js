@@ -20,6 +20,12 @@ function mapRoutes() {
     app.post("/signup", (req, res) => {
         res.status(200).json(req.body);
     });
+
+    app.get("/userByEmail/:email", (req, res) => {
+        //make mongo request
+        const user = { id: 1};
+        res.status(200).json(user);
+    });
 }
 
 function startServer() {

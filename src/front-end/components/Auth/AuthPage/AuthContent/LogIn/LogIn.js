@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 import AuthForm from "../AuthForm/AuthForm";
 
+import fetcher from "fetcher";
+
 import alertTypes from "components/GlobalAlert/alert-types.json";
 import params from "./params-login.json";
 
@@ -24,31 +26,24 @@ class LogIn extends React.Component {
         pass:  ""
     }
 
-    onSubmit = ({ email, pass }) => {
-        fetch("/login", {
-            method: "POST",
-            body: JSON.stringify({ email, pass }),
-            headers : {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-        .then( resp => {
-            if (!resp.ok) {
-                throw new Error("A problem occured while trying to log you in. " +
-                                "Sorry for this, try again later, please");
-            }
+    onSubmit = data => {
+        fetcher.post({ url: "/login", data })
+            .then( resp => {
+                if (!resp.ok) {
+                    throw new Error("A problem occured while trying to log you in. " +
+                                    "Sorry for this, try again later, please");
+                }
 
-            return resp.json();
-        })
-        .then( json => {
-            console.log(json);
-            // save jwt to localStorage
-            // call auth function of App component
-        })
-        .catch( err => {
-            this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
-        });
+                return resp.json();
+            })
+            .then( json => {
+                console.log(json);
+                // save jwt to localStorage
+                // call auth function of App component
+            })
+            .catch( err => {
+                this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
+            });
     }
 
     render() {

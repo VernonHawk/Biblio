@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 import AuthForm from "../AuthForm/AuthForm";
 
+import fetcher from "fetcher";
+
 import alertTypes from "components/GlobalAlert/alert-types.json";
 import params from "./params-signup.json";
 
@@ -25,37 +27,31 @@ class SignUp extends React.Component {
         pass:  ""
     }
     
-    onSubmit = form => {
-        const validation = this.getStateAfterValidation(form);
-
-        this.setState(validation.newState);
-
-        if (validation.valid) {
-            fetch("/signup", {
-                method: "POST",
-                body: JSON.stringify({ name: form.name, email: form.email, pass: form.pass }),
-                headers : {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
+    onSubmit = data => {
+        this.getStateAfterValidation(data)
+            .then( ({ newState, valid }) => {
+                this.setState(newState);
+        
+                if (valid) {
+                    fetcher.post({ url: "/signup", data })
+                        .then( resp => {
+                            if (!resp.ok) {
+                                throw new Error("A problem occured while trying to sign you up. " +
+                                                "Sorry for this, try again later, please");
+                            }
+                
+                            return resp.json();
+                        })
+                        .then( json => {
+                            console.log(json);
+                            // save jwt to localStorage
+                            // call auth function of App component 
+                        });
                 }
-            })
-            .then( resp => {
-                if (!resp.ok) {
-                    throw new Error("A problem occured while trying to sign you up. " +
-                                    "Sorry for this, try again later, please");
-                }
-    
-                return resp.json();
-            })
-            .then( json => {
-                console.log(json);
-                // save jwt to localStorage
-                // call auth function of App component 
             })
             .catch( err => {
                 this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
             });
-        }
     }
 
     getStateAfterValidation = ({ name: fullName, email, pass }) => {
@@ -64,35 +60,62 @@ class SignUp extends React.Component {
             email: "",
             pass:  "" 
         };
+        
+        function validateEmail() {
+            return fetch(`/userByEmail/${email}`)
+                    .then( resp => {
+                        if (!resp.ok) {
+                            throw new Error("There were some problems. " +
+                                            "Sorry for this, try again later, please");
+                        }
 
-        let valid = true;
+                        return resp.json();
+                    })
+                    .then( user => {
+                        if (user) {
+                            newState.email = "This email is already taken";
+                            
+                            return Promise.resolve(false);
+                        }
 
-        if (!fullName.trim().length) {
-            newState.name = "Name can't consist only of whitespaces";
-            valid = false;
+                        return Promise.resolve(true);
+                    })
+                    .catch( err => Promise.reject(err) );
         }
         
-        if (pass.length < 6) {
-            newState.pass = "Password is too short";
-            valid = false;
-        } else if (pass.length > 50) {
-            newState.pass = "Password is too long";
-            valid = false;
+        function validateName() {
+            return new Promise( resolve => {
+                if (!fullName.trim().length) {
+                    newState.name = "Name can't consist only of whitespaces";
+
+                    return resolve(false);
+                }
+
+                return resolve(true);
+            });
+        }
+        
+        function validatePassword() {
+            return new Promise( resolve => {
+                if (pass.length < 6) {
+                    newState.pass = "Password is too short";
+
+                    return resolve(false);
+                } else if (pass.length > 50) {
+                    newState.pass = "Password is too long";
+
+                    return resolve(false);
+                }
+
+                return resolve(true);
+            });
         }
 
-        // TODO: send request to check if email is taken
-        const emailTaken = false;
-
-        if (emailTaken) {
-            newState.email = "This email is already taken";
-            valid = false;
-        }
-
-        return { newState, valid };
+        return Promise.all([validateEmail(), validateName(), validatePassword()])
+            .then( results => ({ newState, valid: results.every(res => res) }) );
     }
 
     render() {
-
         return (
             <React.Fragment>
                 <CardBody>
