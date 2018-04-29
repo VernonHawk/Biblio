@@ -6,18 +6,26 @@ import AuthPage     from "components/AuthPage/AuthPage";
 import MainPage     from "components/MainPage/MainPage";
 import PrivateRoute from "components/Misc/PrivateRoute";
 import GlobalAlert  from "components/GlobalAlert/GlobalAlert";
+import Loader       from "components/Loader/Loader";
 
 class App extends React.Component {
 
     state = {
-        isAuthenticated: false,
+        isAuthenticated: null,
         alert: null
+    }
+
+    componentDidMount() {
+        const isAuthenticated = Boolean(localStorage.getItem("token"));
+
+        this.setState({ isAuthenticated });
     }
 
     onAuth = () => this.setState({ isAuthenticated: true })
 
     onLogOut = () => {
         localStorage.removeItem("token");
+        
         this.setState({ isAuthenticated: false });
     }
 
@@ -26,8 +34,9 @@ class App extends React.Component {
     }
 
     render() {
-        return (
-            <BrowserRouter>
+        const content = this.state.isAuthenticated === null ? 
+             <Loader /> :
+            (<BrowserRouter>
                 <Container fluid className="h-100">
                     <GlobalAlert alert={this.state.alert} />
                     <Switch>
@@ -54,8 +63,9 @@ class App extends React.Component {
                         />
                     </Switch>
                 </Container>
-            </BrowserRouter>
-        );
+            </BrowserRouter>);
+
+        return content;
     }
 }
 
