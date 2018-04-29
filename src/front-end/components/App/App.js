@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Container } from "reactstrap";
 
-import AuthPage     from "components/Auth/AuthPage/AuthPage";
+import AuthPage     from "components/AuthPage/AuthPage";
 import MainPage     from "components/MainPage/MainPage";
 import PrivateRoute from "components/Misc/PrivateRoute";
 import GlobalAlert  from "components/GlobalAlert/GlobalAlert";
@@ -14,7 +14,12 @@ class App extends React.Component {
         alert: null
     }
 
-    onAuth = () => this.setState({ isAuthenticated: true });
+    onAuth = () => this.setState({ isAuthenticated: true })
+
+    onLogOut = () => {
+        localStorage.removeItem("token");
+        this.setState({ isAuthenticated: false });
+    }
 
     onAlert = ({ type, msg }) => {
         this.setState({ alert: { type, msg }});
@@ -28,19 +33,24 @@ class App extends React.Component {
                     <Switch>
                         <Route
                             path="/a"
-                            render={ (props) => 
-                                <AuthPage 
-                                    {...props} 
-                                    onAuth={ this.onAuth } 
-                                    onAlert={ this.onAlert } 
-                                /> 
+                            render={ props =>
+                                <AuthPage
+                                    {...props}
+                                    onAuth={ this.onAuth }
+                                    onAlert={ this.onAlert }
+                                />
                             }
                         />
                         <PrivateRoute
                             path="/"
-                            component={ MainPage }
                             isAuthenticated={ this.state.isAuthenticated }
-                            onAlert={ this.onAlert }
+                            render={ props =>
+                                <MainPage
+                                    {...props}
+                                    onAlert={ this.onAlert }
+                                    onLogOut={ this.onLogOut }
+                                /> 
+                            }
                         />
                     </Switch>
                 </Container>

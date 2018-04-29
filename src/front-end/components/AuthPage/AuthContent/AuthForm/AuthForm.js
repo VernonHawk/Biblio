@@ -14,7 +14,7 @@ const propTypes = {
     errors: PropTypes.objectOf(PropTypes.string)
 };
 
-class SignUp extends React.Component {
+class AuthForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -60,6 +60,6 @@ class SignUp extends React.Component {
     }
 }
 
-SignUp.propTypes = propTypes;
+AuthForm.propTypes = propTypes;
 
-export default SignUp;
+export default AuthForm;

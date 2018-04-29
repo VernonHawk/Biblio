@@ -4,17 +4,17 @@ import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const propTypes = {
-    component:       PropTypes.func.isRequired,
+    render:          PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired
 };
 
-function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
+function PrivateRoute({ render, isAuthenticated, ...rest }) {
     return (
         <Route
             {...rest}
             render={ props =>
                 isAuthenticated ? 
-                     <Component {...props} /> : 
+                    render(props) : 
                     (<Redirect
                         to={{
                             pathname: "/a/login",

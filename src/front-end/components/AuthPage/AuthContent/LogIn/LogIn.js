@@ -15,6 +15,7 @@ const propTypes = {
     location: PropTypes.object,
     history:  PropTypes.object,
 
+    onAuth:  PropTypes.func.isRequired,
     onAlert: PropTypes.func.isRequired
 };
 
@@ -29,28 +30,20 @@ class LogIn extends React.Component {
     onSubmit = data => {
         this.setState({ email: "", pass: "" });
 
-        return fetcher.post({ url: "/login", data })
-            .then( resp => {
-                if (resp.status == 404) {
-                    return resp.json();
-                }
-                
-                if (!resp.ok) {
-                    throw new Error("A problem occured while trying to log you in. " +
-                                    "Sorry for this, try again later, please");
-                }
+        const acceptCodes = [400];
+        const errorMsg = "A problem occured while trying to log you in. " +
+                         "Sorry for this, try again later, please";
 
-                return resp.json();
-            })
+        return fetcher.post({ url: "/login", data, acceptCodes, errorMsg })
             .then( json => {
                 const error = json.error;
-
+                
                 if (error) {
-                    this.setState({ [error.cause]: error.msg });
+                    this.setState({ [error.cause]: error.message });
                 } else {
-                    console.log(json);
-                    // TODO: save jwt to localStorage
-                    // TODO: call auth function of App component 
+                    localStorage.setItem("token", json.token);
+
+                    this.props.onAuth();
                 }
             })
             .catch( err => {

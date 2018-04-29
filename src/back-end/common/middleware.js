@@ -3,8 +3,8 @@
 const { verifyJWToken } = require("./tokens");
 
 function decodeRequestToken(req, res) {
-    const token = req.body.token || req.query.token || req.headers["x-access-token"];
-
+    const token = req.body.token || req.query.token || req.headers["Authorization"];
+    
     return verifyJWToken(token)
             .catch(() => {
                 res.status(403)

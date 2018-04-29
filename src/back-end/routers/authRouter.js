@@ -6,6 +6,8 @@ const crypto = require("crypto");
 const { getByEmail, save } = require("../DAL/UserDAL");
 const { createJWToken } = require("../common/tokens");
 
+const PropError = require("../common/PropError");
+
 const router = express.Router();
 
 router.post("/login", (req, res) => {
@@ -14,7 +16,7 @@ router.post("/login", (req, res) => {
     let error = {};
 
     if (!email || !pass) {
-        error = { cause: "login", msg: "Not all arguments were specified" };
+        error = { cause: "login", message: "Not all arguments were specified" };
 
         return res.status(400).json({ error });
     }
@@ -22,9 +24,9 @@ router.post("/login", (req, res) => {
     getByEmail(email)
         .then( user => {
             if (!user) {
-                error = { cause: "email", msg: "No user found with such email" };
+                error = { cause: "email", message: "No user found with such email" };
 
-                return res.status(404).json({ error });
+                throw new PropError(error);
             }
             
             // Encrypt user password
@@ -33,16 +35,21 @@ router.post("/login", (req, res) => {
                                 .digest("hex");
 
             if (hash === user.pass) {
-                // TODO: make jwt
-                res.status(200).json(user);
+                res.status(200).json({
+                    token: createJWToken({ data: user._id, maxAge: 3600 })
+                });
             } else {
-                error = { cause: "pass", msg: "Password is incorrect" };
+                error = { cause: "pass", message: "Password is incorrect" };
 
-                res.status(404).json({ error });
+                throw new PropError(error);
             }
         })
         .catch( err => {
-            error = { cause: "login", msg: err.message };
+            if (err.name === "PropError") {
+                return res.status(400).json({ error });
+            }
+
+            error = { cause: "login", message: err.message };
 
             res.status(500).json({ error });
         });
@@ -54,7 +61,7 @@ router.post("/signup", (req, res) => {
     let error = {};
 
     if (!username || !email || !pass) {
-        error = { cause: "signup", msg: "Not all arguments were specified" };
+        error = { cause: "signup", message: "Not all arguments were specified" };
 
         return res.status(400).json({ error });
     }
@@ -62,11 +69,11 @@ router.post("/signup", (req, res) => {
     getByEmail(email)
         .then( user => {
             if (user) {
-                error = { cause: "email", msg: "This email is already taken" };
-
-                return res.status(404).json({ error });
+                error = { cause: "email", message: "This email is already taken" };
+                
+                throw new PropError(error);
             }
-
+            
             // Encrypt user password
             const salt = crypto.randomBytes(16).toString("hex"); 
         
@@ -82,12 +89,16 @@ router.post("/signup", (req, res) => {
             return save(newUser);
         })
         .then( user => {
-            // TODO: make jwt
-            res.status(200).json(user);
+            res.status(200).json({
+                token: createJWToken({ data: user._id, maxAge: 3600 })
+            });
         })
         .catch( err => {
-            console.log(err.message);
-            error = { cause: "signup", msg: err.message };
+            if (err.name === "PropError") {
+                return res.status(400).json({ error });
+            }
+
+            error = { cause: "signup", message: err.message };
 
             res.status(500).json({ error });
         });

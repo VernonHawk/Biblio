@@ -22,7 +22,7 @@ class AuthPage extends React.Component {
         redirectToReferrer: false
     }
 
-    auth = () => {
+    onAuth = () => {
         this.props.onAuth();
         this.setState({ redirectToReferrer: true });
     }
@@ -40,6 +40,7 @@ class AuthPage extends React.Component {
                     render={ props => 
                         <AuthContent 
                             {...props} 
+                            onAuth={ this.onAuth }
                             onAlert={ this.props.onAlert } 
                         /> 
                     } 

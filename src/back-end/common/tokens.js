@@ -3,41 +3,42 @@
 const jwt = require("jsonwebtoken");
 
 function verifyJWToken(token) {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
-            if (err || !decodedToken) {
-                return reject(err);
-            }
+    return new Promise( (resolve, reject) => {
+        jwt.verify(
+            token, process.env.TOKEN_SECRET, 
+            { algorithms: ["HS256"] },
+            (err, decodedToken) => {
+                if (err || !decodedToken) {
+                    return reject(err);
+                }
 
-            resolve(decodedToken);
-        });
+                return resolve(decodedToken);
+            }
+        );
     });
 }
 
-function createJWToken(details) {
-    let newDetails = details;
-    
-    if (typeof details !== "object") {
-        newDetails = {};
-    }
+function createJWToken(props) {
+    let payload = typeof props === "object" ? 
+                  props : {};
 
-    if (!newDetails.maxAge || typeof newDetails.maxAge !== "number") {
-        newDetails.maxAge = 3600;
+    if (!payload.maxAge || typeof payload.maxAge !== "number") {
+        payload.maxAge = 60 * 60; // seconds
     }
 
     const token = jwt.sign({
-            data: newDetails.sessionData
+            data: payload.data
         }, 
         process.env.TOKEN_SECRET, 
         {
-            expiresIn: newDetails.maxAge,
+            expiresIn: payload.maxAge,
             algorithm: "HS256"
     });
 
     return token;
 }
 
-module.exports = exports ={
+module.exports = exports = {
     verifyJWToken,
     createJWToken
 };
