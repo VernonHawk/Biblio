@@ -38,7 +38,7 @@ class App extends React.Component {
              <Loader /> :
             (<BrowserRouter>
                 <Container fluid className="h-100">
-                    <GlobalAlert alert={this.state.alert} />
+                    <GlobalAlert alert={ this.state.alert } />
                     <Switch>
                         <Route
                             path="/a"

@@ -46,6 +46,8 @@ router.post("/login", (req, res) => {
         })
         .catch( err => {
             if (err.name === "PropError") {
+                error = { cause: err.cause, message: err.message };
+
                 return res.status(400).json({ error });
             }
 
@@ -95,6 +97,8 @@ router.post("/signup", (req, res) => {
         })
         .catch( err => {
             if (err.name === "PropError") {
+                error = { cause: err.cause, message: err.message };
+
                 return res.status(400).json({ error });
             }
 

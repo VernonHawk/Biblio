@@ -35,12 +35,22 @@ After you have installed [Node.js](https://nodejs.org) and [MongoDB](https://www
 
 After installing the packages, you could run these commands:
 
-- `npm run dev-server` OR `npm run dev-s` to launch a dev server (don't forget to launch mongodb server `mongod` first!)
+- `npm run mongod` OR `npm run md` to launch a MongoDB server
+- `npm run dev-server` OR `npm run dev-s` to launch a dev server (don't forget to run `mongod` first!)
 - `npm run dev-client` OR `npm run dev-c` to launch a webpack-dev-server
 - `npm run build` to create a production build of a client
 - `npm run server` to launch a production server.
 
 Examples:
+
+```bash
+> npm run mongod
+
+biblio@0.1.0 mongod Disk:\path\to\the\project\Biblio
+mongod --auth
+
+2018-04-30T12:45:49.825-0700 I CONTROL  [initandlisten] MongoDB starting : pid=12992 port=27017 dbpath=C:\data\db\ 64-bit host=YOUR_HOST
+```
 
 ```bash
 > npm run dev-server

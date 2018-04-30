@@ -16,40 +16,35 @@ const propTypes = {
     onAlert: PropTypes.func.isRequired
 };
 
-class AuthContent extends React.PureComponent {
-    
-    render() {
-        const url = this.props.match.url;
-
-        return (
-            <Card className="align-self-center border-warning">
-                <AuthHeader />
-                <Switch>
-                    <Route
-                        exact path={`${url}/signup`}
-                        render={ props =>
-                            <SignUp
-                                {...props}
-                                onAuth={ this.props.onAuth }
-                                onAlert={ this.props.onAlert }
-                            /> 
-                        }  
-                    />
-                    <Route
-                        exact path={`${url}/login`}
-                        render={ props =>
-                            <LogIn
-                                {...props}
-                                onAuth={ this.props.onAuth }
-                                onAlert={ this.props.onAlert }
-                            />
-                        } 
-                    />
-                    <Redirect to={`${url}/signup`} />
-                </Switch>
-            </Card>
-        );
-    }
+function AuthContent({ match: { url }, onAuth, onAlert }) {
+    return (
+        <Card className="align-self-center border-warning">
+            <AuthHeader />
+            <Switch>
+                <Route
+                    exact path={`${url}/signup`}
+                    render={ props =>
+                        <SignUp
+                            {...props}
+                            onAuth={ onAuth }
+                            onAlert={ onAlert }
+                        /> 
+                    }  
+                />
+                <Route
+                    exact path={`${url}/login`}
+                    render={ props =>
+                        <LogIn
+                            {...props}
+                            onAuth={ onAuth }
+                            onAlert={ onAlert }
+                        />
+                    } 
+                />
+                <Redirect to={`${url}/signup`} />
+            </Switch>
+        </Card>
+    );
 }
 
 AuthContent.propTypes = propTypes;

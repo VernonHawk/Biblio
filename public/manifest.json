@@ -1,6 +1,6 @@
 {
-  "short_name": "MERN",
-  "name": "MERN tuturial",
+  "short_name": "Biblio",
+  "name": "Biblio: bibliography management service",
   "icons": [
     {
       "src": "favicon.ico",
