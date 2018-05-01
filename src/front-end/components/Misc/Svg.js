@@ -8,9 +8,9 @@ const propTypes = {
     path:    PropTypes.string.isRequired
 };
 
-function Svg({ width, height, viewBox, path }) {
+function Svg({ width, height, viewBox, path, ...rest }) {
     return (
-        <svg width={width} height={height} viewBox={viewBox}>
+        <svg width={width} height={height} viewBox={viewBox} {...rest}>
             <path d={path}></path>
         </svg>
     );

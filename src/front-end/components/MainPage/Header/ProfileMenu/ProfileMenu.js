@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import Svg from "components/Misc/Svg";
 
@@ -39,9 +39,7 @@ class ProfileMenu extends React.PureComponent {
                 <DropdownMenu>
                     <DropdownItem disabled>{ username }</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>
-                        <Link to="/account" className="no-link-decoration">Settings</Link>
-                    </DropdownItem>
+                    <Link to="/account" className="dropdown-item">Settings</Link>
                     <DropdownItem divider />
                     <DropdownItem onClick={ onSignOut }>Sign out</DropdownItem>
                 </DropdownMenu>

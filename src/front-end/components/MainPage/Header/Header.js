@@ -1,10 +1,12 @@
 import React from "react";
-import { Navbar, Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
+import { Navbar, Row, Col } from "reactstrap";
 
 import Brand       from "./Brand/Brand";
 import Search      from "./Search/Search";
 import ProfileMenu from "./ProfileMenu/ProfileMenu";
+
+import "./Header.css";
 
 const propTypes = {
     username:  PropTypes.string.isRequired,
@@ -14,7 +16,7 @@ const propTypes = {
 
 function Header({ username, onSearch, onSignOut }) {
     return (
-        <Navbar className="bg-light pl-4 pr-4">
+        <Navbar id="header" color="light" className="pl-4 pr-4">
             <Row className="w-100 align-items-center">
                 <Col xs="3">
                     <Brand />

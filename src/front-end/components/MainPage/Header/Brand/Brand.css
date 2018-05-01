@@ -7,6 +7,6 @@
 
 #brand:hover  {
     transition-duration: 0.5s;
-    color: gold;
-    fill: gold;
+    color: #ffc107;
+    fill: #ffc107;
 }

@@ -1,8 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { 
     InputGroup, InputGroupAddon, Input, Button
 } from "reactstrap";
-import PropTypes from "prop-types";
 
 import Svg from "components/Misc/Svg";
 

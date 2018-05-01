@@ -1,0 +1,11 @@
+.active {
+    font-weight: bold;
+}
+
+.bg-lightgrey {
+    background-color: #eeeeee;
+}
+
+.nav-item {
+    padding-top: 0.3rem; 
+}

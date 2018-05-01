@@ -9,7 +9,7 @@ import icon from "./icon-book.json";
 
 function Brand() {
     return (
-        <Link to="/" id="brand" className="navbar-brand no-link-decoration">
+        <Link to="/" id="brand" className="navbar-brand">
             <Row>
                 <Svg {...icon} />
                 <h2>Biblio</h2>
