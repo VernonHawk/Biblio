@@ -1,0 +1,18 @@
+html, body, #root{
+    height: 100%;
+}
+
+#container-app {
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.close {
+    outline-style: none !important;
+}
+
+a.no-link-decoration, a.no-link-decoration:hover {
+    color: black;
+    text-decoration: none;
+}

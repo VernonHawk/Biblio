@@ -8,6 +8,8 @@ import PrivateRoute from "components/Misc/PrivateRoute";
 import GlobalAlert  from "components/GlobalAlert/GlobalAlert";
 import Loader       from "components/Loader/Loader";
 
+import "./App.css";
+
 class App extends React.Component {
 
     state = {
@@ -23,7 +25,7 @@ class App extends React.Component {
 
     onAuth = () => this.setState({ isAuthenticated: true })
 
-    onLogOut = () => {
+    onSignOut = () => {
         localStorage.removeItem("token");
         
         this.setState({ isAuthenticated: false });
@@ -37,7 +39,7 @@ class App extends React.Component {
         const content = this.state.isAuthenticated === null ? 
              <Loader /> :
             (<BrowserRouter>
-                <Container fluid className="h-100">
+                <Container fluid id="container-app">
                     <GlobalAlert alert={ this.state.alert } />
                     <Switch>
                         <Route
@@ -57,7 +59,7 @@ class App extends React.Component {
                                 <MainPage
                                     {...props}
                                     onAlert={ this.onAlert }
-                                    onLogOut={ this.onLogOut }
+                                    onSignOut={ this.onSignOut }
                                 /> 
                             }
                         />

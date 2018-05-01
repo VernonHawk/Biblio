@@ -1,0 +1,4 @@
+#btn-search:hover svg {
+    transition-duration: 0.3s;
+    fill: gold;
+}

@@ -68,7 +68,7 @@ class SignUp extends React.Component {
         
         function validateName() {
             return new Promise( resolve => {
-                if (!username.trim().length) {
+                if (!username.trim()) {
                     newState.username = "Username can't consist only of whitespaces";
 
                     return resolve(false);
@@ -112,7 +112,7 @@ class SignUp extends React.Component {
 
                 <CardFooter>
                     Already have an account?
-                    <Link to={"/a/login"}> Log in</Link>
+                    <Link to={"/a/signin"}> Sign in</Link>
                 </CardFooter>
             </React.Fragment>
         );

@@ -1,0 +1,13 @@
+#btn-dropdown:hover svg {
+    transition-duration: 0.4s;
+    fill: gold;
+}
+
+.dropdown-item:active, .dropdown-item:active > a {
+    color: gold;
+    background-color: transparent;
+}
+
+.dropdown-item:focus {
+    outline-color: transparent;
+}

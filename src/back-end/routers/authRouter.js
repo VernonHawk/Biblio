@@ -10,13 +10,13 @@ const PropError = require("../common/PropError");
 
 const router = express.Router();
 
-router.post("/login", (req, res) => {
+router.post("/signin", (req, res) => {
     const { email, pass } = req.body;
 
     let error = {};
 
     if (!email || !pass) {
-        error = { cause: "login", message: "Not all arguments were specified" };
+        error = { cause: "signin", message: "Not all arguments were specified" };
 
         return res.status(400).json({ error });
     }
@@ -51,7 +51,7 @@ router.post("/login", (req, res) => {
                 return res.status(400).json({ error });
             }
 
-            error = { cause: "login", message: err.message };
+            error = { cause: "signin", message: err.message };
 
             res.status(500).json({ error });
         });
@@ -64,6 +64,27 @@ router.post("/signup", (req, res) => {
 
     if (!username || !email || !pass) {
         error = { cause: "signup", message: "Not all arguments were specified" };
+
+        return res.status(400).json({ error });
+    }
+
+    if (!username.trim()) {
+        error = { cause: "username", message: "Username can't consist only of whitespaces" };
+
+        return res.status(400).json({ error });
+    }
+
+    const passLength = {
+        min: 6,
+        max: 50
+    };
+
+    if (pass.length < passLength.min) {
+        error = { cause: "pass", message: `Password is too short. Min length is ${passLength.min}` };
+
+        return res.status(400).json({ error });
+    } else if (pass.length > passLength.max) {
+        error = { cause: "pass", message: `Password is too long. Max length is ${passLength.max}` };
 
         return res.status(400).json({ error });
     }

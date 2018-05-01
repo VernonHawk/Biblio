@@ -8,7 +8,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import fetcher from "fetcher";
 
 import alertTypes from "components/GlobalAlert/alert-types.json";
-import params from "./params-login.json";
+import params from "./params-signin.json";
 
 const propTypes = {
     match:    PropTypes.object,
@@ -19,7 +19,7 @@ const propTypes = {
     onAlert: PropTypes.func.isRequired
 };
 
-class LogIn extends React.Component { 
+class SignIn extends React.Component { 
     
     // Keeps error messages
     state = {
@@ -31,10 +31,10 @@ class LogIn extends React.Component {
         this.setState({ email: "", pass: "" });
 
         const acceptCodes = [400];
-        const errorMsg = "A problem occured while trying to log you in. " +
+        const errorMsg = "A problem occured while trying to sign you in. " +
                          "Sorry for this, try again later, please";
 
-        return fetcher.post({ url: "/login", data, acceptCodes, errorMsg })
+        return fetcher.post({ url: "/signin", data, acceptCodes, errorMsg })
             .then( json => {
                 const error = json.error;
                 
@@ -56,22 +56,22 @@ class LogIn extends React.Component {
             <React.Fragment>
                 <CardBody>
                     <AuthForm 
-                        params={params}
-                        btnLabel="Log In"
-                        onSubmit={this.onSubmit}
-                        errors={this.state}
+                        params={ params }
+                        btnLabel="Sign In"
+                        onSubmit={ this.onSubmit }
+                        errors={ this.state }
                     />
                 </CardBody>
 
                 <CardFooter>
                     Do not have an account?
-                    <Link to={"/a/signup"}> Sign up</Link>
+                    <Link to="/a/signup"> Sign up</Link>
                 </CardFooter>
             </React.Fragment>
         );
     }
 }
 
-LogIn.propTypes = propTypes;
+SignIn.propTypes = propTypes;
 
-export default LogIn;
+export default SignIn;

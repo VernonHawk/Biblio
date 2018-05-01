@@ -11,6 +11,7 @@
         "type": "password",
         "placeholder": "For example: *********",
         "minLength": 6,
-        "help": "Password must be longer than 5 characters"
+        "maxLength": 50,
+        "help": "Password length must be between 6 and 50 characters"
     }
 ]

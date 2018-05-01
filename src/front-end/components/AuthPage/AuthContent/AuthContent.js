@@ -4,7 +4,7 @@ import { Card } from "reactstrap";
 import PropTypes from "prop-types";
 
 import AuthHeader from "./AuthHeader";
-import LogIn      from "./LogIn/LogIn";
+import SignIn     from "./SignIn/SignIn";
 import SignUp     from "./SignUp/SignUp";
 
 const propTypes = {
@@ -32,9 +32,9 @@ function AuthContent({ match: { url }, onAuth, onAlert }) {
                     }  
                 />
                 <Route
-                    exact path={`${url}/login`}
+                    exact path={`${url}/signin`}
                     render={ props =>
-                        <LogIn
+                        <SignIn
                             {...props}
                             onAuth={ onAuth }
                             onAlert={ onAlert }
