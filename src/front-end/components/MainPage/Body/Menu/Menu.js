@@ -1,7 +1,8 @@
 import React from "react";
 import { Navbar, Nav } from "reactstrap";
 
-import MenuItem from "./MenuItem";
+import MenuItem   from "./MenuItem";
+import MenuHeader from "./MenuHeader";
 
 import "./Menu.css";
 
@@ -15,6 +16,7 @@ function Menu() {
     return (
         <Navbar className="h-100 align-items-start pt-5 pl-4 bg-lightgrey">
             <Nav vertical>
+                <MenuHeader>My bibliography</MenuHeader>
                 { list }
             </Nav>
         </Navbar>

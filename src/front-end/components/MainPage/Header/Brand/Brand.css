@@ -3,6 +3,7 @@
     text-decoration: none;
     cursor: pointer;
     padding-bottom: 0;
+    transition-duration: 1s;
 }
 
 #brand:hover  {

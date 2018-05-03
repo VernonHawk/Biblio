@@ -1,5 +1,6 @@
 .active {
     font-weight: bold;
+    fill: #ffc107;
 }
 
 .bg-lightgrey {
@@ -8,4 +9,13 @@
 
 .nav-item {
     padding-top: 0.3rem; 
+}
+
+.nav-item svg {
+    transition-duration: 0.8s;
+}
+
+.nav-item:hover svg {
+    transition-duration: 0.4s;
+    fill: #ffc107;
 }

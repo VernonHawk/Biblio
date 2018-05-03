@@ -6,15 +6,15 @@ const propTypes = {
 
 };
 
-class Bibliography extends React.Component {
+class Recent extends React.Component {
 
     render() {
         return (
-            <div>Bibliography</div>
+            <div>Recent</div>
         );
     }
 }
 
-Bibliography.propTypes = propTypes;
+Recent.propTypes = propTypes;
 
-export default Bibliography;
+export default Recent;

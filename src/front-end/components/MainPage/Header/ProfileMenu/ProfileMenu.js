@@ -39,7 +39,13 @@ class ProfileMenu extends React.PureComponent {
                 <DropdownMenu>
                     <DropdownItem disabled>{ username }</DropdownItem>
                     <DropdownItem divider />
-                    <Link to="/account" className="dropdown-item">Settings</Link>
+                    <Link
+                        to="/profile" 
+                        className="dropdown-item"
+                        onClick={ this.toggle }
+                    >
+                        Settings
+                    </Link>
                     <DropdownItem divider />
                     <DropdownItem onClick={ onSignOut }>Sign out</DropdownItem>
                 </DropdownMenu>

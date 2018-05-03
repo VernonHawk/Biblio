@@ -1,3 +1,7 @@
+#btn-search svg {
+    transition-duration: 0.6s;
+}
+
 #btn-search:hover svg {
     transition-duration: 0.3s;
     fill: #ffc107;

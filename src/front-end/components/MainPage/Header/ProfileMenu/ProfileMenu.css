@@ -1,3 +1,7 @@
+#btn-dropdown svg {
+    transition-duration: 0.8s;
+}
+
 #btn-dropdown:hover svg {
     transition-duration: 0.4s;
     fill: #ffc107;
