@@ -7,7 +7,7 @@ import Svg from "components/Misc/Svg";
 
 import "./ProfileMenu.css";
 
-import icon from "./icon-user.json";
+import { profile } from "media/icons.json";
 
 const propTypes = {
     username:   PropTypes.string.isRequired,
@@ -24,6 +24,12 @@ class ProfileMenu extends React.PureComponent {
 
     render() {
         const { username, onSignOut } = this.props;
+
+        const icon = {
+            width:  20,
+            height: 20,
+            path:   profile
+        };
 
         return (
             <ButtonDropdown

@@ -11,11 +11,11 @@
     padding-top: 0.3rem; 
 }
 
-.nav-item svg {
+.nav-item > a svg {
     transition-duration: 0.8s;
 }
 
-.nav-item:hover svg {
+.nav-item > a:hover svg {
     transition-duration: 0.4s;
     fill: #ffc107;
 }

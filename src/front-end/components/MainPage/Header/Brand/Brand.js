@@ -5,9 +5,15 @@ import { Link } from "react-router-dom";
 import Svg from "components/Misc/Svg";
 
 import "./Brand.css";
-import icon from "./icon-book.json";
+import { book } from "media/icons.json";
 
 function Brand() {
+    const icon = {
+        width:  36,
+        height: 36,
+        path:   book
+    };
+
     return (
         <Link to="/" id="brand" className="navbar-brand">
             <Row>

@@ -1,0 +1,14 @@
+.button_select {
+    padding: 0.6rem 0.6rem;
+    border-radius: 50% !important;
+    border-color: grey;
+}
+
+.button_select:hover {
+    background-color: inherit;
+}
+
+.button_select--selected {
+    padding: 0 0.3rem;
+    background-color: #007bff;
+}

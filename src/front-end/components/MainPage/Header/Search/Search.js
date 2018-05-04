@@ -8,7 +8,7 @@ import Svg from "components/Misc/Svg";
 
 import "./Search.css";
 
-import icon from "./icon-search.json";
+import { search } from "media/icons.json";
 
 const propTypes = {
     onSearch: PropTypes.func.isRequired
@@ -29,6 +29,12 @@ class Search extends React.PureComponent {
     }
 
     render() {
+        const icon = {
+            width:  16,
+            height: 16,
+            path:   search
+        };
+
         return (
             <InputGroup>
                 <InputGroupAddon addonType="prepend">

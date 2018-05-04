@@ -6,7 +6,7 @@ import Menu    from "./Menu/Menu";
 import Content from "./Content/Content";
 
 const propTypes = {
-    onAlert:   PropTypes.func.isRequired
+    onAlert: PropTypes.func.isRequired
 };
 
 class Body extends React.Component {
@@ -14,11 +14,11 @@ class Body extends React.Component {
     render() {
         return (
             <Row className="h-100">
-                <Col xs="2">
+                <Col xs="3">
                     <Menu />
                 </Col>
-                <Col xs="10">
-                    <Content />
+                <Col xs="9">
+                    <Content onAlert={ this.props.onAlert } />
                 </Col>
             </Row>
         );

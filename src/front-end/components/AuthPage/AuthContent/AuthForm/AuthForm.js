@@ -42,7 +42,7 @@ class AuthForm extends React.Component {
                 <AuthFormGroup
                     key={id}
                     id={id}
-                    value={this.state[id]}
+                    value={ this.state[id] }
                     onChange={ e => this.setState({ [id]: e.target.value })}
                     error={ errors[id].trim() }
                     {...rest}
@@ -51,7 +51,7 @@ class AuthForm extends React.Component {
         }
 
         return (
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={ this.onSubmit }>
                 {formGroups}
 
                 <AuthButton label={btnLabel} className="mt-3" />

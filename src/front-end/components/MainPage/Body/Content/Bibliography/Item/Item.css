@@ -1,0 +1,34 @@
+.item {
+    margin-bottom: 2rem;
+}
+
+.item--selected .item__overlay {
+    visibility: visible;
+}
+
+.item__overlay  {
+    position: absolute;
+    visibility: hidden;
+}
+
+.item__overlay_top-left {
+    top:  -0.9rem;
+    left: 1rem;
+}
+
+.item__overlay_top-right {
+    top:   -1rem;
+    right: 1rem;
+}
+
+.item__body {
+    cursor: pointer;
+}
+
+.item:hover .item__name {
+    color: #304d9c;
+}
+
+.item:hover .item__overlay {
+    visibility: visible;
+}

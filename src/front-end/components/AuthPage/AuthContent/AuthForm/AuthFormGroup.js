@@ -17,7 +17,7 @@ function AuthFormGroup({ id, label, help, error, ...rest }) {
                 <Input 
                     id={id} required 
                     size="40" maxLength={50} 
-                    invalid={Boolean(error)}
+                    invalid={ Boolean(error) }
                     {...rest} 
                 />
                 { error && <FormFeedback>{ error }</FormFeedback> }
