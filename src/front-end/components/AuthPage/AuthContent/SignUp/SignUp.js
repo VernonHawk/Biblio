@@ -11,6 +11,7 @@ import alertTypes from "components/GlobalAlert/alert-types.json";
 import params from "./params-signup.json";
 
 const propTypes = {
+    // Injected by router
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,

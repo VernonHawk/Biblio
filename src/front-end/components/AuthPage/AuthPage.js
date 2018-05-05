@@ -8,6 +8,7 @@ import AuthContent from "./AuthContent/AuthContent";
 import "./AuthPage.css";
 
 const propTypes = {
+    // Injected by router
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,

@@ -7,7 +7,7 @@ import MenuHeader from "./MenuHeader";
 import "./Menu.css";
 
 import items from "./items.json";
-import icons from "media/icons.json";
+import icons from "assets/icons.json";
 
 function Menu() {
     const list = items.map( ({ path, text, icon }) => {

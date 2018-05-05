@@ -25,6 +25,10 @@
     cursor: pointer;
 }
 
+.dragged {
+    opacity: 0.5;
+}
+
 .item:hover .item__name {
     color: #304d9c;
 }

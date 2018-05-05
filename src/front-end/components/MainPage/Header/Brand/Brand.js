@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Svg from "components/Misc/Svg";
 
 import "./Brand.css";
-import { book } from "media/icons.json";
+import { book } from "assets/icons.json";
 
 function Brand() {
     const icon = {

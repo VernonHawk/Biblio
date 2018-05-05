@@ -5,6 +5,7 @@ import Header from "./Header/Header";
 import Body   from "./Body/Body";
 
 const propTypes = {
+    // Injected by router
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,

@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 
 import Svg from "components/Misc/Svg";
 
-import icons from "media/icons.json";
+import icons from "assets/icons.json";
 
 const propTypes = {
     isStarred: PropTypes.bool.isRequired
@@ -21,7 +21,7 @@ function StarButton({ isStarred, ...rest }) {
 
     return (
         <Button color="link" title={title} {...rest}>
-            <Svg {...starIcon} style={{ fill: "#ffbf00e5" }}/>
+            <Svg {...starIcon} style={{ fill: "#ffbf00" }}/>
         </Button>
         
     );

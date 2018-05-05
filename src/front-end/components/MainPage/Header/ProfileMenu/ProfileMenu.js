@@ -7,7 +7,7 @@ import Svg from "components/Misc/Svg";
 
 import "./ProfileMenu.css";
 
-import { profile } from "media/icons.json";
+import { profile } from "assets/icons.json";
 
 const propTypes = {
     username:   PropTypes.string.isRequired,

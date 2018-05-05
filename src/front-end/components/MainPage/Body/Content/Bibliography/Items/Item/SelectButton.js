@@ -6,7 +6,7 @@ import Svg from "components/Misc/Svg";
 
 import "./SelectButton.css";
 
-import { check } from "media/icons.json";
+import { check } from "assets/icons.json";
 
 const propTypes = {
     isSelected: PropTypes.bool.isRequired

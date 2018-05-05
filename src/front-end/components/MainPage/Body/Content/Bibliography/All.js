@@ -1,101 +1,107 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Breadcrumbs, Row, Col } from "reactstrap";
 //import { Switch, Route } from "react-router-dom";
-//import PropTypes from "prop-types";
 
-import Reference from "./Item/Reference/Reference";
-import Folder    from "./Item/Folder/Folder";
+import Items from "./Items";
 
 const propTypes = {
+    // Injected by router
+    match:    PropTypes.object,
+    location: PropTypes.object,
+    history:  PropTypes.object,
 
+    userEmail: PropTypes.string,
+    onAlert:   PropTypes.func.isRequired
 };
 
 class All extends React.Component {
 
     state = {
-        items: [
+        data: []
+    }
+
+    static getDerivedStateFromProps(nextProps) {
+        let fetched = [];
+        
+        //TODO: fetch data from server based on match.params.folder
+        fetched = [
             { 
-                id: 0,
+                id: "0",
                 name: "Very long-long name to display",
                 type: "folder",
-                isSelected: true,
                 isStarred:  false
             },
             { 
-                id: 1,
+                id: "1",
                 name: "Very long-long name to display",
                 type: "folder",
-                isSelected: true,
                 isStarred:  true
             },
             { 
-                id: 2,
+                id: "2",
                 name: "Very long-long name to display",
                 type: "folder",
-                isSelected: false,
                 isStarred:  true
             },
             { 
-                id: 3,
+                id: "3",
                 name: "Very long-long name to display",
                 type: "folder",
-                isSelected: false,
                 isStarred:  false
             },
             { 
-                id: 4,
+                id: "4",
                 name: "Very long-long name to display",
                 type: "reference",
-                isSelected: true,
                 isStarred:  false
             },
             { 
-                id: 5,
+                id: "5",
                 name: "Very long-long name to display",
                 type: "reference",
-                isSelected: true,
                 isStarred:  true
             },
             { 
-                id: 6,
+                id: "6",
                 name: "Very long-long name to display",
                 type: "reference",
-                isSelected: false,
                 isStarred:  true
             },
             { 
-                id: 7,
+                id: "7",
                 name: "Very long-long name to display",
                 type: "reference",
-                isSelected: false,
                 isStarred:  false
             },
-        ]
+        ];
+
+        const data = fetched.map( item => ({ ...item, isSelected: false }) );
+
+        return { data };
+    }
+
+    onItemSelect = id => {
+        const newData = this.state.data.slice();
+
+        const index = newData.findIndex( el => el.id === id );
+
+        newData[index].isSelected = !newData[index].isSelected;
+
+        this.setState({ data: newData });
+    }
+
+    onItemStar = item => {
+        //TODO: make server request
+        console.log("star", item);
+    }
+
+    onItemDrop = res => {
+        //TODO: make request
+        console.log("drop", res);
     }
 
     render() {
-        const items = this.state.items.map( ({ id, type, ...rest }) => {
-            let Component;
-
-            switch (type) {
-                case "folder":
-                    Component = Folder;
-                    break;
-                case "reference":
-                    Component = Reference;
-                    break;
-                default:
-                    // TODO: Do something in this case
-                    console.error("Unknown component type!");
-                    break;
-            } 
-
-            return (
-                <Col xs="3" key={id}>
-                    <Component id={id} {...rest} />
-                </Col>
-            );
-        });
 
         return (
             <Row>
@@ -103,7 +109,13 @@ class All extends React.Component {
                     <div>Home / Dir / Dir2 / Dir 3</div>
                     <hr />
                     <Row>
-                        { items }
+                        <Items 
+                            data={ this.state.data }
+                            onItemSelect={ this.onItemSelect }
+                            onItemStar={ this.onItemStar }
+                            onItemDrop={ this.onItemDrop }
+                            onAlert={ this.props.onAlert }
+                        />
                     </Row>
                 </Col>
                 <Col xs="3">

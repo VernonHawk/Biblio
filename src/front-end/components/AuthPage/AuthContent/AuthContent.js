@@ -8,6 +8,7 @@ import SignIn     from "./SignIn/SignIn";
 import SignUp     from "./SignUp/SignUp";
 
 const propTypes = {
+    // Injected by router
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,

@@ -8,7 +8,7 @@ import Svg from "components/Misc/Svg";
 
 import "./Search.css";
 
-import { search } from "media/icons.json";
+import { search } from "assets/icons.json";
 
 const propTypes = {
     onSearch: PropTypes.func.isRequired
