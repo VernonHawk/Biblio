@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { Breadcrumbs, Row, Col } from "reactstrap";
 //import { Switch, Route } from "react-router-dom";
 
-import Items from "./Items";
+import Items   from "./Items/Items";
+import Sidebar from "./Sidebar/Sidebar";
 
 const propTypes = {
     // Injected by router
@@ -24,7 +25,7 @@ class All extends React.Component {
     static getDerivedStateFromProps(nextProps) {
         let fetched = [];
         
-        //TODO: fetch data from server based on match.params.folder
+        //TODO: fetch data from server based on nextProps.match.params.folder
         fetched = [
             { 
                 id: "0",
@@ -85,7 +86,7 @@ class All extends React.Component {
         const newData = this.state.data.slice();
 
         const index = newData.findIndex( el => el.id === id );
-
+        
         newData[index].isSelected = !newData[index].isSelected;
 
         this.setState({ data: newData });
@@ -97,33 +98,48 @@ class All extends React.Component {
     }
 
     onItemDrop = res => {
-        //TODO: make request
+        //TODO: make server request
         console.log("drop", res);
     }
 
+    onStarSelected = () => {
+        const selected = this.state.data.filter( el => el.isSelected );
+
+        // send request
+        console.log("star", selected);
+    }
+
+    onDeleteSelected = () => {
+        const selected = this.state.data.filter( el => el.isSelected );
+
+        // send request
+        console.log("delete", selected);
+    }
+
     render() {
+        const data = this.state.data;
+
+        const itemsSelected = data.some( el => el.isSelected );
 
         return (
             <Row>
                 <Col xs="9">
                     <div>Home / Dir / Dir2 / Dir 3</div>
                     <hr />
-                    <Row>
-                        <Items 
-                            data={ this.state.data }
-                            onItemSelect={ this.onItemSelect }
-                            onItemStar={ this.onItemStar }
-                            onItemDrop={ this.onItemDrop }
-                            onAlert={ this.props.onAlert }
-                        />
-                    </Row>
+                    <Items 
+                        data={ data }
+                        onItemSelect={ this.onItemSelect }
+                        onItemStar={ this.onItemStar }
+                        onItemDrop={ this.onItemDrop }
+                        onAlert={ this.props.onAlert }
+                    />
                 </Col>
                 <Col xs="3">
-                    <div>New Folder</div>
-                    <div>New file</div>
-                    <div>Delete selected</div>
-                    <div>Star selected</div>
-                    <div>Archive selected</div>
+                    <Sidebar 
+                        itemsSelected={ itemsSelected }
+                        onStarSelected={ this.onStarSelected}
+                        onDeleteSelected={ this.onDeleteSelected}
+                    />
                 </Col>
             </Row>
         );
