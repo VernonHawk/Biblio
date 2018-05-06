@@ -8,7 +8,8 @@ import AuthButton  from "../AuthButton";
 
 import fetcher from "fetcher";
 
-import alertTypes from "components/GlobalAlert/alert-types.json";
+import errors from "assets/errorMessages.json";
+import alerts from "components/GlobalAlert/alert-types.json";
 import params from "./params-signup.json";
 
 const propTypes = {
@@ -37,8 +38,7 @@ class SignUp extends React.Component {
         
                 if (valid) {
                     const acceptCodes = [400];
-                    const errorMsg = "A problem occured while trying to sign you up. " +
-                                     "Sorry for this, try again later, please";
+                    const errorMsg = errors.SIGN_UP;
 
                     return fetcher.post({ url: "/signup", data, acceptCodes, errorMsg })
                         .then( json => {
@@ -55,7 +55,7 @@ class SignUp extends React.Component {
                 }
             })
             .catch( err => {
-                this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
+                this.props.onAlert({ type: alerts.DANGER, msg: err.message });
             });
     }
 

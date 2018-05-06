@@ -2,6 +2,28 @@
 
 const jwt = require("jsonwebtoken");
 
+const STD_TOKEN_AGE = 60 * 60; //seconds
+
+function createJWToken(props) {
+    let payload = typeof props === "object" ? 
+                  props : {};
+
+    if (!payload.maxAge || typeof payload.maxAge !== "number") {
+        payload.maxAge = STD_TOKEN_AGE;
+    }
+
+    const token = jwt.sign({
+            data: payload.data
+        }, 
+        process.env.TOKEN_SECRET, 
+        {
+            expiresIn: payload.maxAge,
+            algorithm: "HS256"
+    });
+
+    return token;
+}
+
 function verifyJWToken(token) {
     return new Promise( (resolve, reject) => {
         jwt.verify(
@@ -18,27 +40,17 @@ function verifyJWToken(token) {
     });
 }
 
-function createJWToken(props) {
-    let payload = typeof props === "object" ? 
-                  props : {};
-
-    if (!payload.maxAge || typeof payload.maxAge !== "number") {
-        payload.maxAge = 60 * 60; // seconds
-    }
-
-    const token = jwt.sign({
-            data: payload.data
-        }, 
-        process.env.TOKEN_SECRET, 
-        {
-            expiresIn: payload.maxAge,
-            algorithm: "HS256"
-    });
-
-    return token;
+function decodeRequestToken(req) {
+    const token = req.headers["authorization"] || req.body.token || req.query.token;
+    
+    return verifyJWToken(token);
 }
+
+const getJWToken = data => createJWToken({ data, maxAge: STD_TOKEN_AGE });
 
 module.exports = exports = {
     verifyJWToken,
-    createJWToken
+    createJWToken,
+    decodeRequestToken,
+    getJWToken
 };

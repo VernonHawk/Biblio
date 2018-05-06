@@ -2,11 +2,11 @@ import React from "react";
 import { Alert, Row } from "reactstrap";
 import PropTypes from "prop-types";
 
-import alertTypes from "./alert-types.json";
+import alerts from "./alert-types.json";
 
 const propTypes = {
     alert: PropTypes.shape({
-        type: PropTypes.oneOf(Object.values(alertTypes)).isRequired,
+        type: PropTypes.oneOf(Object.values(alerts)).isRequired,
         msg:  PropTypes.string.isRequired
     })
 };

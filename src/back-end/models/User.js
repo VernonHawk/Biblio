@@ -2,27 +2,27 @@
 
 const mongoose = require("mongoose");
 
-const notEmpty = value => new Promise( resolve => resolve(Boolean(value.trim().length)) );
+const notEmpty = value => Promise.resolve( Boolean(value.trim()) );
 
 const userSchema = mongoose.Schema({
-    username: { 
-        type: String, 
-        required: [ true, "Username required" ], 
+    username: {
+        type: String,
+        required: [ true, "Username required" ],
         validate: { validator: notEmpty, message: "Username can't consist only of whitespace" }
     },
-    email: { 
+    email: {
         type: String, 
-        required: [ true, "Email required" ], 
+        required: [ true, "Email required" ],
         unique: true,
         validate: { validator: notEmpty, message: "Email can't consist only of whitespace" }
     },
-    pass: { 
-        type: String, 
-        required: [ true, "Password required" ] 
+    pass: {
+        type: String,
+        required: [ true, "Password required" ]
     },
-    salt: { 
-        type: String, 
-        required: [ true, "Salt required" ] 
+    salt: {
+        type: String,
+        required: [ true, "Salt required" ]
     },
 });
 

@@ -36,9 +36,10 @@ class App extends React.Component {
     }
 
     render() {
-        const content = this.state.isAuthenticated === null ? 
-             <Loader /> :
-            (<BrowserRouter>
+        return this.state.isAuthenticated === null ? 
+            <Loader /> :
+        (
+            <BrowserRouter>
                 <Container fluid id="container-app">
                     <GlobalAlert alert={ this.state.alert } />
                     <Switch>
@@ -65,9 +66,8 @@ class App extends React.Component {
                         />
                     </Switch>
                 </Container>
-            </BrowserRouter>);
-
-        return content;
+            </BrowserRouter>
+        );
     }
 }
 

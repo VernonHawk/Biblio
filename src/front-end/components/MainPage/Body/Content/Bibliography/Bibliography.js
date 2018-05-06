@@ -11,28 +11,33 @@ import Archive from "./Archive";
 import NotFound from "components/Misc/NotFound";
 
 const propTypes = {
+    userId:  PropTypes.string.isRequired,
     onAlert: PropTypes.func.isRequired
 };
 
 class Bibliography extends React.Component {
 
     render() {
-        const onAlert = this.props.onAlert;
+        const { userId, onAlert } = this.props;
 
         return (
             <DragDropContextProvider backend={ Backend }>
                 <Switch>
                     <Route exact path="/recent"  
-                           render={ props => <Recent {...props} onAlert={onAlert} /> } 
+                           render={ props => 
+                               <Recent {...props} userId={userId} onAlert={onAlert} /> } 
                     />
                     <Route exact path="/starred" 
-                           render={ props => <Starred {...props} onAlert={onAlert} /> } 
+                           render={ props => 
+                               <Starred {...props} userId={userId} onAlert={onAlert} /> } 
                     />
                     <Route exact path="/archive" 
-                           render={ props => <Archive {...props} onAlert={onAlert} /> } 
+                           render={ props => 
+                               <Archive {...props} userId={userId} onAlert={onAlert} /> } 
                     />
                     <Route exact path="/:folder?" 
-                           render={ props => <All {...props} onAlert={onAlert} /> } 
+                           render={ props => 
+                               <All {...props} userId={userId} onAlert={onAlert} /> } 
                     />
                     <Route component={ NotFound } />
                 </Switch>

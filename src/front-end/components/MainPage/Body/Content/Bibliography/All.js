@@ -12,8 +12,9 @@ const propTypes = {
     location: PropTypes.object,
     history:  PropTypes.object,
 
-    userEmail: PropTypes.string,
-    onAlert:   PropTypes.func.isRequired
+    userId:  PropTypes.string.isRequired,
+    
+    onAlert: PropTypes.func.isRequired
 };
 
 class All extends React.Component {
@@ -25,7 +26,7 @@ class All extends React.Component {
     static getDerivedStateFromProps(nextProps) {
         let fetched = [];
         
-        //TODO: fetch data from server based on nextProps.match.params.folder
+        //TODO: fetch data from server based on nextProps.match.params.folder for userId
         fetched = [
             { 
                 id: "0",

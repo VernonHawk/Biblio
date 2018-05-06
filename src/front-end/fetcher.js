@@ -12,30 +12,37 @@
  * 
  * @returns {Promise.<Object, Error>} promise of json data
  */
-function request({ url, data, method, acceptCodes = [], errorMsg = "Error occured" }) {
-    return fetch( url, {
+function request({ url, method = "GET", data = {}, acceptCodes = [], errorMsg = "Error occured" }) {
+    const options = {
         method,
-        body: JSON.stringify(data),
         headers : {
-            "Accept": "application/json",
+            "Accept":       "application/json",
             "Content-Type": "application/json",
             "Authorization": localStorage.getItem("token")
         }
-    })
-    .then( resp => {
-        if (acceptCodes.includes(resp.status)) {
-            return resp.json();
-        }
-        
-        if (!resp.ok) {
-            throw new Error(errorMsg);
-        }
+    };
 
-        return resp.json();
-    });
+    if (method !== "GET") {
+        options.body = JSON.stringify(data);
+    }
+
+    return fetch( url, options )
+        .then( resp => {
+            if (acceptCodes.includes(resp.status)) {
+                
+                return resp.json();
+            }
+            
+            if (!resp.ok) {
+                throw new Error(errorMsg);
+            }
+
+            return resp.json();
+        });
 }
 
 export default {
+    get:    params => request({ ...params, method: "GET"    }),
     post:   params => request({ ...params, method: "POST"   }),
     put:    params => request({ ...params, method: "PUT"    }),
     patch:  params => request({ ...params, method: "PATCH"  }),

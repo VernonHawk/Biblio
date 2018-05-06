@@ -6,19 +6,22 @@ import Menu    from "./Menu/Menu";
 import Content from "./Content/Content";
 
 const propTypes = {
+    userId:  PropTypes.string.isRequired,
     onAlert: PropTypes.func.isRequired
 };
 
 class Body extends React.Component {
 
     render() {
+        const { userId, onAlert } = this.props;
+
         return (
             <Row className="h-100">
                 <Col xs="3">
                     <Menu />
                 </Col>
                 <Col xs="9">
-                    <Content onAlert={ this.props.onAlert } />
+                    <Content userId={userId} onAlert={onAlert} />
                 </Col>
             </Row>
         );

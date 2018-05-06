@@ -4,7 +4,7 @@ const express = require("express");
 const crypto = require("crypto");
 
 const { getByEmail, save } = require("../DAL/UserDAL");
-const { createJWToken } = require("../common/tokens");
+const { getJWToken } = require("../common/tokens");
 
 const PropError = require("../common/PropError");
 
@@ -35,9 +35,7 @@ router.post("/signin", (req, res) => {
                                 .digest("hex");
 
             if (hash === user.pass) {
-                res.status(200).json({
-                    token: createJWToken({ data: user._id, maxAge: 3600 })
-                });
+                res.status(200).json({ token: getJWToken(user._id) });
             } else {
                 error = { cause: "pass", message: "Password is incorrect" };
 
@@ -114,9 +112,7 @@ router.post("/signup", (req, res) => {
             return save(newUser);
         })
         .then( user => {
-            res.status(200).json({
-                token: createJWToken({ data: user._id, maxAge: 3600 })
-            });
+            res.status(200).json({ token: getJWToken(user._id) });
         })
         .catch( err => {
             if (err.name === "PropError") {

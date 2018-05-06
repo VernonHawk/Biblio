@@ -8,7 +8,8 @@ import AuthButton  from "../AuthButton";
 
 import fetcher from "fetcher";
 
-import alertTypes from "components/GlobalAlert/alert-types.json";
+import errors from "assets/errorMessages.json";
+import alerts from "components/GlobalAlert/alert-types.json";
 import params from "./params-signin.json";
 
 const propTypes = {
@@ -33,8 +34,7 @@ class SignIn extends React.Component {
         this.setState({ email: "", pass: "" });
 
         const acceptCodes = [400];
-        const errorMsg = "A problem occured while trying to sign you in. " +
-                         "Sorry for this, try again later, please";
+        const errorMsg = errors.SIGN_IN;
 
         return fetcher.post({ url: "/signin", data, acceptCodes, errorMsg })
             .then( json => {
@@ -49,7 +49,7 @@ class SignIn extends React.Component {
                 }
             })
             .catch( err => {
-                this.props.onAlert({ type: alertTypes.DANGER, msg: err.message });
+                this.props.onAlert({ type: alerts.DANGER, msg: err.message });
             });
     }
 

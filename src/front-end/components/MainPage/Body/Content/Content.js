@@ -6,12 +6,15 @@ import Bibliography  from "./Bibliography/Bibliography";
 import Profile       from "./Profile/Profile";
 
 const propTypes = {
+    userId:  PropTypes.string.isRequired,
     onAlert: PropTypes.func.isRequired
 };
 
 class Content extends React.Component {
 
     render() {
+        const { userId, onAlert } = this.props;
+
         return (
             <div className="h-100 pl-3 pt-4">
                 <Switch>
@@ -19,12 +22,12 @@ class Content extends React.Component {
                         exact
                         path="/profile"
                         render={ props => 
-                            <Profile {...props} onAlert={ this.props.onAlert } />}
+                            <Profile {...props} userId={userId} onAlert={onAlert} /> }
                     />
                     <Route
                         path="/"
                         render={ props => 
-                            <Bibliography {...props} onAlert={ this.props.onAlert } />}
+                            <Bibliography {...props} userId={userId} onAlert={onAlert} /> }
                     />
                 </Switch>
             </div>

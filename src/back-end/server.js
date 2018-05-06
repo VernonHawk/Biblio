@@ -4,8 +4,8 @@ const express    = require("express");
 const bodyParser = require("body-parser");
 const helmet     = require("helmet");
 
-const authRouter   = require("./routers/authRouter");
-const commonRouter = require("./routers/commonRouter");
+const authRouter = require("./routers/authRouter");
+const mainRouter = require("./routers/mainRouter");
 
 const app = express();
 
@@ -17,7 +17,7 @@ function mapRoutes() {
     });
 
     app.use("/", authRouter);
-    //app.use("/", commonRouter);
+    app.use("/", mainRouter);
 }
 
 function startServer() {
