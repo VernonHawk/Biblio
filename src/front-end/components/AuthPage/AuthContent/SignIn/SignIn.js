@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { CardBody, CardFooter } from "reactstrap";
 import PropTypes from "prop-types";
 
-import AuthForm from "../AuthForm/AuthForm";
+import GenericForm from "components/GenericForm/GenericForm";
+import AuthButton  from "../AuthButton";
 
 import fetcher from "fetcher";
 
@@ -56,12 +57,13 @@ class SignIn extends React.Component {
         return (
             <React.Fragment>
                 <CardBody>
-                    <AuthForm 
+                    <GenericForm 
                         params={ params }
-                        btnLabel="Sign In"
                         onSubmit={ this.onSubmit }
                         errors={ this.state }
-                    />
+                    >
+                        <AuthButton label="Sign In" className="mt-3" />
+                    </GenericForm>
                 </CardBody>
 
                 <CardFooter>

@@ -2,19 +2,17 @@ import React from "react";
 import { Form } from "reactstrap";
 import PropTypes from "prop-types";
 
-import AuthFormGroup from "./AuthFormGroup";
-import AuthButton    from "./AuthButton";
+import GenericFormGroup from "./GenericFormGroup";
 
 const propTypes = {
     params: PropTypes.arrayOf( PropTypes.shape({
         id:   PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired,
         help: PropTypes.string
     })),
-    btnLabel: PropTypes.string.isRequired,
     errors: PropTypes.objectOf(PropTypes.string)
 };
 
-class AuthForm extends React.Component {
+class GenericForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -33,13 +31,13 @@ class AuthForm extends React.Component {
     }
     
     render() {
-        const { params, btnLabel, errors } = this.props;
+        const { params, errors, children } = this.props;
 
         const formGroups = [];
 
         for (const { id, ...rest } of params) {
             formGroups.push(
-                <AuthFormGroup
+                <GenericFormGroup
                     key={id}
                     id={id}
                     value={ this.state[id] }
@@ -52,14 +50,13 @@ class AuthForm extends React.Component {
 
         return (
             <Form onSubmit={ this.onSubmit }>
-                {formGroups}
-
-                <AuthButton label={btnLabel} className="mt-3" />
+                { formGroups }
+                { children }
             </Form>
         );
     }
 }
 
-AuthForm.propTypes = propTypes;
+GenericForm.propTypes = propTypes;
 
-export default AuthForm;
+export default GenericForm;

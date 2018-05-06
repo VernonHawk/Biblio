@@ -23,6 +23,7 @@ class Reference extends React.Component {
 
     onStar = () => this.props.onStar({ type: REFERENCE, id: this.props.id });
 
+    // TODO: Open modal
     onOpen = () => console.log("Open reference");
     
     onDrop = dropTarget => this.props.onDrop({...dropTarget, itemType: REFERENCE });

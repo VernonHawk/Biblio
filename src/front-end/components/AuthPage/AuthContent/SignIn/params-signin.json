@@ -3,7 +3,10 @@
         "label": "Email",
         "id": "email",
         "type": "email",
-        "placeholder": "For example: example@mail.com"
+        "placeholder": "For example: example@mail.com",
+        "maxLength": 50,
+        "size": 40,
+        "required": true
     },
     {
         "label": "Password",
@@ -11,6 +14,8 @@
         "type": "password",
         "placeholder": "For example: *********",
         "minLength": 6,
-        "maxLength": 50
+        "maxLength": 50,
+        "size": 40,
+        "required": true
     }
 ]

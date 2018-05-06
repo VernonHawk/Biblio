@@ -9,14 +9,13 @@ const propTypes = {
     error: PropTypes.string
 };
 
-function AuthFormGroup({ id, label, help, error, ...rest }) {
+function GenericFormGroup({ id, label, help, error, ...rest }) {
     return (
         <FormGroup row>
             <Label for={id} sm={3}>{ label }</Label>
             <Col sm={9}>
                 <Input 
-                    id={id} required 
-                    size="40" maxLength={50} 
+                    id={id}
                     invalid={ Boolean(error) }
                     {...rest} 
                 />
@@ -27,6 +26,6 @@ function AuthFormGroup({ id, label, help, error, ...rest }) {
     );
 }
 
-AuthFormGroup.propTypes = propTypes;
+GenericFormGroup.propTypes = propTypes;
 
-export default AuthFormGroup;
+export default GenericFormGroup;
