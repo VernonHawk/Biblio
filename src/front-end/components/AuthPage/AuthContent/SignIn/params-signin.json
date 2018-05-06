@@ -5,7 +5,7 @@
         "type": "email",
         "placeholder": "For example: example@mail.com",
         "maxLength": 50,
-        "size": 40,
+        "size": "40",
         "required": true
     },
     {
@@ -15,7 +15,7 @@
         "placeholder": "For example: *********",
         "minLength": 6,
         "maxLength": 50,
-        "size": 40,
+        "size": "40",
         "required": true
     }
 ]

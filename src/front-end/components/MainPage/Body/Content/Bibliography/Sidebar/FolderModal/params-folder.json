@@ -1,0 +1,11 @@
+[
+    {
+        "label": "Name",
+        "id": "name",
+        "type": "text",
+        "placeholder": "For example: Super secret folder",
+        "maxLength": 50,
+        "size": "40",
+        "required": true
+    }
+]

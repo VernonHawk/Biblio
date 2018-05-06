@@ -60,6 +60,8 @@ router.post("/signin", (req, res) => {
 router.post("/signup", (req, res) => {
     const { username, email, pass } = req.body;
 
+    const trimUsername = username.trim();
+
     let error = {};
 
     if (!username || !email || !pass) {
@@ -68,7 +70,7 @@ router.post("/signup", (req, res) => {
         return res.status(400).json({ error });
     }
 
-    if (!username.trim()) {
+    if (!trimUsername) {
         error = { cause: "username", message: "Username can't consist only of whitespaces" };
 
         return res.status(400).json({ error });
@@ -105,8 +107,8 @@ router.post("/signup", (req, res) => {
                                 .digest("hex");
 
             const newUser = {
-                username, email, salt,
-                pass: hash
+                username: trimUsername, 
+                email, salt, pass: hash
             };
 
             return save(newUser);

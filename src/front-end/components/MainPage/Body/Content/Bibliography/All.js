@@ -105,14 +105,14 @@ class All extends React.Component {
     onStarSelected = () => {
         const selected = this.state.data.filter( el => el.isSelected );
 
-        // send request
+        //TODO: send request
         console.log("star", selected);
     }
 
     onDeleteSelected = () => {
         const selected = this.state.data.filter( el => el.isSelected );
 
-        // send request
+        //TODO: send request
         console.log("delete", selected);
     }
 

@@ -36,8 +36,6 @@ class SignUp extends React.Component {
                 this.setState(newState);
         
                 if (valid) {
-                    this.setState({ username: "", email: "", pass: "" });
-
                     const acceptCodes = [400];
                     const errorMsg = "A problem occured while trying to sign you up. " +
                                      "Sorry for this, try again later, please";

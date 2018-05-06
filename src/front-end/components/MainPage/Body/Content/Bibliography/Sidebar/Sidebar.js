@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {  } from "reactstrap";
 
 import SidebarButton from "./SidebarButton";
-import FolderModal   from "./FolderModal";
+import FolderModal   from "./FolderModal/FolderModal";
 
 const propTypes = {
     itemsSelected: PropTypes.bool.isRequired,
@@ -21,15 +21,15 @@ class Sidebar extends React.Component {
         referenceModal: false
     }
 
-    onNewFolder() {
-        console.log("f");
+    onNewFolder = data => {
+        console.log("f", data);
     }
 
-    onNewReference() {
+    onNewReference = () => {
         console.log("r");
     }
 
-    onDeleteSelected() {
+    onDeleteSelected = () => {
         console.log("d");
     }
 

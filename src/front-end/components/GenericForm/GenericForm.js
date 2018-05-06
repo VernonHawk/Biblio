@@ -12,6 +12,11 @@ const propTypes = {
     errors: PropTypes.objectOf(PropTypes.string)
 };
 
+const defaultProps = {
+    params: [],
+    errors: {}
+};
+
 class GenericForm extends React.Component {
 
     constructor(props) {
@@ -42,7 +47,7 @@ class GenericForm extends React.Component {
                     id={id}
                     value={ this.state[id] }
                     onChange={ e => this.setState({ [id]: e.target.value })}
-                    error={ errors[id].trim() }
+                    error={ errors[id] && errors[id].trim() }
                     {...rest}
                 />
             );
@@ -58,5 +63,6 @@ class GenericForm extends React.Component {
 }
 
 GenericForm.propTypes = propTypes;
+GenericForm.defaultProps = defaultProps;
 
 export default GenericForm;

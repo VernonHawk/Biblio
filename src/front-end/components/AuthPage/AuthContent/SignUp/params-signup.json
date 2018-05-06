@@ -3,7 +3,10 @@
         "label": "Username",
         "id": "username",
         "type": "text",
-        "placeholder": "For example: John Doe"
+        "placeholder": "For example: John Doe",
+        "maxLength": 50,
+        "size": "40",
+        "required": true
     },
     {
         "label": "Email",
@@ -11,7 +14,7 @@
         "type": "email",
         "placeholder": "For example: example@mail.com",
         "maxLength": 50,
-        "size": 40,
+        "size": "40",
         "required": true
     },
     {
@@ -21,7 +24,7 @@
         "placeholder": "For example: *********",
         "minLength": 6,
         "maxLength": 50,
-        "size": 40,
+        "size": "40",
         "required": true,
         "help": "Password length must be between 6 and 50 characters"
     }
