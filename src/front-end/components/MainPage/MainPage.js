@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 import Header from "./Header/Header";
@@ -63,7 +63,7 @@ class MainPage extends React.Component {
         return (!username || !id) ? 
             <Loader /> :
         (
-            <React.Fragment>
+            <Fragment>
                 <Header 
                     username={ username }
                     onSearch={ this.onSearch } 
@@ -73,7 +73,7 @@ class MainPage extends React.Component {
                     userId={ id } 
                     onAlert={ this.props.onAlert } 
                 />
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

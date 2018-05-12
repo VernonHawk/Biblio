@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { CardBody, CardFooter } from "reactstrap";
 import PropTypes from "prop-types";
@@ -100,7 +100,7 @@ class SignUp extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 <CardBody>
                     <GenericForm 
                         params={params}
@@ -115,7 +115,7 @@ class SignUp extends React.Component {
                     Already have an account?
                     <Link to={"/a/signin"}> Sign in</Link>
                 </CardFooter>
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

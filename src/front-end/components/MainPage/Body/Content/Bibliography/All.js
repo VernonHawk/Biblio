@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Breadcrumbs, Row, Col } from "reactstrap";
+import { Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
 //import { Switch, Route } from "react-router-dom";
 
 import Items   from "./Items/Items";
@@ -125,7 +125,9 @@ class All extends React.Component {
         return (
             <Row>
                 <Col xs="9">
-                    <div>Home / Dir / Dir2 / Dir 3</div>
+                    <Breadcrumb className="bg-white mb-0 p-0">
+                        <BreadcrumbItem active>Home</BreadcrumbItem>
+                    </Breadcrumb>
                     <hr />
                     <Items 
                         data={ data }

@@ -60,8 +60,7 @@ class GlobalAlert extends React.PureComponent {
         } else {
             return null;
         }
-    }
-    
+    }  
 }
 
 GlobalAlert.propTypes = propTypes;

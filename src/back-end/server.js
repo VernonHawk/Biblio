@@ -21,7 +21,7 @@ function mapRoutes() {
 }
 
 function startServer() {
-    const buildPath = __dirname + "/../../build/" ;
+    const buildPath = __dirname + "/../../build/";
 
     app.use(express.static(buildPath));
     app.use(express.static(buildPath + "static"));

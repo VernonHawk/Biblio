@@ -5,8 +5,7 @@ const jwt = require("jsonwebtoken");
 const STD_TOKEN_AGE = 60 * 60; //seconds
 
 function createJWToken(props) {
-    let payload = typeof props === "object" ? 
-                  props : {};
+    let payload = typeof props === "object" ? props : {};
 
     if (!payload.maxAge || typeof payload.maxAge !== "number") {
         payload.maxAge = STD_TOKEN_AGE;

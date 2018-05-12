@@ -12,7 +12,8 @@
  * 
  * @returns {Promise.<Object, Error>} promise of json data
  */
-function request({ url, method = "GET", data = {}, acceptCodes = [], errorMsg = "Error occured" }) {
+function request({ url, method = "GET", data = {}, 
+                   acceptCodes = [], errorMsg = "Error occured" }) {
     const options = {
         method,
         headers : {

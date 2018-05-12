@@ -14,7 +14,7 @@ function connect() {
     mongoose.connect(process.env.DB_CONNECTION_STRING, OPTIONS)
         .then(
             () => console.log("Connected to MongoDB"),
-            (err) => {
+            err => {
                 console.error(`Connection error: ${err}`);
 
                 process.exit(1);

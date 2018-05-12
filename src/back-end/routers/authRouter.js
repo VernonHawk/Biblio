@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require("express");
-const crypto = require("crypto");
+const crypto  = require("crypto");
 
 const { getByEmail, save } = require("../DAL/UserDAL");
 const { getJWToken } = require("../common/tokens");
@@ -13,6 +13,8 @@ const router = express.Router();
 router.post("/signin", (req, res) => {
     const { email, pass } = req.body;
 
+    const lowerEmail = email.toLowerCase();
+
     let error = {};
 
     if (!email || !pass) {
@@ -21,7 +23,7 @@ router.post("/signin", (req, res) => {
         return res.status(400).json({ error });
     }
 
-    getByEmail(email)
+    getByEmail(lowerEmail)
         .then( user => {
             if (!user) {
                 error = { cause: "email", message: "No user found with such email" };
@@ -43,7 +45,7 @@ router.post("/signin", (req, res) => {
             }
         })
         .catch( err => {
-            if (err.name === "PropError") {
+            if (err instanceof PropError) {
                 error = { cause: err.cause, message: err.message };
 
                 return res.status(400).json({ error });
@@ -59,6 +61,7 @@ router.post("/signup", (req, res) => {
     const { username, email, pass } = req.body;
 
     const trimUsername = username.trim();
+    const lowerEmail   = email.toLowerCase();
 
     let error = {};
 
@@ -69,7 +72,7 @@ router.post("/signup", (req, res) => {
     }
 
     if (!trimUsername) {
-        error = { cause: "username", message: "Username can't consist only of whitespaces" };
+        error = { cause: "username", message: "Username can't consist only of whitespace" };
 
         return res.status(400).json({ error });
     }
@@ -89,7 +92,7 @@ router.post("/signup", (req, res) => {
         return res.status(400).json({ error });
     }
 
-    getByEmail(email)
+    getByEmail(lowerEmail)
         .then( user => {
             if (user) {
                 error = { cause: "email", message: "This email is already taken" };
@@ -106,7 +109,8 @@ router.post("/signup", (req, res) => {
 
             const newUser = {
                 username: trimUsername, 
-                email, salt, pass: hash
+                email: lowerEmail, 
+                salt, pass: hash
             };
 
             return save(newUser);
@@ -115,7 +119,7 @@ router.post("/signup", (req, res) => {
             res.status(200).json({ token: getJWToken(user._id) });
         })
         .catch( err => {
-            if (err.name === "PropError") {
+            if (err instanceof PropError) {
                 error = { cause: err.cause, message: err.message };
 
                 return res.status(400).json({ error });
