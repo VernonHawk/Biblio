@@ -7,13 +7,15 @@ import Content from "./Content/Content";
 
 const propTypes = {
     userId:  PropTypes.string.isRequired,
-    onAlert: PropTypes.func.isRequired
+
+    onAlert:   PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class Body extends React.Component {
 
     render() {
-        const { userId, onAlert } = this.props;
+        const { userId, onAlert, onSignOut } = this.props;
 
         return (
             <Row className="h-100">
@@ -21,7 +23,11 @@ class Body extends React.Component {
                     <Menu />
                 </Col>
                 <Col xs="9">
-                    <Content userId={userId} onAlert={onAlert} />
+                    <Content
+                        userId={ userId }
+                        onAlert={ onAlert }
+                        onSignOut={ onSignOut }
+                    />
                 </Col>
             </Row>
         );

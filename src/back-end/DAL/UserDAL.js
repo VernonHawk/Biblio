@@ -29,8 +29,8 @@ const getByEmail = email => User.findOne({ email });
  * 
  * @param {Object} params User attributes
  * @param {String} params.email Email
- * @param {String} params.pass Password hash
- * @param {String} params.salt Salt
+ * @param {String} params.pass  Password hash
+ * @param {String} params.salt  Salt
  * 
  * @returns {Promise.<User, Error>} promise of user
  */

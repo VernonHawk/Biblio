@@ -7,11 +7,14 @@ import FolderModal   from "./FolderModal/FolderModal";
 
 const propTypes = {
     itemsSelected: PropTypes.bool.isRequired,
+    folderId:      PropTypes.string.isRequired,
 
-    onNewFolder:      PropTypes.func,
-    onNewReference:   PropTypes.func,
-    onStarSelected:   PropTypes.func,
-    onDeleteSelected: PropTypes.func,
+    onStarSelected:   PropTypes.func.isRequired,
+    onDeleteSelected: PropTypes.func.isRequired,
+    onDataUpdate:     PropTypes.func.isRequired,
+
+    onAlert:   PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class Sidebar extends React.Component {
@@ -21,44 +24,45 @@ class Sidebar extends React.Component {
         referenceModal: false
     }
 
-    onNewFolder = data => {
-        console.log("f", data);
-    }
-
-    onNewReference = () => {
-        console.log("r");
-    }
-
-    onDeleteSelected = () => {
-        console.log("d");
-    }
-
     toggleModal = modalName => {
         this.setState( prevState => ({ [modalName]: !prevState[modalName] }) );
     }
 
     render() {
-        const menu = this.props.itemsSelected ? 
+        const { itemsSelected, folderId, 
+                onDeleteSelected, onStarSelected, 
+                onDataUpdate, 
+                onSignOut, onAlert } = this.props;
+
+        const toggleFolderModal = () => this.toggleModal("folderModal");
+        const toggleReferenceModal = () => this.toggleModal("referenceModal");
+
+        const menu = itemsSelected ? 
             ( 
             <Fragment>
-                <SidebarButton onClick={ this.props.onStarSelected }>Star selected</SidebarButton>
-                <SidebarButton onClick={ this.onDeleteSelected }>Delete selected</SidebarButton>
+                <SidebarButton onClick={ onStarSelected }>Star selected</SidebarButton>
+                <SidebarButton onClick={ onDeleteSelected }>Delete selected</SidebarButton>
             </Fragment>
             ) :
             (  
             <Fragment>
-                <SidebarButton onClick={ () => this.toggleModal("folderModal") }>New folder</SidebarButton>
-                <SidebarButton onClick={ this.onNewReference }>New reference</SidebarButton>
+                <SidebarButton onClick={ toggleFolderModal }>New folder</SidebarButton>
+                <SidebarButton onClick={ () => console.log("new ref") }>New reference</SidebarButton>
             </Fragment>
             );
 
         return (
             <div className="pt-5">
                 { menu }
-                <FolderModal 
-                    isOpen={ this.state.folderModal } 
-                    toggle={ this.toggleModal } 
-                    onSubmit={ this.onNewFolder }
+                <FolderModal
+                    folderId={ folderId }
+
+                    isOpen={ this.state.folderModal }
+                    toggle={ toggleFolderModal }
+                    onDataUpdate={ onDataUpdate }
+
+                    onSignOut={ onSignOut }
+                    onAlert={ onAlert }
                 />
             </div>
         );

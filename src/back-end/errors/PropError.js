@@ -1,11 +1,10 @@
 class PropError extends Error {
-    
     constructor({ cause, message }) {
-      super(message);
+        super(message);
 
-      this.name = "PropError";
-      this.cause = cause;
+        this.name = "PropError";
+        this.cause = cause;
     }
-  }
+}
 
 module.exports = exports = PropError;

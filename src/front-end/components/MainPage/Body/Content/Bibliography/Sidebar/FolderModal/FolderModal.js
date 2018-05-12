@@ -7,12 +7,22 @@ import {
 
 import GenericForm from "components/GenericForm/GenericForm";
 
+import fetcher from "fetcher";
+
+import errors from "assets/errorMessages.json";
+import alerts from "components/GlobalAlert/alert-types.json";
 import params from "./params-folder.json";
 
 const propTypes = {
+    folderId: PropTypes.string.isRequired,
+
     isOpen:   PropTypes.bool.isRequired,
     toggle:   PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
+
+    onDataUpdate: PropTypes.func.isRequired,
+
+    onAlert:   PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class FolderModal extends React.Component {
@@ -22,18 +32,49 @@ class FolderModal extends React.Component {
         name: ""
     }
 
-    toggle = () => this.props.toggle("folderModal");
+    toggle = () => this.props.toggle();
 
-    onSubmit = data => {
-        const { newState, valid } = this.getStateAfterValidation(data);
+    onSubmit = form => {
+        const { newState, valid } = this.getStateAfterValidation(form);
 
         this.setState(newState);
         
         if (valid) {
-            // TODO: make request
-            // TODO: update state if invalid
-            // TODO: pass new data to Bibliography component
-            this.props.onSubmit(data);
+            const { folderId, onAlert, onDataUpdate, onSignOut } = this.props;
+
+            const acceptCodes = [400, 403];
+            const errorMsg = errors.ADD_FOLDER;
+
+            const data = { name: form.name, folderId: folderId };
+            
+            return fetcher.post({ url: "/folder", data, acceptCodes, errorMsg })
+                .then( json => { // error || folder
+                    const error = json.error;
+                    
+                    if (error) {
+                        if (error.cause === "token") {
+                            onSignOut();
+    
+                            onAlert({ type: alerts.WARNING, msg: errors.TOKEN_EXPIRED });
+                        } else {
+                            this.setState({ [error.cause]: error.message });
+                        }
+                    } else {
+                        const { folder, token } = json;
+
+                        localStorage.setItem("token", token);
+
+                        onAlert({ type: alerts.SUCCESS, 
+                                  msg: `Folder ${folder.name} was successfuly created` });
+                        
+                        this.toggle();
+
+                        onDataUpdate();
+                    }
+                })
+                .catch( err => {
+                    onAlert({ type: alerts.DANGER, msg: err.message });
+                });
         }
     }
 
@@ -56,13 +97,13 @@ class FolderModal extends React.Component {
         const { isOpen } = this.props;
         
         return (
-            <Modal isOpen={isOpen} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>New folder</ModalHeader>
+            <Modal isOpen={isOpen} toggle={ this.toggle }>
+                <ModalHeader toggle={ this.toggle }>New folder</ModalHeader>
                 <ModalBody>
                     <GenericForm 
-                        params={params}
-                        onSubmit={this.onSubmit}
-                        errors={this.state}
+                        params={ params }
+                        onSubmit={ this.onSubmit }
+                        errors={ this.state }
                     >
                         <ModalFooter className="p-0 pt-3">
                             <Button color="success">Save</Button>

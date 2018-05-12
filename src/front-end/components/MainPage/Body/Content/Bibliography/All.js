@@ -14,13 +14,15 @@ const propTypes = {
 
     userId:  PropTypes.string.isRequired,
     
-    onAlert: PropTypes.func.isRequired
+    onAlert:   PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class All extends React.Component {
 
     state = {
-        data: []
+        data:     [],
+        folderId: this.props.userId
     }
 
     static getDerivedStateFromProps(nextProps) {
@@ -93,6 +95,11 @@ class All extends React.Component {
         this.setState({ data: newData });
     }
 
+    onDataUpdate = () => {
+        //TODO: make server request
+        console.log("data update");
+    }
+
     onItemStar = item => {
         //TODO: make server request
         console.log("star", item);
@@ -118,8 +125,9 @@ class All extends React.Component {
     }
 
     render() {
-        const data = this.state.data;
+        const { data, folderId } = this.state;
 
+        // TODO: change to amount of items, not bool
         const itemsSelected = data.some( el => el.isSelected );
 
         return (
@@ -131,17 +139,25 @@ class All extends React.Component {
                     <hr />
                     <Items 
                         data={ data }
+
                         onItemSelect={ this.onItemSelect }
                         onItemStar={ this.onItemStar }
                         onItemDrop={ this.onItemDrop }
+                        
                         onAlert={ this.props.onAlert }
                     />
                 </Col>
                 <Col xs="3">
                     <Sidebar 
                         itemsSelected={ itemsSelected }
-                        onStarSelected={ this.onStarSelected}
-                        onDeleteSelected={ this.onDeleteSelected}
+                        folderId={ folderId }
+
+                        onStarSelected={ this.onStarSelected }
+                        onDeleteSelected={ this.onDeleteSelected }
+                        onDataUpdate={ this.onDataUpdate }
+
+                        onSignOut={ this.props.onSignOut }
+                        onAlert={ this.props.onAlert }
                     />
                 </Col>
             </Row>

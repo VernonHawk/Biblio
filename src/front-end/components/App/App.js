@@ -31,17 +31,19 @@ class App extends React.Component {
         this.setState({ isAuthenticated: false });
     }
 
-    onAlert = ({ type, msg }) => {
-        this.setState({ alert: { type, msg }});
+    onAlert = props => {
+        this.setState({ alert: props });
     }
 
     render() {
-        return this.state.isAuthenticated === null ? 
+        const { isAuthenticated, alert } = this.state;
+
+        return isAuthenticated === null ? 
             <Loader /> :
         (
             <BrowserRouter>
                 <Container fluid id="container-app">
-                    <GlobalAlert alert={ this.state.alert } />
+                    <GlobalAlert alert={ alert } onAlert={ this.onAlert } />
                     <Switch>
                         <Route
                             path="/a"
@@ -55,7 +57,7 @@ class App extends React.Component {
                         />
                         <PrivateRoute
                             path="/"
-                            isAuthenticated={ this.state.isAuthenticated }
+                            isAuthenticated={ isAuthenticated }
                             render={ props =>
                                 <MainPage
                                     {...props}

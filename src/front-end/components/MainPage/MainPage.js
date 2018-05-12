@@ -64,14 +64,15 @@ class MainPage extends React.Component {
             <Loader /> :
         (
             <Fragment>
-                <Header 
+                <Header
                     username={ username }
-                    onSearch={ this.onSearch } 
-                    onSignOut={ this.props.onSignOut } 
+                    onSearch={ this.onSearch }
+                    onSignOut={ this.props.onSignOut }
                 />
                 <Body 
-                    userId={ id } 
-                    onAlert={ this.props.onAlert } 
+                    userId={ id }
+                    onAlert={ this.props.onAlert }
+                    onSignOut={ this.props.onSignOut }
                 />
             </Fragment>
         );

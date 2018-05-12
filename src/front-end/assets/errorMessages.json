@@ -1,7 +1,10 @@
 {
     "SIGN_IN": "A problem occured while trying to sign you in. Sorry for this, try again later, please",
     "SIGN_UP": "A problem occured while trying to sign you up. Sorry for this, try again later, please",
+
     "LOAD_DATA": "A problem occured while trying to load your data. Sorry for this, try again later, please",
+
+    "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
 
     "TOKEN_EXPIRED": "Your session expired. Authorize again, please"
 }

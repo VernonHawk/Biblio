@@ -4,11 +4,15 @@ import PropTypes from "prop-types";
 
 import alerts from "./alert-types.json";
 
+import "./GlobalAlert.css";
+
 const propTypes = {
     alert: PropTypes.shape({
         type: PropTypes.oneOf(Object.values(alerts)).isRequired,
         msg:  PropTypes.string.isRequired
-    })
+    }),
+
+    onAlert: PropTypes.func.isRequired
 };
 
 class GlobalAlert extends React.PureComponent {
@@ -38,19 +42,19 @@ class GlobalAlert extends React.PureComponent {
     dismiss = () => {
         clearTimeout(this.dismissTimer);
 
-        this.setState({ visible: false });
+        this.props.onAlert(null);
     }
-
+    
     render() {
         const newAlert = this.props.alert;
 
         if (newAlert) {
             return (
-                <Row className="justify-content-center fixed-top">
-                    <Alert 
-                        className="w-25 mt-3" 
+                <Row className="justify-content-center fixed-top alert-container">
+                    <Alert
+                        className="w-25 mt-3"
                         color={ newAlert.type }
-                        isOpen={ this.state.visible } 
+                        isOpen={ this.state.visible }
                         toggle={ this.dismiss }
                     > 
                         { newAlert.msg }

@@ -12,32 +12,42 @@ import NotFound from "components/Misc/NotFound";
 
 const propTypes = {
     userId:  PropTypes.string.isRequired,
-    onAlert: PropTypes.func.isRequired
+
+    onAlert:   PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class Bibliography extends React.Component {
 
     render() {
-        const { userId, onAlert } = this.props;
+        const { userId, onAlert, onSignOut } = this.props;
 
         return (
             <DragDropContextProvider backend={ Backend }>
                 <Switch>
                     <Route exact path="/recent"  
                            render={ props => 
-                               <Recent {...props} userId={userId} onAlert={onAlert} /> } 
+                               <Recent {...props} userId={userId} 
+                                       onAlert={onAlert} onSignOut={ onSignOut } 
+                                /> } 
                     />
                     <Route exact path="/starred" 
                            render={ props => 
-                               <Starred {...props} userId={userId} onAlert={onAlert} /> } 
+                               <Starred {...props} userId={userId} 
+                                        onAlert={onAlert} onSignOut={ onSignOut } 
+                                /> } 
                     />
                     <Route exact path="/archive" 
                            render={ props => 
-                               <Archive {...props} userId={userId} onAlert={onAlert} /> } 
+                               <Archive {...props} userId={userId} 
+                                        onAlert={onAlert} onSignOut={ onSignOut } 
+                                /> } 
                     />
                     <Route exact path="/:folder?" 
                            render={ props => 
-                               <All {...props} userId={userId} onAlert={onAlert} /> } 
+                               <All {...props} userId={userId} 
+                                    onAlert={onAlert} onSignOut={ onSignOut } 
+                                /> } 
                     />
                     <Route component={ NotFound } />
                 </Switch>

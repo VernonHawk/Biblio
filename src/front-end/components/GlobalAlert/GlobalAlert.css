@@ -1,0 +1,7 @@
+.alert-container {
+    pointer-events: none;
+}
+
+.alert-container > .alert {
+    pointer-events: all;
+}

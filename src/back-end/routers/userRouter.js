@@ -6,22 +6,28 @@ const { getById } = require("../DAL/UserDAL");
 
 const { getJWToken, decodeRequestToken } = require("../common/tokens");
 
+const TokenError = require("../errors/TokenError");
+
 const router = express.Router();
 
 router.get("/user", (req, res) => {
     let error = {};
 
     decodeRequestToken(req)
-        .then( decodedToken => getById(decodedToken.data) )
-        .then( ({ _id, username }) => {
-            res.status(200).json({
-                id: _id, username,
-                token: getJWToken(_id)
-            });
-        })
         .catch( err => {
-            if (err.name === "TokenExpiredError") {
-                error = { cause: "token", message: err.message };
+            error = { cause: "token", message: err.message };
+
+            throw new TokenError(error);
+        })
+        .then( ({ data }) => getById(data) )
+        .then( ({ _id, username }) => 
+            res.status(200).json({
+                id: _id, username, token: getJWToken(_id)
+            })
+        )
+        .catch( err => {
+            if (err instanceof TokenError) {
+                error = { cause: err.cause, message: err.message };
 
                 return res.status(403).json({ error });
             }

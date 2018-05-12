@@ -5,7 +5,8 @@ import { Row, Col, Button, Form, Input } from "reactstrap";
 import ParamRow from "./ParamRow";
 
 const propTypes = {
-    onAlert: PropTypes.func.isRequired
+    onAlert: PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 };
 
 class Profile extends React.Component {

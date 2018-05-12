@@ -6,14 +6,12 @@ const crypto  = require("crypto");
 const { getByEmail, save } = require("../DAL/UserDAL");
 const { getJWToken } = require("../common/tokens");
 
-const PropError = require("../common/PropError");
+const PropError = require("../errors/PropError");
 
 const router = express.Router();
 
 router.post("/signin", (req, res) => {
     const { email, pass } = req.body;
-
-    const lowerEmail = email.toLowerCase();
 
     let error = {};
 
@@ -22,6 +20,8 @@ router.post("/signin", (req, res) => {
 
         return res.status(400).json({ error });
     }
+
+    const lowerEmail = email.toLowerCase();
 
     getByEmail(lowerEmail)
         .then( user => {
@@ -60,9 +60,6 @@ router.post("/signin", (req, res) => {
 router.post("/signup", (req, res) => {
     const { username, email, pass } = req.body;
 
-    const trimUsername = username.trim();
-    const lowerEmail   = email.toLowerCase();
-
     let error = {};
 
     if (!username || !email || !pass) {
@@ -70,6 +67,9 @@ router.post("/signup", (req, res) => {
 
         return res.status(400).json({ error });
     }
+
+    const trimUsername = username.trim();
+    const lowerEmail   = email.toLowerCase();
 
     if (!trimUsername) {
         error = { cause: "username", message: "Username can't consist only of whitespace" };
@@ -115,9 +115,9 @@ router.post("/signup", (req, res) => {
 
             return save(newUser);
         })
-        .then( user => {
-            res.status(200).json({ token: getJWToken(user._id) });
-        })
+        .then( user =>
+            res.status(200).json({ token: getJWToken(user._id) })
+        )
         .catch( err => {
             if (err instanceof PropError) {
                 error = { cause: err.cause, message: err.message };
