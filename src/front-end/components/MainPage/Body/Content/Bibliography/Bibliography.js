@@ -4,11 +4,11 @@ import { Switch, Route } from "react-router-dom";
 import { DragDropContextProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
-import All     from "./All";
+import All     from "./All/All";
 import Recent  from "./Recent";
 import Starred from "./Starred";
 import Archive from "./Archive";
-import NotFound from "components/Misc/NotFound";
+import NotFound from "components/Common/NotFound";
 
 const propTypes = {
     userId:  PropTypes.string.isRequired,

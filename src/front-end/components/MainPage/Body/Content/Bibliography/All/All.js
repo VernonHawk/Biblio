@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
 //import { Switch, Route } from "react-router-dom";
 
-import Items   from "./Items/Items";
-import Sidebar from "./Sidebar/Sidebar";
+import Items   from "../Items/Items";
+import Sidebar from "../Sidebar/Sidebar";
 
 const propTypes = {
     // Injected by router

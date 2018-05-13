@@ -4,7 +4,7 @@ import {
     InputGroup, InputGroupAddon, Input, Button
 } from "reactstrap";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 
 import "./Search.css";
 

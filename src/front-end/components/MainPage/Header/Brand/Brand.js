@@ -2,7 +2,7 @@ import React from "react";
 import { Row } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 
 import "./Brand.css";
 import { book } from "assets/icons.json";

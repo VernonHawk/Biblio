@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 
 import AuthPage     from "components/AuthPage/AuthPage";
 import MainPage     from "components/MainPage/MainPage";
-import PrivateRoute from "components/Misc/PrivateRoute";
+import PrivateRoute from "components/Common/PrivateRoute";
 import GlobalAlert  from "components/GlobalAlert/GlobalAlert";
 import Loader       from "components/Loader/Loader";
 

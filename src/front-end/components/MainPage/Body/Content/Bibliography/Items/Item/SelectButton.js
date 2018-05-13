@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 
 import "./SelectButton.css";
 

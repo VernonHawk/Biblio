@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 
 import "./ProfileMenu.css";
 

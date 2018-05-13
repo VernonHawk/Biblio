@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 
 const propTypes = {
     path: PropTypes.string.isRequired,

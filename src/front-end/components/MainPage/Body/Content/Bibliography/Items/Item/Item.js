@@ -4,7 +4,7 @@ import { DragSource } from "react-dnd";
 
 import { ITEM } from "assets/itemTypes.json";
 
-import Svg from "components/Misc/Svg";
+import Svg from "components/Common/Svg";
 import SelectButton from "./SelectButton";
 import StarButton   from "./StarButton";
 
