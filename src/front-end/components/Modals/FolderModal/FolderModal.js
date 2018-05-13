@@ -82,7 +82,7 @@ class FolderModal extends React.Component {
         let valid = true;
         
         if (!name.trim()) {
-            newState.name = "Folder name can't consist only of whitespaces";
+            newState.name = "Folder name can't be empty or consist only of whitespaces";
             valid = false;
         }
 

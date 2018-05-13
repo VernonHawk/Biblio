@@ -20,7 +20,7 @@ const folderSchema = mongoose.Schema({
         required: [ true, "Folder name required" ],
         trim: true,
         maxlength: 100,
-        validate: { validator: validateName, message: "Folder name can't consist only of whitespace" }
+        validate: { validator: validateName, message: "Folder name can't be empty or consist only of whitespace" }
     },
     lastModified: {
         type: Date,

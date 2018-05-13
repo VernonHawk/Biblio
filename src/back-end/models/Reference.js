@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-const { validateId, validateName, validateArray } = require("./validator");
+const { validateId, validateName, validateAuthors, validateYear } = require("./validator");
 
 const referenceSchema = mongoose.Schema({
     // general info
@@ -35,15 +35,16 @@ const referenceSchema = mongoose.Schema({
         required: [ true, "Reference name required" ],
         trim: true,
         maxlength: 100,
-        validate: { validator: validateName, message: "Reference name can't consist only of whitespace" }
+        validate: { validator: validateName, message: "Reference name can't be empty or consist only of whitespace" }
     },
     authors: {
         type: [{
             type: String,
+            trim: true,
             maxlength: 100,
-            validate: { validator: validateName, message: "Author's name can't consist only of whitespace" }
+            validate: { validator: validateName, message: "Author's name can't be empty or consist only of whitespace" }
         }],
-        validate: { validator: validateArray, message: "Authors array is too long" }
+        validate: { validator: validateAuthors, message: "Authors array is too long" }
     },
     publisher: {
         type: String,
@@ -59,22 +60,33 @@ const referenceSchema = mongoose.Schema({
     },
     year: {
         type: Number,
-        max: [ new Date().getFullYear, "Publishing year can't be later than current year" ]
+        validate: { validator: validateYear, message: "Publishing year can't be later than current year" }
+    },
+    edition: {
+        type: String,
+        default: "",
+        trim: true,
+        maxlength: 100
     },
     startPage: {
         type: Number,
         min: [ 0, "Start page number can't be less than 0" ],
-        max: [
-        function () {
-            return this.endPage;
-        }, "Start page number can't be higher than end page" ]
+        validate: { 
+            validator: function (val) {
+                return this.endPage ? val <= this.endPage : val <= 10000;
+            }, 
+            message: "Start page number can't be higher than end page" 
+        }
     },
     endPage: {
         type: Number,
-        min: [
-        function () {
-            return this.startPage;
-        }, "End page number can't be lower than start page" ]
+        min: [ 0, "End page number can't be less than 0" ],
+        validate: { 
+            validator: function (val) {
+                return this.startPage ? val >= this.startPage : val <= 10000;
+            }, 
+            message: "End page number can't be lower than start page" 
+        }
     },
     text: {
         type: String,

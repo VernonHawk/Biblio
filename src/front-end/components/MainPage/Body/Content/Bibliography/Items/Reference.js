@@ -1,5 +1,4 @@
 import React from "react";
-import {  } from "reactstrap";
 import PropTypes from "prop-types";
 
 import { REFERENCE } from "assets/itemTypes.json";

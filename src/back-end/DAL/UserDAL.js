@@ -5,9 +5,9 @@ const User = require("../models/User");
  * 
  * @async
  * 
- * @param {String} id User id
+ * @param {String} id Id
  * 
- * @returns {Promise.<User, Error>} promise of user
+ * @returns {Promise.<User, Error>} Promise of user
  */
 const getById = id => User.findById(id);
 
@@ -16,9 +16,9 @@ const getById = id => User.findById(id);
  * 
  * @async
  * 
- * @param {String} email User email
+ * @param {String} email Email
  * 
- * @returns {Promise.<User, Error>} promise of user
+ * @returns {Promise.<User, Error>} Promise of user
  */
 const getByEmail = email => User.findOne({ email });
 
@@ -32,7 +32,7 @@ const getByEmail = email => User.findOne({ email });
  * @param {String} params.pass  Password hash
  * @param {String} params.salt  Salt
  * 
- * @returns {Promise.<User, Error>} promise of user
+ * @returns {Promise.<User, Error>} Promise of user
  */
 const save = params => new User(params).save();
 

@@ -69,7 +69,7 @@ class SignUp extends React.Component {
         function validateName() {
             return new Promise( resolve => {
                 if (!username.trim()) {
-                    newState.username = "Username can't consist only of whitespaces";
+                    newState.username = "Username can't be empty or consist only of whitespaces";
 
                     return resolve(false);
                 }

@@ -4,9 +4,10 @@ const express    = require("express");
 const bodyParser = require("body-parser");
 const helmet     = require("helmet");
 
-const authRouter   = require("./routers/authRouter");
-const userRouter   = require("./routers/userRouter");
-const folderRouter = require("./routers/folderRouter");
+const authRouter      = require("./routers/authRouter");
+const userRouter      = require("./routers/userRouter");
+const folderRouter    = require("./routers/folderRouter");
+const referenceRouter = require("./routers/referenceRouter");
 
 const app = express();
 
@@ -20,6 +21,7 @@ function mapRoutes() {
     app.use("/", authRouter);
     app.use("/", userRouter);
     app.use("/folder", folderRouter);
+    app.use("/reference", referenceRouter);
 }
 
 function startServer() {

@@ -1,0 +1,85 @@
+[
+    {
+        "label": "Name",
+        "id": "name",
+        "type": "text",
+        "placeholder": "Fahrenheit 451",
+        "maxLength": 50,
+        "size": "40",
+        "required": true
+    },
+    {
+        "label": "Authors",
+        "id": "authors",
+        "type": "text",
+        "placeholder": "Rey Douglas Bradbury, Joseph Mugnaini",
+        "maxLength": 100,
+        "size": "40",
+        "help": "Enter authors' names, separated by coma"
+    },
+    {
+        "label": "Publisher",
+        "id": "publisher",
+        "type": "text",
+        "placeholder": "Simon & Schuster",
+        "maxLength": 50,
+        "size": "40"
+    },
+    {
+        "label": "City",
+        "id": "city",
+        "type": "text",
+        "placeholder": "New York",
+        "maxLength": 50,
+        "size": "40"
+    },
+    {
+        "label": "Year",
+        "id": "year",
+        "type": "number",
+        "placeholder": "2003",
+        "max": 2019,
+        "size": "20"
+    },
+    {
+        "label": "Edition",
+        "id": "edition",
+        "type": "text",
+        "placeholder": "Fiction : Juvenile audience : English",
+        "maxLength": 50,
+        "size": "40"
+    },
+    {
+        "label": "Start page",
+        "id": "startPage",
+        "type": "number",
+        "placeholder": "65",
+        "min": 0,
+        "max": 10000,
+        "size": "10"
+    },
+    {
+        "label": "End page",
+        "id": "endPage",
+        "type": "number",
+        "placeholder": "66",
+        "min": 0,
+        "max": 10000,
+        "size": "10"
+    },
+    {
+        "label": "Text",
+        "id": "text",
+        "type": "textarea",
+        "placeholder": "A cool glass of fresh milk, and a few apples and pears laid at the foot of the steps. This was all he wanted now. Some sign that the immense world would accept him and give him the long time needed to think all the things that must be thought.",
+        "maxLength": 200
+    },
+    {
+        "label": "Link",
+        "id": "link",
+        "type": "text",
+        "placeholder": "https://sitewithbooks/lib/AbCd123/fahrenheit-451.pdf",
+        "maxLength": 100,
+        "size": "40"
+    }
+]

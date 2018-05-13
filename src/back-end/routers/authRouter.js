@@ -72,7 +72,7 @@ router.post("/signup", (req, res) => {
     const lowerEmail   = email.toLowerCase();
 
     if (!trimUsername) {
-        error = { cause: "username", message: "Username can't consist only of whitespace" };
+        error = { cause: "username", message: "Username can't be empty or consist only of whitespace" };
 
         return res.status(400).json({ error });
     }

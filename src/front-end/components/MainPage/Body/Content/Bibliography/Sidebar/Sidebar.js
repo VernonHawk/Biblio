@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import {  } from "reactstrap";
 
-import SidebarButton from "./SidebarButton";
-import FolderModal   from "./FolderModal/FolderModal";
+import FolderModal    from "components/Modals/FolderModal/FolderModal";
+import ReferenceModal from "components/Modals/ReferenceModal/ReferenceModal";
+
+import SidebarButton  from "./SidebarButton";
 
 const propTypes = {
     itemsSelected: PropTypes.bool.isRequired,
@@ -29,12 +30,11 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const { itemsSelected, folderId, 
+        const { itemsSelected, 
                 onDeleteSelected, onStarSelected, 
-                onDataUpdate, 
-                onSignOut, onAlert } = this.props;
+                ...rest } = this.props;
 
-        const toggleFolderModal = () => this.toggleModal("folderModal");
+        const toggleFolderModal    = () => this.toggleModal("folderModal");
         const toggleReferenceModal = () => this.toggleModal("referenceModal");
 
         const menu = itemsSelected ? 
@@ -46,8 +46,8 @@ class Sidebar extends React.Component {
             ) :
             (  
             <Fragment>
+                <SidebarButton onClick={ toggleReferenceModal }>New reference</SidebarButton>
                 <SidebarButton onClick={ toggleFolderModal }>New folder</SidebarButton>
-                <SidebarButton onClick={ () => console.log("new ref") }>New reference</SidebarButton>
             </Fragment>
             );
 
@@ -55,14 +55,16 @@ class Sidebar extends React.Component {
             <div className="pt-5">
                 { menu }
                 <FolderModal
-                    folderId={ folderId }
-
                     isOpen={ this.state.folderModal }
                     toggle={ toggleFolderModal }
-                    onDataUpdate={ onDataUpdate }
 
-                    onSignOut={ onSignOut }
-                    onAlert={ onAlert }
+                    {...rest}
+                />
+                <ReferenceModal
+                    isOpen={ this.state.referenceModal }
+                    toggle={ toggleReferenceModal }
+
+                    {...rest}
                 />
             </div>
         );

@@ -5,9 +5,9 @@ const Folder = require("../models/Folder");
  * 
  * @async
  * 
- * @param {String} id Folder id
+ * @param {String} id Id
  * 
- * @returns {Promise.<Folder, Error>} promise of folder
+ * @returns {Promise.<Folder, Error>} Promise of folder
  */
 const getById = id => Folder.findById(id);
 
@@ -21,7 +21,7 @@ const getById = id => Folder.findById(id);
  * @param {String} params.parentId Parent folder Id
  * @param {String} params.userId   User Id
  * 
- * @returns {Promise.<Folder, Error>} promise of folder
+ * @returns {Promise.<Folder, Error>} Promise of folder
  */
 const save = params => new Folder(params).save();
 

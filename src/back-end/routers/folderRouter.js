@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
     const trimName = name.trim();
 
     if (!trimName) {
-        error = { cause: "name", message: "Folder name can't consist only of whitespace" };
+        error = { cause: "name", message: "Folder name can't be empty or consist only of whitespace" };
 
         return res.status(400).json({ error });
     }
