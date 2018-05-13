@@ -8,12 +8,17 @@ const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: [ true, "Username required" ],
+        trim: true,
+        maxlength: 100,
         validate: { validator: validateName, message: "Username can't consist only of whitespace" }
     },
     email: {
         type: String, 
         required: [ true, "Email required" ],
         unique: true,
+        lowercase: true,
+        trim: true,
+        maxlength: 100,
         validate: { validator: validateEmail, message: "Email can't consist only of whitespace" }
     },
     pass: {

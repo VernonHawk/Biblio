@@ -52,7 +52,7 @@ class GlobalAlert extends React.PureComponent {
             return (
                 <Row className="justify-content-center fixed-top alert-container">
                     <Alert
-                        className="w-25 mt-3"
+                        className="mt-3 text-justify"
                         color={ newAlert.type }
                         isOpen={ this.state.visible }
                         toggle={ this.dismiss }

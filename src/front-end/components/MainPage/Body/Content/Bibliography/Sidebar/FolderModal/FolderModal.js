@@ -42,30 +42,26 @@ class FolderModal extends React.Component {
         if (valid) {
             const { folderId, onAlert, onDataUpdate, onSignOut } = this.props;
 
-            const acceptCodes = [400, 403];
+            const acceptCodes = [403];
             const errorMsg = errors.ADD_FOLDER;
 
-            const data = { name: form.name, folderId: folderId };
+            const data = { name: form.name, folderId };
             
             return fetcher.post({ url: "/folder", data, acceptCodes, errorMsg })
-                .then( json => { // error || folder
+                .then( json => { // error || { name, token }
                     const error = json.error;
                     
                     if (error) {
-                        if (error.cause === "token") {
-                            onSignOut();
-    
-                            onAlert({ type: alerts.WARNING, msg: errors.TOKEN_EXPIRED });
-                        } else {
-                            this.setState({ [error.cause]: error.message });
-                        }
+                        onSignOut();
+
+                        onAlert({ type: alerts.WARNING, msg: errors.TOKEN_EXPIRED });
                     } else {
-                        const { folder, token } = json;
+                        const { name, token } = json;
 
                         localStorage.setItem("token", token);
 
                         onAlert({ type: alerts.SUCCESS, 
-                                  msg: `Folder ${folder.name} was successfuly created` });
+                                  msg: `Folder ${name} was successfuly created` });
                         
                         this.toggle();
 

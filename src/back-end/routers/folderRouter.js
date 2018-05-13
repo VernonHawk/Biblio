@@ -59,8 +59,8 @@ router.post("/", (req, res) => {
                 name: trimName
             });
         })
-        .then( folder => 
-            res.status(200).json({ folder, token: getJWToken(folder.userId) })
+        .then( ({ name, userId }) => 
+            res.status(200).json({ name, token: getJWToken(userId) })
         )
         .catch( err => {
             if (err instanceof TokenError) {

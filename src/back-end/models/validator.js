@@ -6,11 +6,11 @@ const validateName = name => Promise.resolve( Boolean(name.trim()) );
 
 const validateEmail = email => Promise.resolve( Boolean(email.trim()) );
 
-const validateDate = date => Promise.resolve( Boolean(date.getTime() <= new Date().getTime()) );
+const validateArray = arr => Promise.resolve( Boolean(arr.length <= 20) );
 
 module.exports = exports = {
     validateId,
     validateName,
     validateEmail,
-    validateDate
+    validateArray
 };

@@ -20,8 +20,8 @@ function SelectButton({ isSelected, ...rest }) {
     }
 
     const checkIcon = {
-        width: 14,
-        height: 14,
+        width:  13,
+        height: 12,
         path: check
     };
 
