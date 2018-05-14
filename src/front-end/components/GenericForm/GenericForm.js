@@ -9,11 +9,13 @@ const propTypes = {
         id:   PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired,
         help: PropTypes.string
     })),
+    values: PropTypes.object,
     errors: PropTypes.objectOf(PropTypes.string)
 };
 
 const defaultProps = {
     params: [],
+    values: {},
     errors: {}
 };
 
@@ -25,7 +27,7 @@ class GenericForm extends React.Component {
         this.state = {};
 
         for (const { id } of props.params) {
-            this.state[id] = "";
+            this.state[id] = props.values[id] || "";
         }
     }
 

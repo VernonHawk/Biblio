@@ -61,6 +61,7 @@ class Sidebar extends React.Component {
                     {...rest}
                 />
                 <ReferenceModal
+                    isEditing={ false }
                     isOpen={ this.state.referenceModal }
                     toggle={ toggleReferenceModal }
 

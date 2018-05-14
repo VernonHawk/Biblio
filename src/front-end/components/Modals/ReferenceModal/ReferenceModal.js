@@ -18,15 +18,22 @@ import alerts from "components/GlobalAlert/alert-types.json";
 import params from "./params-reference.json";
 
 const propTypes = {
+    id:       PropTypes.string,
     folderId: PropTypes.string.isRequired,
+    values:   PropTypes.object,
 
-    isOpen:   PropTypes.bool.isRequired,
-    toggle:   PropTypes.func.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    isOpen:    PropTypes.bool.isRequired,
+    toggle:    PropTypes.func.isRequired,
 
     onDataUpdate: PropTypes.func.isRequired,
 
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
+};
+
+const defaultProps = {
+    values: {}
 };
 
 class Reference extends React.Component {
@@ -48,7 +55,7 @@ class Reference extends React.Component {
     toggle = () => this.props.toggle();
 
     onSubmit = ({ authors, startPage, endPage, year, ...rest }) => {
-        const reference = { authors: parseAuthors(authors), 
+        const reference = { authors: parseAuthors(authors.toString()), 
                             ...parseNumbers({ startPage, endPage, year }),
                             ...rest };
 
@@ -57,14 +64,25 @@ class Reference extends React.Component {
                 this.setState(newState);
 
                 if (valid) {
-                    const { folderId, onAlert, onDataUpdate, onSignOut } = this.props;
+                    const { 
+                        id, folderId, isEditing, 
+                        onAlert, onDataUpdate, onSignOut
+                    } = this.props;
 
                     const acceptCodes = [403];
                     const errorMsg = errors.ADD_REFERENCE;
 
-                    const data = { ...reference, folderId };
-                    
-                    return fetcher.post({ url: "/reference", data, acceptCodes, errorMsg })
+                    let data = { ...reference, folderId };
+                    let method = fetcher.post;
+                    let action = "created";
+
+                    if (isEditing) {
+                        data.id = id;
+                        method =  fetcher.patch;
+                        action =  "updated";
+                    }
+
+                    return method({ url: "/reference", data, acceptCodes, errorMsg })
                         .then( json => { // error || { name, token }
                             const error = json.error;
                             
@@ -77,8 +95,10 @@ class Reference extends React.Component {
 
                                 localStorage.setItem("token", token);
 
-                                onAlert({ type: alerts.SUCCESS, 
-                                        msg: `Reference ${name} was successfuly created` });
+                                onAlert({ 
+                                    type: alerts.SUCCESS, 
+                                    msg: `Reference ${name} was successfuly ${action}` 
+                                });
                                 
                                 this.toggle();
 
@@ -93,16 +113,19 @@ class Reference extends React.Component {
     }
 
     render() {
-        const { isOpen } = this.props;
+        const { isOpen, isEditing, values } = this.props;
         
         return (
             <Modal isOpen={isOpen} toggle={ this.toggle }>
-                <ModalHeader toggle={ this.toggle }>New reference</ModalHeader>
+                <ModalHeader toggle={ this.toggle }>
+                    { isEditing ? values.name : "New reference" }
+                </ModalHeader>
                 <ModalBody>
                     <GenericForm 
                         params={ params }
                         onSubmit={ this.onSubmit }
                         errors={ this.state }
+                        values={ values }
                     >
                         <ModalFooter className="p-0 pt-3">
                             <Button color="success">Save</Button>
@@ -115,6 +138,7 @@ class Reference extends React.Component {
     }
 }
 
-Reference.propTypes = propTypes;
+Reference.propTypes    = propTypes;
+Reference.defaultProps = defaultProps;
 
 export default Reference;

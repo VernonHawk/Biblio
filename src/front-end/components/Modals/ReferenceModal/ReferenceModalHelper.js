@@ -101,7 +101,9 @@ function getStateAfterValidation({ name, year, startPage, endPage, authors, ...r
         .then( results => ({ newState, valid: results.every(res => res) }) );
 }
 
-const parseAuthors = authorsString => authorsString ? authorsString.split(",").map( el => el.trim() ) : [];
+const parseAuthors = authorsString => authorsString ? 
+                                      authorsString.split(",").map( el => el.trim() ) : 
+                                      [];
 
 function parseNumbers(numbers) {
     const nums = {};

@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
     const reference = { name: trimName, 
                         ...parseNumbers({ startPage, endPage, year }),
                         ...rest };
-
+    
     validateReference(reference)
         .then( ({ err, valid }) => {
             if (!valid) {

@@ -118,7 +118,9 @@ class All extends React.PureComponent {
                             onItemSelect={ this.onItemSelect }
                             onItemStar={ this.onItemStar }
                             onItemDrop={ this.onItemDrop }
+                            onDataUpdate={ this.updateStateWithData }
                             
+                            onSignOut={ this.props.onSignOut }
                             onAlert={ this.props.onAlert }
                         />
                     }
