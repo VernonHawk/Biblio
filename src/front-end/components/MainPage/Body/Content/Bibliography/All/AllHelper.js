@@ -28,9 +28,29 @@ function fetchData({ folderId, onSignOut }) {
         });
 }
 
+function updateItem({ data, errorMsg, itemType, onSignOut }) {
+    const acceptCodes = [403];
+    
+    return fetcher.patch({ url: `/${itemType}`, data, acceptCodes, errorMsg })
+        .then( json => { // error || { token }
+            const error = json.error;
+            
+            if (error) {
+                onSignOut();
+
+                throw new Error(errors.TOKEN_EXPIRED);
+            } else {
+                localStorage.setItem("token", json.token);
+                
+                return Promise.resolve();
+            }
+        });
+}
+
 const getSelected = data => data.filter( el => el.isSelected );
 
 export {
     fetchData,
-    getSelected
+    getSelected,
+    updateItem
 };

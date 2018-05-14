@@ -55,7 +55,7 @@ router.post("/", (req, res) => {
 
             return Folder.save({
                 userId,
-                parentId: folder._id,
+                folderId: folder._id,
                 name: trimName
             });
         })
@@ -74,6 +74,61 @@ router.post("/", (req, res) => {
             }
 
             error = { cause: "folder", message: "Couldn't add new folder" };
+
+            return res.status(500).json({ error });
+        });
+});
+
+router.patch("/", (req, res) => {
+    const { id, ...rest } = req.body;
+
+    let error = {};
+
+    if (!id) {
+        error = { cause: "update folder", message: "Not all obligatory arguments were specified" };
+
+        return res.status(400).json({ error });
+    }
+
+    if (rest.name && !name.trim()) {   
+        error = { cause: "name", message: "Folder name can't be empty or consist only of whitespace" };
+        
+        return res.status(400).json({ error });
+    }
+
+    decodeRequestToken(req)
+        .catch( err => {
+            error = { cause: "token", message: err.message };
+
+            throw new TokenError(error);
+        })
+        .then( () => Folder.getById(id) )
+        .then( folder => {
+            if (!folder) {
+                error = { cause: "id", message: "No folder found with such id" };
+
+                throw new PropError(error);
+            }
+
+            folder.set(rest);
+
+            return folder.save();
+        })
+        .then( ({ userId }) =>
+            res.status(200).json({ token: getJWToken(userId) })
+        )
+        .catch( err => {
+            if (err instanceof TokenError) {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(403).json({ error });
+            } else if (err instanceof PropError) {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(400).json({ error });
+            }
+
+            error = { cause: "folder", message: "Couldn't update the folder" };
 
             return res.status(500).json({ error });
         });

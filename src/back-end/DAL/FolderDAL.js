@@ -16,11 +16,11 @@ const getById = id => Folder.findById(id);
  * 
  * @async
  * 
- * @param {String} parentId Parent Folder Id
+ * @param {String} folderId Parent Folder Id
  * 
  * @returns {Promise.<Folder[], Error>} Promise of folders
  */
-const getManyByParentId = parentId => Folder.find({ parentId }).lean().sort({ name: 1 });
+const getManyByParentId = folderId => Folder.find({ folderId }).lean().sort({ name: 1 });
 
 /**
  * Save Folder
@@ -29,7 +29,7 @@ const getManyByParentId = parentId => Folder.find({ parentId }).lean().sort({ na
  * 
  * @param {Object} params Folder attributes
  * @param {String} params.name     Name
- * @param {String} params.parentId Parent folder Id
+ * @param {String} params.folderId Parent folder Id
  * @param {String} params.userId   User Id
  * 
  * @returns {Promise.<Folder, Error>} Promise of folder

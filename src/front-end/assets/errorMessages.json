@@ -5,6 +5,7 @@
     "LOAD_DATA": "A problem occured while trying to load your data. Sorry for this, try again later, please",
     "FOLDER_NOT_FOUND": "We couldn't find this folder, sorry. Try opening the folder manually",
 
+    "MOVE_ITEM": "A problem occured while trying to move item to the folder. Sorry for this, try again later, please",
     "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
     "ADD_REFERENCE": "A problem occured while trying to add new reference. Sorry for this, try again later, please",
 

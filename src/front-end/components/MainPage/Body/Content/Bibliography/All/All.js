@@ -6,8 +6,9 @@ import Items   from "../Items/Items";
 import Sidebar from "../Sidebar/Sidebar";
 import Loader from "components/Loader/Loader";
 
-import { fetchData, getSelected } from "./AllHelper";
+import { fetchData, updateItem, getSelected } from "./AllHelper";
 
+import errors from "assets/errorMessages.json";
 import alerts from "components/GlobalAlert/alert-types.json";
 
 const propTypes = {
@@ -48,7 +49,7 @@ class All extends React.PureComponent {
             
         let folderId = (match && match.params.folder) || userId;
         
-        fetchData({ folderId, onSignOut })
+        return fetchData({ folderId, onSignOut })
             .then( fetched => {
                 const data = fetched.map( item => ({ ...item, isSelected: false }) );
 
@@ -74,9 +75,12 @@ class All extends React.PureComponent {
         console.log("star", item);
     }
 
-    onItemDrop = res => {
-        //TODO: make server request
-        console.log("drop", res);
+    onItemDrop = ({ itemId, targetId, itemType }) => { // itemId, targetId, itemType
+        const data = { id: itemId, folderId: targetId };
+        const errorMsg = errors.MOVE_ITEM;
+
+        updateItem({ data, errorMsg, itemType, onSignOut: this.props.onSignOut })
+            .then(this.updateStateWithData);
     }
 
     onStarSelected = () => {

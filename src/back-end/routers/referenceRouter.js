@@ -85,12 +85,68 @@ router.post("/", (req, res) => {
         });
 });
 
+router.patch("/", (req, res) => {
+    const { id, ...rest } = req.body;
+
+    let error = {};
+
+    if (!id) {
+        error = { cause: "update folder", message: "Not all obligatory arguments were specified" };
+
+        return res.status(400).json({ error });
+    }
+
+    validateReference(rest)
+        .then( ({ err, valid }) => {
+            if (!valid) {
+                throw new PropError(err);
+            } else {
+                return decodeRequestToken(req)
+                    .catch( err => {
+                        error = { cause: "token", message: err.message };
+            
+                        throw new TokenError(error);
+                    });
+            }
+        })
+        .then( () => Reference.getById(id) )
+        .then( reference => {
+            if (!reference) {
+                error = { cause: "id", message: "No reference found with such id" };
+
+                throw new PropError(error);
+            }
+
+            reference.set(rest);
+
+            return reference.save();
+        })
+        .then( ({ userId }) =>
+            res.status(200).json({ token: getJWToken(userId) })
+        )
+        .catch( err => {
+            if (err instanceof TokenError) {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(403).json({ error });
+            } else if (err instanceof PropError) {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(400).json({ error });
+            }
+            
+            error = { cause: "reference", message: "Couldn't update the reference" };
+
+            return res.status(500).json({ error });
+        });
+});
+
 function validateReference({ name, year, startPage, endPage, authors, ...rest }) {
     let err = {};
 
     function validName() {
         return new Promise( resolve => {
-            if (!name.trim()) {
+            if (name && !name.trim()) {
                 err = { cause: "name", message: "Reference name can't be empty or consist only of whitespace" };
 
                 return resolve(false);
@@ -120,7 +176,7 @@ function validateReference({ name, year, startPage, endPage, authors, ...rest })
 
     function validYear() {
         return new Promise( resolve => {
-            if (startPage !== undefined && (year > new Date().getFullYear())) {
+            if (year !== undefined && (year > new Date().getFullYear())) {
                 err = { cause: "year", message: "Publishing year can't be later than current year" };
 
                 return resolve(false);
@@ -160,12 +216,16 @@ function validateReference({ name, year, startPage, endPage, authors, ...rest })
 
     function validTextLength() {
         return new Promise( resolve => {
-            const textFields = { ...rest, name };
+            const textFields = name ? 
+                  { ...rest, name } : 
+                  { ...rest };
 
             for (const el in textFields) {
                 if (textFields[el].length > 200) {
-                    err = { cause: el, 
-                              message: `${el[0].toUpperCase() + el.slice(1)} field can't be longer than 200 characters` };
+                    err = { 
+                        cause: el,
+                        message: `${el[0].toUpperCase() + el.slice(1)} field can't be longer than 200 characters`
+                    };
 
                     return resolve(false);
                 }

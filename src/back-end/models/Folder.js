@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const { validateId, validateName } = require("./validator");
 
 const folderSchema = mongoose.Schema({
-    parentId: {
+    folderId: {
         type: String,
         required: [ true, "Parent folder Id required" ],
         validate: { validator: validateId, message: "Parent folder Id is incorrect" }
