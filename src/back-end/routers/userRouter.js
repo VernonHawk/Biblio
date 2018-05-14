@@ -10,7 +10,7 @@ const TokenError = require("../errors/TokenError");
 
 const router = express.Router();
 
-router.get("/user", (req, res) => {
+router.get("/", (req, res) => {
     let error = {};
 
     decodeRequestToken(req)

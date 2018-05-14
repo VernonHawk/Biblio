@@ -23,7 +23,7 @@ class Items extends React.Component {
     render() {
         const { data, onItemSelect, onItemStar, onItemDrop } = this.props;
 
-        const items = data.map( ({ id, type, ...rest }) => {
+        const items = data.map( ({ _id, type, ...rest }) => {
             let Component;
 
             switch (type) {
@@ -39,9 +39,9 @@ class Items extends React.Component {
             }
 
             return (
-                <Col xs="3" key={id}>
+                <Col xs="3" key={_id}>
                     <Component
-                        id={id} {...rest}
+                        id={_id} {...rest}
                         onSelect={ onItemSelect } onStar={ onItemStar }
                         onDrop={ onItemDrop }
                     />

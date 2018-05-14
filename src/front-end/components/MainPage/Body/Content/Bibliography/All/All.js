@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
-//import { Switch, Route } from "react-router-dom";
 
 import Items   from "../Items/Items";
 import Sidebar from "../Sidebar/Sidebar";
+import Loader from "components/Loader/Loader";
+
+import { fetchData, getSelected } from "./AllHelper";
+
+import alerts from "components/GlobalAlert/alert-types.json";
 
 const propTypes = {
     // Injected by router
@@ -18,86 +22,51 @@ const propTypes = {
     onSignOut: PropTypes.func.isRequired
 };
 
-class All extends React.Component {
+class All extends React.PureComponent {
 
     state = {
-        data:     [],
+        data:     null,
         folderId: this.props.userId
     }
 
-    static getDerivedStateFromProps(nextProps) {
-        let fetched = [];
+    componentDidMount() {
+        this.updateStateWithData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.folder !== prevProps.match.params.folder) {
+            
+            this.props.history.push(prevProps.location.pathname);
+            this.props.history.push(this.props.location.pathname);
+            
+            this.updateStateWithData();
+        }
+    }
+
+    updateStateWithData = () => {
+        const { match, userId, onAlert, onSignOut } = this.props;
+            
+        let folderId = (match && match.params.folder) || userId;
         
-        //TODO: fetch data from server based on nextProps.match.params.folder for userId
-        fetched = [
-            { 
-                id: "0",
-                name: "Very long-long name to display",
-                type: "folder",
-                isStarred:  false
-            },
-            { 
-                id: "1",
-                name: "Very long-long name to display",
-                type: "folder",
-                isStarred:  true
-            },
-            { 
-                id: "2",
-                name: "Very long-long name to display",
-                type: "folder",
-                isStarred:  true
-            },
-            { 
-                id: "3",
-                name: "Very long-long name to display",
-                type: "folder",
-                isStarred:  false
-            },
-            { 
-                id: "4",
-                name: "Very long-long name to display",
-                type: "reference",
-                isStarred:  false
-            },
-            { 
-                id: "5",
-                name: "Very long-long name to display",
-                type: "reference",
-                isStarred:  true
-            },
-            { 
-                id: "6",
-                name: "Very long-long name to display",
-                type: "reference",
-                isStarred:  true
-            },
-            { 
-                id: "7",
-                name: "Very long-long name to display",
-                type: "reference",
-                isStarred:  false
-            },
-        ];
+        fetchData({ folderId, onSignOut })
+            .then( fetched => {
+                const data = fetched.map( item => ({ ...item, isSelected: false }) );
 
-        const data = fetched.map( item => ({ ...item, isSelected: false }) );
-
-        return { data };
+                this.setState({ data, folderId });
+            })
+            .catch( err => {
+                onAlert({ type: alerts.DANGER, msg: err.message });
+            });
     }
 
     onItemSelect = id => {
         const newData = this.state.data.slice();
 
-        const index = newData.findIndex( el => el.id === id );
+        const index = newData.findIndex( el => el._id === id );
         
         newData[index].isSelected = !newData[index].isSelected;
 
         this.setState({ data: newData });
-    }
-
-    onDataUpdate = () => {
-        //TODO: make server request
-        console.log("data update");
     }
 
     onItemStar = item => {
@@ -111,14 +80,14 @@ class All extends React.Component {
     }
 
     onStarSelected = () => {
-        const selected = this.state.data.filter( el => el.isSelected );
+        const selected = getSelected(this.state.data);
 
         //TODO: send request
         console.log("star", selected);
     }
 
     onDeleteSelected = () => {
-        const selected = this.state.data.filter( el => el.isSelected );
+        const selected = getSelected(this.state.data);
 
         //TODO: send request
         console.log("delete", selected);
@@ -128,7 +97,7 @@ class All extends React.Component {
         const { data, folderId } = this.state;
 
         // TODO: change to amount of items, not bool
-        const itemsSelected = data.some( el => el.isSelected );
+        const itemsSelected = data ? data.some( el => el.isSelected ) : false;
 
         return (
             <Row>
@@ -137,15 +106,18 @@ class All extends React.Component {
                         <BreadcrumbItem active>Home</BreadcrumbItem>
                     </Breadcrumb>
                     <hr />
-                    <Items 
-                        data={ data }
+                    { data === null ? 
+                        <Loader /> :
+                        <Items 
+                            data={ data }
 
-                        onItemSelect={ this.onItemSelect }
-                        onItemStar={ this.onItemStar }
-                        onItemDrop={ this.onItemDrop }
-                        
-                        onAlert={ this.props.onAlert }
-                    />
+                            onItemSelect={ this.onItemSelect }
+                            onItemStar={ this.onItemStar }
+                            onItemDrop={ this.onItemDrop }
+                            
+                            onAlert={ this.props.onAlert }
+                        />
+                    }
                 </Col>
                 <Col xs="3">
                     <Sidebar 
@@ -154,7 +126,7 @@ class All extends React.Component {
 
                         onStarSelected={ this.onStarSelected }
                         onDeleteSelected={ this.onDeleteSelected }
-                        onDataUpdate={ this.onDataUpdate }
+                        onDataUpdate={ this.updateStateWithData }
 
                         onSignOut={ this.props.onSignOut }
                         onAlert={ this.props.onAlert }

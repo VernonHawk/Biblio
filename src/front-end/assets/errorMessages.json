@@ -3,6 +3,7 @@
     "SIGN_UP": "A problem occured while trying to sign you up. Sorry for this, try again later, please",
 
     "LOAD_DATA": "A problem occured while trying to load your data. Sorry for this, try again later, please",
+    "FOLDER_NOT_FOUND": "We couldn't find this folder, sorry. Try opening the folder manually",
 
     "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
     "ADD_REFERENCE": "A problem occured while trying to add new reference. Sorry for this, try again later, please",

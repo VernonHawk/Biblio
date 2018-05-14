@@ -58,10 +58,6 @@ class Folder extends React.Component {
             path:   folder
         };
 
-        if (this.state.open) {
-            return <Redirect to={ id } />;
-        }
-
         return connectDropTarget(
             <div>
                 <Item
@@ -73,6 +69,7 @@ class Folder extends React.Component {
                     icon={icon}
                     style={{ fill: "#ecb10fee" }}
                 />
+                { this.state.open && <Redirect to={ id } /> }
             </div>
         );
     }

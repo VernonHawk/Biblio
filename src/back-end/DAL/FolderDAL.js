@@ -12,6 +12,17 @@ const Folder = require("../models/Folder");
 const getById = id => Folder.findById(id);
 
 /**
+ * Get Folders by Parent Folder Id
+ * 
+ * @async
+ * 
+ * @param {String} parentId Parent Folder Id
+ * 
+ * @returns {Promise.<Folder[], Error>} Promise of folders
+ */
+const getManyByParentId = parentId => Folder.find({ parentId }).lean().sort({ name: 1 });
+
+/**
  * Save Folder
  * 
  * @async
@@ -27,5 +38,6 @@ const save = params => new Folder(params).save();
 
 module.exports = {
     getById,
+    getManyByParentId,
     save
 };

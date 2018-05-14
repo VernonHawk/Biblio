@@ -12,6 +12,17 @@ const Reference = require("../models/Reference");
 const getById = id => Reference.findById(id);
 
 /**
+ * Get References by FolderId
+ * 
+ * @async
+ * 
+ * @param {String} folderId Folder Id
+ * 
+ * @returns {Promise.<Reference[], Error>} Promise of references
+ */
+const getManyByFolderId = folderId => Reference.find({ folderId }).lean().sort({ name: 1 });
+
+/**
  * Save Reference
  * 
  * @async
@@ -36,5 +47,6 @@ const save = params => new Reference(params).save();
 
 module.exports = {
     getById,
+    getManyByFolderId,
     save
 };
