@@ -95,7 +95,7 @@ router.patch("/", (req, res) => {
 
         return res.status(400).json({ error });
     }
-
+    
     validateReference(rest)
         .then( ({ err, valid }) => {
             if (!valid) {
@@ -121,8 +121,8 @@ router.patch("/", (req, res) => {
 
             return reference.save();
         })
-        .then( ({ userId }) =>
-            res.status(200).json({ token: getJWToken(userId) })
+        .then( ({ name, userId }) =>
+            res.status(200).json({ name, token: getJWToken(userId) })
         )
         .catch( err => {
             if (err instanceof TokenError) {

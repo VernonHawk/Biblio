@@ -80,13 +80,6 @@ class All extends React.PureComponent {
         updateItem({ data, errorMsg, itemType, onSignOut: this.props.onSignOut })
             .then(this.updateStateWithData);
     }
-    
-    onRenameSelected = () => {
-        const selected = getSelected(this.state.data);
-
-        //TODO: display modal ?
-        console.log("rename", selected);
-    }
 
     onItemStar = item => {
         const data = { items: [item], params: { isStarred: !item.isStarred } };
@@ -113,7 +106,7 @@ class All extends React.PureComponent {
         const selected = getSelected(this.state.data);
 
         const data = { items: selected, params: { isArchived: true } };
-        const errorMsg = errors.STAR_ITEMS;
+        const errorMsg = errors.ARCHIVE_ITEMS;
         
         updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
             .then(this.updateStateWithData)
@@ -123,7 +116,7 @@ class All extends React.PureComponent {
     render() {
         const { data, folderId } = this.state;
 
-        const selectedAmount = data ? data.filter( el => el.isSelected ).length : 0;
+        const selected = data ? getSelected(this.state.data) : [];
 
         return (
             <Row>
@@ -149,10 +142,9 @@ class All extends React.PureComponent {
                 </Col>
                 <Col xs="3">
                     <Sidebar 
-                        selectedAmount={ selectedAmount }
+                        selectedItems={ selected }
                         folderId={ folderId }
 
-                        onRenameSelected={ this.onRenameSelected }
                         onStarSelected={ this.onStarSelected }
                         onArchiveSelected={ this.onArchiveSelected }
                         onDataUpdate={ this.updateStateWithData }

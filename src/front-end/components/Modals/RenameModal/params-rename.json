@@ -3,7 +3,7 @@
         "label": "Name",
         "id": "name",
         "type": "text",
-        "placeholder": "My secret folder",
+        "placeholder": "New name",
         "maxLength": 50,
         "size": "40",
         "required": true

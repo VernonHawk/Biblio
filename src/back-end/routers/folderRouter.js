@@ -89,8 +89,8 @@ router.patch("/", (req, res) => {
 
         return res.status(400).json({ error });
     }
-
-    if (rest.name && !name.trim()) {   
+    
+    if (rest.name && !rest.name.trim()) {   
         error = { cause: "name", message: "Folder name can't be empty or consist only of whitespace" };
         
         return res.status(400).json({ error });
@@ -114,8 +114,8 @@ router.patch("/", (req, res) => {
 
             return folder.save();
         })
-        .then( ({ userId }) =>
-            res.status(200).json({ token: getJWToken(userId) })
+        .then( ({ name, userId }) =>
+            res.status(200).json({ name, token: getJWToken(userId) })
         )
         .catch( err => {
             if (err instanceof TokenError) {

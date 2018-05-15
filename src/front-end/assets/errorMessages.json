@@ -7,7 +7,10 @@
 
     "MOVE_ITEM": "A problem occured while trying to move item to the folder. Sorry for this, try again later, please",
     "STAR_ITEM":  "A problem occured while trying to star the item. Sorry for this, try again later, please",
+    "RENAME_ITEM": "A problem occured while trying to rename the item. Sorry for this, try again later, please",
+    
     "STAR_ITEMS": "A problem occured while trying to star selected items. Sorry for this, try staring them one by one",
+    "ARCHIVE_ITEMS": "A problem occured while trying to archive selected items. Sorry for this, try staring them one by one",
 
     "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
     "ADD_REFERENCE": "A problem occured while trying to add new reference. Sorry for this, try again later, please",
