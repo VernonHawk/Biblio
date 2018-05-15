@@ -32,11 +32,6 @@ router.post("/", (req, res) => {
     }
 
     decodeRequestToken(req)
-        .catch( err => {
-            error = { cause: "token", message: err.message };
-
-            throw new TokenError(error);
-        })
         .then( ({ data }) => {
             if (data === folderId) {
                 return User.getById(folderId);
@@ -97,11 +92,6 @@ router.patch("/", (req, res) => {
     }
 
     decodeRequestToken(req)
-        .catch( err => {
-            error = { cause: "token", message: err.message };
-
-            throw new TokenError(error);
-        })
         .then( () => Folder.getById(id) )
         .then( folder => {
             if (!folder) {

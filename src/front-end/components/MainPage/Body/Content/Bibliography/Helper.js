@@ -1,12 +1,13 @@
 import fetcher from "fetcher";
 
 import errors from "assets/errorMessages.json";
+import alerts from "components/GlobalAlert/alert-types.json";
 
-function fetchData({ folderId, onSignOut }) {
+function fetchData({ path, onSignOut, onAlert }) {
     const acceptCodes = [400, 403];
     const errorMsg = errors.LOAD_DATA;
     
-    return fetcher.get({ url: `/${folderId}`, acceptCodes, errorMsg })
+    return fetcher.get({ url: `/${path}`, acceptCodes, errorMsg })
         .then( json => { // error || { data, token }
             const error = json.error;
             
@@ -22,10 +23,13 @@ function fetchData({ folderId, onSignOut }) {
                 const { data, token } = json;
 
                 localStorage.setItem("token", token);
-                
-                return Promise.resolve(data);
+
+                const maped = data.map( item => ({ ...item, isSelected: false }) );
+
+                return Promise.resolve(maped);
             }
-        });
+        })
+        .catch( err => onAlert({ type: alerts.DANGER, msg: err.message }) );
 }
 
 function updateItems({ data, errorMsg, onSignOut }) {
@@ -47,10 +51,21 @@ function updateItems({ data, errorMsg, onSignOut }) {
         });
 }
 
+function getItemsAfterSelection({ id, data }) {
+    const newData = data.slice();
+
+    const index = newData.findIndex( el => el._id === id );
+    
+    newData[index].isSelected = !newData[index].isSelected;
+
+    return { data: newData };
+}
+
 const getSelected = data => data.filter( el => el.isSelected );
 
 export {
     fetchData,
     updateItems,
+    getItemsAfterSelection,
     getSelected
 };

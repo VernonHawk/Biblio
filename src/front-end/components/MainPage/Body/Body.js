@@ -12,26 +12,21 @@ const propTypes = {
     onSignOut: PropTypes.func.isRequired
 };
 
-class Body extends React.Component {
-
-    render() {
-        const { userId, onAlert, onSignOut } = this.props;
-
-        return (
-            <Row className="h-100">
-                <Col xs="3">
-                    <Menu />
-                </Col>
-                <Col xs="9">
-                    <Content
-                        userId={ userId }
-                        onAlert={ onAlert }
-                        onSignOut={ onSignOut }
-                    />
-                </Col>
-            </Row>
-        );
-    }
+function Body({ userId, onAlert, onSignOut }) {
+    return (
+        <Row className="h-100">
+            <Col xs="3">
+                <Menu />
+            </Col>
+            <Col xs="9">
+                <Content
+                    userId={ userId }
+                    onAlert={ onAlert }
+                    onSignOut={ onSignOut }
+                />
+            </Col>
+        </Row>
+    );
 }
 
 Body.propTypes = propTypes;

@@ -2,6 +2,8 @@
 
 const jwt = require("jsonwebtoken");
 
+const TokenError = require("../errors/TokenError");
+
 const STD_TOKEN_AGE = 60 * 60; //seconds
 
 function createJWToken(props) {
@@ -42,7 +44,12 @@ function verifyJWToken(token) {
 function decodeRequestToken(req) {
     const token = req.headers["authorization"] || req.body.token || req.query.token;
     
-    return verifyJWToken(token);
+    return verifyJWToken(token)
+        .catch( err => {
+            const error = { cause: "token", message: err.message };
+
+            throw new TokenError(error);
+        });
 }
 
 const getJWToken = data => createJWToken({ data, maxAge: STD_TOKEN_AGE });

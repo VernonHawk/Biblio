@@ -14,11 +14,6 @@ router.get("/", (req, res) => {
     let error = {};
 
     decodeRequestToken(req)
-        .catch( err => {
-            error = { cause: "token", message: err.message };
-
-            throw new TokenError(error);
-        })
         .then( ({ data }) => getById(data) )
         .then( ({ _id, username }) => 
             res.status(200).json({

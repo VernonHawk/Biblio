@@ -12,15 +12,17 @@ const Folder = require("../models/Folder");
 const getById = id => Folder.findById(id);
 
 /**
- * Get Folders by Parent Folder Id
+ * Get Folders by parameters with sort
  * 
  * @async
  * 
- * @param {String} folderId Parent Folder Id
+ * @param {Object} params Folder attributes
+ * @param {String} params.filters Paramters to filter data
+ * @param {String} params.sort    Sorting order
  * 
  * @returns {Promise.<Folder[], Error>} Promise of folders
  */
-const getNotArchivedByFolderId = folderId => Folder.find({ folderId, isArchived: false }).lean().sort({ name: 1 });
+const getByFiltersWithSort = ({ filters, sort = { name: 1 } }) => Folder.find(filters).lean().sort(sort);
 
 /**
  * Save Folder
@@ -51,7 +53,7 @@ const updateManyByIds = ({ ids, params }) => Folder.updateMany(params).where("_i
 
 module.exports = {
     getById,
-    getNotArchivedByFolderId,
+    getByFiltersWithSort,
     save,
     updateManyByIds
 };

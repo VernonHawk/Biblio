@@ -15,6 +15,53 @@ const { FOLDER, REFERENCE } = require("../assets/itemTypes.json");
 
 const router = express.Router();
 
+router.get("/recent", (req, res) => {
+    let error = {};
+    let userId = "";
+
+    decodeRequestToken(req)
+        .then( ({ data }) => {
+            userId = data;
+            
+            const lastWeek = Date.now() - 7 * 1000 * 60 * 60 * 24;
+
+            const filters = {
+                userId,
+                isArchived: false,
+                lastModified: { $gte: lastWeek }
+            };
+
+            const sort = {
+                lastModified: -1
+            };
+
+            const getFolders = () => Folder.getByFiltersWithSort({ filters, sort });
+            const getRefs = () => Reference.getByFiltersWithSort({ filters, sort });
+            
+            return Promise.all([ getFolders(), getRefs() ]);
+        })
+        .then( ([ folders, refs ]) => mapWithType({ folders, refs }) )
+        .then( ({ folders, references }) =>
+            res.status(200).json({ data: [...folders, ...references], 
+                                token: getJWToken(userId) })
+        )
+        .catch( err => {
+            if (err instanceof TokenError) {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(403).json({ error });
+            } else if (err instanceof PropError || err.name === "CastError") {
+                error = { cause: err.cause, message: err.message };
+
+                return res.status(400).json({ error });
+            }
+            
+            error = { cause: "recent", message: "Couldn't fetch recently modified items" };
+
+            return res.status(500).json({ error });
+        });
+});
+
 router.get("/:folderId", (req, res) => {
     const { folderId } = req.params;
 
@@ -22,11 +69,6 @@ router.get("/:folderId", (req, res) => {
     let userId = "";
 
     decodeRequestToken(req)
-        .catch( err => {
-            error = { cause: "token", message: err.message };
-
-            throw new TokenError(error);
-        })
         .then( ({ data }) => {
             userId = data;
 
@@ -42,19 +84,27 @@ router.get("/:folderId", (req, res) => {
 
                 throw new PropError(error);
             }
+
+            const filters = {
+                userId,
+                folderId: folder._id,
+                isArchived: false
+            };
+
+            const sort = {
+                name: 1
+            };
+
+            const getFolders = () => Folder.getByFiltersWithSort({ filters, sort });
+            const getRefs    = () => Reference.getByFiltersWithSort({ filters, sort });
             
-            const getRefs = () => Reference.getNotArchivedByFolderId(folder._id);
-            const getFolders = () => Folder.getNotArchivedByFolderId(folder._id);
-            
-            return Promise.all([ getRefs(), getFolders() ]);
+            return Promise.all([ getFolders(), getRefs() ]);
         })
-        .then( ([refs, folders]) => {
-            const typedFolders = folders.map( el => ({ ...el, type: FOLDER }) );
-            const typedRefs    = refs.map( el => ({ ...el, type: REFERENCE }) );
-            
-            res.status(200).json({ data: [...typedFolders, ...typedRefs], 
-                                   token: getJWToken(userId) });
-        })
+        .then( ([ folders, refs ]) => mapWithType({ folders, refs }) )
+        .then( ({ folders, references }) =>
+            res.status(200).json({ data: [...folders, ...references], 
+                                   token: getJWToken(userId) })
+        )
         .catch( err => {
             if (err instanceof TokenError) {
                 error = { cause: err.cause, message: err.message };
@@ -66,10 +116,17 @@ router.get("/:folderId", (req, res) => {
                 return res.status(400).json({ error });
             }
             
-            error = { cause: "biblio", message: "Couldn't fetch folder content" };
+            error = { cause: "all", message: "Couldn't fetch folder content" };
 
             return res.status(500).json({ error });
         });
 });
+
+function mapWithType({ refs, folders }) {
+    const typedFolders = folders.map( el => ({ ...el, type: FOLDER }) );
+    const typedRefs    = refs.map( el => ({ ...el, type: REFERENCE }) );
+
+    return Promise.resolve({ folders: typedFolders, references: typedRefs});
+}
 
 module.exports = exports = router;

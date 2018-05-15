@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
-import AllSidebar from "./AllSidebar";
+import RecentSidebar from "./RecentSidebar";
 
 import { 
     fetchData, updateItems, getSelected, getItemsAfterSelection
@@ -19,46 +19,29 @@ const propTypes = {
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,
-
-    userId:  PropTypes.string.isRequired,
     
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
 };
 
-class All extends React.PureComponent {
+class Recent extends React.PureComponent {
 
     state = {
-        data:     null,
-        folderId: this.props.userId
+        data: null
     }
 
     componentDidMount() {
         this.fetchDataState();
     }
 
-    componentDidUpdate(prevProps) {
-        const { match, history, location } = this.props;
-
-        if (match.params.folder !== prevProps.match.params.folder) {
-            
-            history.push(prevProps.location.pathname);
-            history.push(location.pathname);
-            
-            this.fetchDataState();
-        }
-    }
-
     onItemSelect = id =>
         this.setState( getItemsAfterSelection({ id, data: this.state.data }) );
 
     fetchDataState = () => {
-        const { match, userId, onAlert, onSignOut } = this.props;
-            
-        const folderId = (match && match.params.folder) || userId;
+        const { onAlert, onSignOut } = this.props;
 
-        return fetchData({ path: folderId, onSignOut, onAlert })
-            .then( data => this.setState({ data, folderId }) );
+        return fetchData({ path: "recent", onSignOut, onAlert })
+            .then( data => this.setState({ data }) );
     }
 
     onStarSelected = () => {
@@ -93,30 +76,28 @@ class All extends React.PureComponent {
     }
 
     render() {
-        const { data, folderId } = this.state;
+        const { data } = this.state;
 
         const selected = data ? getSelected(this.state.data) : [];
 
         return (
             <Row>
                 <Col xs="9">
-                    <Breadcrumb className="bg-white mb-0 p-0">
-                        <BreadcrumbItem active>Home</BreadcrumbItem>
-                    </Breadcrumb>
+                    <h3>Recent</h3>
                     <hr />
                     <ItemsContainer
                         data={ data }
                         updateData={ this.updateData }
                         onItemSelect={ this.onItemSelect }
                         onDataUpdate={ this.fetchDataState }
+
                         onSignOut={ this.props.onSignOut }
                         onAlert={ this.props.onAlert }
                     />
                 </Col>
                 <Col xs="3">
-                    <AllSidebar 
+                    <RecentSidebar 
                         selectedItems={ selected }
-                        folderId={ folderId }
 
                         onStarSelected={ this.onStarSelected }
                         onArchiveSelected={ this.onArchiveSelected }
@@ -131,6 +112,6 @@ class All extends React.PureComponent {
     }
 }
 
-All.propTypes = propTypes;
+Recent.propTypes = propTypes;
 
-export default All;
+export default Recent;

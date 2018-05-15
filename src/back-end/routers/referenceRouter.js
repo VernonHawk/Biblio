@@ -35,12 +35,7 @@ router.post("/", (req, res) => {
             if (!valid) {
                 throw new PropError(err);
             } else {
-                return decodeRequestToken(req)
-                    .catch( err => {
-                        error = { cause: "token", message: err.message };
-            
-                        throw new TokenError(error);
-                    });
+                return decodeRequestToken(req);
             }
         })
         .then( ({ data }) => {
@@ -101,12 +96,7 @@ router.patch("/", (req, res) => {
             if (!valid) {
                 throw new PropError(err);
             } else {
-                return decodeRequestToken(req)
-                    .catch( err => {
-                        error = { cause: "token", message: err.message };
-            
-                        throw new TokenError(error);
-                    });
+                return decodeRequestToken(req);
             }
         })
         .then( () => Reference.getById(id) )

@@ -12,15 +12,17 @@ const Reference = require("../models/Reference");
 const getById = id => Reference.findById(id);
 
 /**
- * Get References by FolderId
+ * Get References by parameters with sort
  * 
  * @async
  * 
- * @param {String} folderId Folder Id
+ * @param {Object} params Reference attributes
+ * @param {String} params.filters Paramters to filter data
+ * @param {String} params.sort    Sorting order
  * 
  * @returns {Promise.<Reference[], Error>} Promise of references
  */
-const getNotArchivedByFolderId = folderId => Reference.find({ folderId, isArchived: false }).lean().sort({ name: 1 });
+const getByFiltersWithSort = ({ filters, sort = { name: 1 } }) => Reference.find(filters).lean().sort(sort);
 
 /**
  * Save Reference
@@ -60,7 +62,7 @@ const updateManyByIds = ({ ids, params }) => Reference.updateMany(params).where(
 
 module.exports = {
     getById,
-    getNotArchivedByFolderId,
+    getByFiltersWithSort,
     save,
     updateManyByIds
 };

@@ -27,11 +27,6 @@ router.patch("/", (req, res) => {
     }
     
     decodeRequestToken(req)
-        .catch( err => {
-            error = { cause: "token", message: err.message };
-
-            throw new TokenError(error);
-        })
         .then( ({ data }) => {
             userId = data;
             
