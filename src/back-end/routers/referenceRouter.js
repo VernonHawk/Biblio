@@ -91,7 +91,7 @@ router.patch("/", (req, res) => {
     let error = {};
 
     if (!id) {
-        error = { cause: "update folder", message: "Not all obligatory arguments were specified" };
+        error = { cause: "update reference", message: "Not all obligatory arguments were specified" };
 
         return res.status(400).json({ error });
     }

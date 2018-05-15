@@ -7,7 +7,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Loader from "components/Loader/Loader";
 
 import { 
-    fetchData, updateItem, updateItems, getSelected 
+    fetchData, updateItems, getSelected 
 } from "./AllHelper";
 
 import errors  from "assets/errorMessages.json";
@@ -74,22 +74,18 @@ class All extends React.PureComponent {
     }
 
     onItemDrop = ({ itemId, targetId, itemType }) => { // itemId, targetId, itemType
-        const data = { id: itemId, folderId: targetId };
+        const data = [{ _id: itemId, folderId: targetId, type: itemType }];
         const errorMsg = errors.MOVE_ITEM;
         
-        updateItem({ data, errorMsg, itemType, onSignOut: this.props.onSignOut })
-            .then(this.updateStateWithData);
+        this.updateItemsAndState({ data, errorMsg, succMsg: success.ITEM_MOVED });
     }
 
     onItemStar = item => {
         const data = { items: [item], params: { isStarred: !item.isStarred } };
         const errorMsg = errors.STAR_ITEM;
-
-        const msg = item.isStarred ? success.ITEM_UNSTARRED : success.ITEM_STARRED;
+        const succMsg = item.isStarred ? success.ITEM_UNSTARRED : success.ITEM_STARRED;
         
-        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
-            .then(this.updateStateWithData)
-            .then(this.props.onAlert({ type: alerts.SUCCESS, msg }));
+        this.updateItemsAndState({ data, errorMsg, succMsg });
     }
 
     onStarSelected = () => {
@@ -97,20 +93,24 @@ class All extends React.PureComponent {
         const data = { items: selected, params: { isStarred: true } };
         const errorMsg = errors.STAR_ITEMS;
         
-        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
-            .then(this.updateStateWithData)
-            .then(this.props.onAlert({ type: alerts.SUCCESS, msg: success.ITEMS_STARRED }));
+        this.updateItemsAndState({ data, errorMsg, succMsg: success.ITEMS_STARRED });
     }
 
     onArchiveSelected = () => {
         const selected = getSelected(this.state.data);
-
-        const data = { items: selected, params: { isArchived: true } };
+        const data = { items: selected, params: { isArchived: true, isStarred: false } };
         const errorMsg = errors.ARCHIVE_ITEMS;
         
-        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
-            .then(this.updateStateWithData)
-            .then(this.props.onAlert({ type: alerts.SUCCESS, msg: success.ITEMS_ARCHIVED }));
+        this.updateItemsAndState({ data, errorMsg, succMsg: success.ITEMS_ARCHIVED });
+    }
+
+    updateItemsAndState = ({ data, errorMsg, succMsg }) => {
+        const { onSignOut, onAlert } = this.props;
+
+        updateItems({ data, errorMsg, onSignOut })
+            .then( this.updateStateWithData )
+            .then( onAlert({ type: alerts.SUCCESS, msg: succMsg }) )
+            .catch( err => onAlert({ type: alerts.DANGER, msg: err.message }) );
     }
 
     render() {

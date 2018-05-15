@@ -37,6 +37,23 @@ const folderSchema = mongoose.Schema({
     }
 });
 
+folderSchema.pre("save", function(next) {
+    this.lastModified = Date.now();
+    
+    next();
+});
+
+folderSchema.pre("update", function(next) {
+    this.update({}, { lastModified: Date.now() });
+    
+    next();
+});
+
+folderSchema.pre("updateMany", function(next) {
+    this.update({}, { lastModified: Date.now() });
+    
+    next();
+});
 const Folder = mongoose.model("Folder", folderSchema);
 
 module.exports = exports = Folder;

@@ -101,6 +101,24 @@ const referenceSchema = mongoose.Schema({
     }
 });
 
+referenceSchema.pre("save", function(next) {
+    this.lastModified = Date.now();
+    
+    next();
+});
+
+referenceSchema.pre("update", function(next) {
+    this.update({}, { lastModified: Date.now() });
+    
+    next();
+});
+
+referenceSchema.pre("updateMany", function(next) {
+    this.update({}, { lastModified: Date.now() });
+    
+    next();
+});
+
 const Reference = mongoose.model("Reference", referenceSchema);
 
 module.exports = exports = Reference;
