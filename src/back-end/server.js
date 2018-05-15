@@ -7,6 +7,7 @@ const helmet     = require("helmet");
 const authRouter      = require("./routers/authRouter");
 const userRouter      = require("./routers/userRouter");
 const biblioRouter    = require("./routers/biblioRouter");
+const itemsRouter     = require("./routers/itemsRouter");
 const folderRouter    = require("./routers/folderRouter");
 const referenceRouter = require("./routers/referenceRouter");
 
@@ -21,6 +22,7 @@ function mapRoutes() {
 
     app.use("/", authRouter);
     app.use("/user", userRouter);
+    app.use("/items", itemsRouter);
     app.use("/folder", folderRouter);
     app.use("/reference", referenceRouter);
     app.use("/", biblioRouter);

@@ -20,7 +20,7 @@ const getById = id => Reference.findById(id);
  * 
  * @returns {Promise.<Reference[], Error>} Promise of references
  */
-const getManyByFolderId = folderId => Reference.find({ folderId }).lean().sort({ name: 1 });
+const getNotArchivedByFolderId = folderId => Reference.find({ folderId, isArchived: false }).lean().sort({ name: 1 });
 
 /**
  * Save Reference
@@ -45,8 +45,22 @@ const getManyByFolderId = folderId => Reference.find({ folderId }).lean().sort({
  */
 const save = params => new Reference(params).save();
 
+/**
+ * Update many references by items ids
+ * 
+ * @async
+ * 
+ * @param {Object} params Reference attributes
+ * @param {String} params.ids    Ids of references to update
+ * @param {String} params.params Fields with new values
+ * 
+ * @returns {Promise.<Reference[], Error>} Promise of references
+ */
+const updateManyByIds = ({ ids, params }) => Reference.updateMany(params).where("_id").in(ids).exec();
+
 module.exports = {
     getById,
-    getManyByFolderId,
-    save
+    getNotArchivedByFolderId,
+    save,
+    updateManyByIds
 };

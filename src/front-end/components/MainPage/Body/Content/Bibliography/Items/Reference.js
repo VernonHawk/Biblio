@@ -51,7 +51,11 @@ class Reference extends React.Component {
         isModalOpen: false
     }
 
-    onStar = () => this.props.onStar({ type: REFERENCE, id: this.props.id });
+    onStar = () => {
+        const { id, isStarred, onStar } = this.props;
+
+        onStar({ type: REFERENCE, _id: id, isStarred });
+    }
 
     toggleModal = () => 
         this.setState( ({ isModalOpen }) => ({ isModalOpen: !isModalOpen }) );

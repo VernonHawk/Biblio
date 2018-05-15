@@ -12,11 +12,16 @@ import { ITEM } from "assets/itemTypes.json";
 import { folder } from "assets/icons.json";
 
 const propTypes = {
-    id:         PropTypes.string.isRequired,
-    name:       PropTypes.string.isRequired,
-    isSelected: PropTypes.bool.isRequired,
+    id:   PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    folderId: PropTypes.string.isRequired,
+    userId:   PropTypes.string.isRequired,
+    lastModified: PropTypes.string.isRequired,
     isStarred:  PropTypes.bool.isRequired,
+    isArchived: PropTypes.bool.isRequired,
 
+    isSelected: PropTypes.bool.isRequired,
+    
     onSelect: PropTypes.func.isRequired,
     onStar:   PropTypes.func.isRequired
 };
@@ -43,7 +48,11 @@ class Folder extends React.Component {
         open: false
     }
 
-    onStar = () => this.props.onStar({ type: FOLDER, id: this.props.id });
+    onStar = () => {
+        const { id, isStarred, onStar } = this.props;
+
+        onStar({ type: FOLDER, _id: id, isStarred });
+    }
 
     onOpen = () => this.setState({ open: true });
 

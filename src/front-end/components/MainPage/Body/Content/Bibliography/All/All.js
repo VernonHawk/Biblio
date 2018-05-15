@@ -6,10 +6,13 @@ import Items   from "../Items/Items";
 import Sidebar from "../Sidebar/Sidebar";
 import Loader from "components/Loader/Loader";
 
-import { fetchData, updateItem, getSelected } from "./AllHelper";
+import { 
+    fetchData, updateItem, updateItems, getSelected 
+} from "./AllHelper";
 
-import errors from "assets/errorMessages.json";
-import alerts from "components/GlobalAlert/alert-types.json";
+import errors  from "assets/errorMessages.json";
+import success from "assets/successMessages.json";
+import alerts  from "components/GlobalAlert/alert-types.json";
 
 const propTypes = {
     // Injected by router
@@ -70,38 +73,57 @@ class All extends React.PureComponent {
         this.setState({ data: newData });
     }
 
-    onItemStar = item => {
-        //TODO: make server request
-        console.log("star", item);
-    }
-
     onItemDrop = ({ itemId, targetId, itemType }) => { // itemId, targetId, itemType
         const data = { id: itemId, folderId: targetId };
         const errorMsg = errors.MOVE_ITEM;
-
+        
         updateItem({ data, errorMsg, itemType, onSignOut: this.props.onSignOut })
             .then(this.updateStateWithData);
+    }
+    
+    onRenameSelected = () => {
+        const selected = getSelected(this.state.data);
+
+        //TODO: display modal ?
+        console.log("rename", selected);
+    }
+
+    onItemStar = item => {
+        const data = { items: [item], params: { isStarred: !item.isStarred } };
+        const errorMsg = errors.STAR_ITEM;
+
+        const msg = item.isStarred ? success.ITEM_UNSTARRED : success.ITEM_STARRED;
+        
+        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
+            .then(this.updateStateWithData)
+            .then(this.props.onAlert({ type: alerts.SUCCESS, msg }));
     }
 
     onStarSelected = () => {
         const selected = getSelected(this.state.data);
-
-        //TODO: send request
-        console.log("star", selected);
+        const data = { items: selected, params: { isStarred: true } };
+        const errorMsg = errors.STAR_ITEMS;
+        
+        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
+            .then(this.updateStateWithData)
+            .then(this.props.onAlert({ type: alerts.SUCCESS, msg: success.ITEMS_STARRED }));
     }
 
-    onDeleteSelected = () => {
+    onArchiveSelected = () => {
         const selected = getSelected(this.state.data);
 
-        //TODO: send request
-        console.log("delete", selected);
+        const data = { items: selected, params: { isArchived: true } };
+        const errorMsg = errors.STAR_ITEMS;
+        
+        updateItems({ data, errorMsg, onSignOut: this.props.onSignOut })
+            .then(this.updateStateWithData)
+            .then(this.props.onAlert({ type: alerts.SUCCESS, msg: success.ITEMS_ARCHIVED }));
     }
 
     render() {
         const { data, folderId } = this.state;
 
-        // TODO: change to amount of items, not bool
-        const itemsSelected = data ? data.some( el => el.isSelected ) : false;
+        const selectedAmount = data ? data.filter( el => el.isSelected ).length : 0;
 
         return (
             <Row>
@@ -127,11 +149,12 @@ class All extends React.PureComponent {
                 </Col>
                 <Col xs="3">
                     <Sidebar 
-                        itemsSelected={ itemsSelected }
+                        selectedAmount={ selectedAmount }
                         folderId={ folderId }
 
+                        onRenameSelected={ this.onRenameSelected }
                         onStarSelected={ this.onStarSelected }
-                        onDeleteSelected={ this.onDeleteSelected }
+                        onArchiveSelected={ this.onArchiveSelected }
                         onDataUpdate={ this.updateStateWithData }
 
                         onSignOut={ this.props.onSignOut }

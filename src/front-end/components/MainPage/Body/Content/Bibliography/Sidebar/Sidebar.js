@@ -7,12 +7,13 @@ import ReferenceModal from "components/Modals/ReferenceModal/ReferenceModal";
 import SidebarButton  from "./SidebarButton";
 
 const propTypes = {
-    itemsSelected: PropTypes.bool.isRequired,
-    folderId:      PropTypes.string.isRequired,
+    selectedAmount: PropTypes.number.isRequired,
+    folderId:       PropTypes.string.isRequired,
 
-    onStarSelected:   PropTypes.func.isRequired,
-    onDeleteSelected: PropTypes.func.isRequired,
-    onDataUpdate:     PropTypes.func.isRequired,
+    onRenameSelected:  PropTypes.func.isRequired,
+    onStarSelected:    PropTypes.func.isRequired,
+    onArchiveSelected: PropTypes.func.isRequired,
+    onDataUpdate:      PropTypes.func.isRequired,
 
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
@@ -30,26 +31,46 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const { itemsSelected, 
-                onDeleteSelected, onStarSelected, 
+        const { selectedAmount, 
+                onRenameSelected, onArchiveSelected, onStarSelected, 
                 ...rest } = this.props;
 
         const toggleFolderModal    = () => this.toggleModal("folderModal");
         const toggleReferenceModal = () => this.toggleModal("referenceModal");
 
-        const menu = itemsSelected ? 
-            ( 
-            <Fragment>
-                <SidebarButton onClick={ onStarSelected }>Star selected</SidebarButton>
-                <SidebarButton onClick={ onDeleteSelected }>Delete selected</SidebarButton>
-            </Fragment>
-            ) :
-            (  
-            <Fragment>
+        let menu = null;
+
+        const zeroSelectedMenu = (
+            <Fragment key="zeroSelectedMenu">
                 <SidebarButton onClick={ toggleReferenceModal }>New reference</SidebarButton>
                 <SidebarButton onClick={ toggleFolderModal }>New folder</SidebarButton>
             </Fragment>
-            );
+        );
+
+        const oneSelectedMenu = (
+            <Fragment key="oneSelectedMenu">
+                <SidebarButton onClick={ onRenameSelected }>Rename</SidebarButton>
+            </Fragment>
+        );
+
+        const manySelectedMenu = (
+            <Fragment key="manySelectedMenu">
+                <SidebarButton onClick={ onStarSelected }>Star selected</SidebarButton>
+                <SidebarButton onClick={ onArchiveSelected }>Archive selected</SidebarButton>
+            </Fragment>
+        );
+
+        switch (selectedAmount) {
+            case 0:
+                menu = zeroSelectedMenu;
+                break;
+            case 1:
+                menu = [oneSelectedMenu, manySelectedMenu];
+                break;
+            default:
+                menu = manySelectedMenu;
+                break;
+        }
 
         return (
             <div className="pt-5">

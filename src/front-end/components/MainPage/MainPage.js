@@ -69,7 +69,7 @@ class MainPage extends React.Component {
                     onSearch={ this.onSearch }
                     onSignOut={ this.props.onSignOut }
                 />
-                <Body 
+                <Body
                     userId={ id }
                     onAlert={ this.props.onAlert }
                     onSignOut={ this.props.onSignOut }

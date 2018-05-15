@@ -20,7 +20,7 @@ const getById = id => Folder.findById(id);
  * 
  * @returns {Promise.<Folder[], Error>} Promise of folders
  */
-const getManyByParentId = folderId => Folder.find({ folderId }).lean().sort({ name: 1 });
+const getNotArchivedByFolderId = folderId => Folder.find({ folderId, isArchived: false }).lean().sort({ name: 1 });
 
 /**
  * Save Folder
@@ -36,8 +36,22 @@ const getManyByParentId = folderId => Folder.find({ folderId }).lean().sort({ na
  */
 const save = params => new Folder(params).save();
 
+/**
+ * Update many folders by items ids
+ * 
+ * @async
+ * 
+ * @param {Object} params Folder attributes
+ * @param {String} params.ids    Ids of folders to update
+ * @param {String} params.params Fields with new values
+ * 
+ * @returns {Promise.<Folder[], Error>} Promise of folders
+ */
+const updateManyByIds = ({ ids, params }) => Folder.updateMany(params).where("_id").in(ids).exec();
+
 module.exports = {
     getById,
-    getManyByParentId,
-    save
+    getNotArchivedByFolderId,
+    save,
+    updateManyByIds
 };

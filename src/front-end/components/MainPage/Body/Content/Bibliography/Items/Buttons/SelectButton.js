@@ -25,10 +25,13 @@ function SelectButton({ isSelected, ...rest }) {
         path: check
     };
 
+    const title = isSelected ? "Deselect" : "Select";
+
     return (
-        <Button 
+        <Button
             outline color="primary" 
-            className={ className } 
+            title={ title }
+            className={ className }
             {...rest}
         >
             { isSelected && <Svg {...checkIcon} style={{ fill: "white" }}/> }

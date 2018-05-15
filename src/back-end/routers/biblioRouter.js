@@ -11,8 +11,9 @@ const { getJWToken, decodeRequestToken } = require("../common/tokens");
 const TokenError = require("../errors/TokenError");
 const PropError  = require("../errors/PropError");
 
-const router = express.Router();
+const { FOLDER, REFERENCE } = require("../assets/itemTypes.json");
 
+const router = express.Router();
 
 router.get("/:folderId", (req, res) => {
     const { folderId } = req.params;
@@ -42,14 +43,14 @@ router.get("/:folderId", (req, res) => {
                 throw new PropError(error);
             }
             
-            const getRefs = () => Reference.getManyByFolderId(folder._id);
-            const getFolders = () => Folder.getManyByParentId(folder._id);
+            const getRefs = () => Reference.getNotArchivedByFolderId(folder._id);
+            const getFolders = () => Folder.getNotArchivedByFolderId(folder._id);
             
             return Promise.all([ getRefs(), getFolders() ]);
         })
         .then( ([refs, folders]) => {
-            const typedFolders = folders.map( el => ({...el, type: "folder"}) );
-            const typedRefs    = refs.map( el => ({...el, type: "reference"}) );
+            const typedFolders = folders.map( el => ({ ...el, type: FOLDER }) );
+            const typedRefs    = refs.map( el => ({ ...el, type: REFERENCE }) );
             
             res.status(200).json({ data: [...typedFolders, ...typedRefs], 
                                    token: getJWToken(userId) });
