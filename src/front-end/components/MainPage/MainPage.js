@@ -32,7 +32,7 @@ class MainPage extends React.Component {
         const acceptCodes = [400, 403];
         const errorMsg = errors.LOAD_DATA;
 
-        return fetcher.get({ url: "/user", acceptCodes, errorMsg })
+        return fetcher.get({ url: "user", acceptCodes, errorMsg })
             .then( json => { // error || { id, username, token }
                 const error = json.error;
                 

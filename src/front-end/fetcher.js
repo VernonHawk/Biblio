@@ -27,7 +27,7 @@ function request({ url, method = "GET", data = {},
         options.body = JSON.stringify(data);
     }
 
-    return fetch( url, options )
+    return fetch( `/api/${url}`, options )
         .then( resp => {
             if (acceptCodes.includes(resp.status)) {
                 

@@ -36,7 +36,7 @@ class SignIn extends React.Component {
         const acceptCodes = [400];
         const errorMsg = errors.SIGN_IN;
 
-        return fetcher.post({ url: "/signin", data, acceptCodes, errorMsg })
+        return fetcher.post({ url: "signin", data, acceptCodes, errorMsg })
             .then( json => {
                 const error = json.error;
                 

@@ -7,7 +7,7 @@ function fetchData({ path, onSignOut, onAlert }) {
     const acceptCodes = [400, 403];
     const errorMsg = errors.LOAD_DATA;
     
-    return fetcher.get({ url: `/${path}`, acceptCodes, errorMsg })
+    return fetcher.get({ url: `${path}`, acceptCodes, errorMsg })
         .then( json => { // error || { data, token }
             const error = json.error;
             
@@ -35,7 +35,7 @@ function fetchData({ path, onSignOut, onAlert }) {
 function updateItems({ data, errorMsg, onSignOut }) {
     const acceptCodes = [403];
     
-    return fetcher.patch({ url: "/items", data, acceptCodes, errorMsg })
+    return fetcher.patch({ url: "items", data, acceptCodes, errorMsg })
         .then( json => { // error || { token }
             const error = json.error;
             

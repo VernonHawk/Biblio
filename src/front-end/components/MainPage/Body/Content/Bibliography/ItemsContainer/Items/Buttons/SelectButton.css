@@ -8,6 +8,10 @@
     background-color: inherit;
 }
 
+.button_select--selected:hover {
+    background-color: #007bff;
+}
+
 .button_select--selected {
     padding: 0 0.3rem;
     background-color: #007bff;

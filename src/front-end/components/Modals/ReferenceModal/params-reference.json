@@ -38,7 +38,8 @@
         "id": "year",
         "type": "number",
         "placeholder": "2003",
-        "max": 2019,
+        "min": -10000,
+        "max": 2020,
         "size": "20"
     },
     {
