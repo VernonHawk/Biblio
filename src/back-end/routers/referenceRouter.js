@@ -170,6 +170,10 @@ function validateReference({ name, year, startPage, endPage, authors, ...rest })
                 err = { cause: "year", message: "Publishing year can't be later than current year" };
 
                 return resolve(false);
+            } else if (year < -10000) {
+                err = { cause: "year", message: "Publishing year can't be so low" };
+
+                return resolve(false);
             }
 
             return resolve(true);

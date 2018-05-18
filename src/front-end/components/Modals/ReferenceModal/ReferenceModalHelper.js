@@ -40,7 +40,11 @@ function getStateAfterValidation({ name, year, startPage, endPage, authors, ...r
     function validYear() {
         return new Promise( resolve => {
             if (startPage !== undefined && (year > new Date().getFullYear())) {
-                newState.year = "Publishing year can't be later than current year";
+                newState.year = "Publishing year can't be higher than current year";
+
+                return resolve(false);
+            } else if (year < -10000) {
+                newState.year = "Publishing year can't be so low";
 
                 return resolve(false);
             }

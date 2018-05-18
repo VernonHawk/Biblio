@@ -6,7 +6,7 @@ const validateName = name => Promise.resolve( Boolean(name.trim()) );
 
 const validateEmail = email => Promise.resolve( Boolean(email.trim()) );
 
-const validateYear = year => Promise.resolve( Boolean(year <= new Date().getFullYear()) );
+const validateYear = year => Promise.resolve( Boolean(-10000 < year && year <= new Date().getFullYear()) );
 
 const validateAuthors = arr => Promise.resolve( Boolean(arr.length <= 20) );
 
