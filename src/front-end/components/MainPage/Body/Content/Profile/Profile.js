@@ -29,8 +29,8 @@ class Profile extends React.Component {
                     <h5 className="text-danger">Danger zone</h5>
                     <hr className="border-danger" />
                     <Row>
-                        <Col xs="3">Delete my account</Col>
-                        <Col xs="9">
+                        <Col xs="4">Delete my account</Col>
+                        <Col xs="8">
                             <Button color="link" className="text-danger float-right pt-0">Delete</Button>
                         </Col>
                     </Row>

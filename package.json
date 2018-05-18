@@ -10,7 +10,15 @@
     "name": "Igor Morenec",
     "email": "Igor.Morenec@gmail.com"
   },
+  "bugs": { 
+    "url": "https://github.com/VernonHawk/Biblio/issues",
+    "email": "Igor.Morenec@gmail.com"
+  },
   "license": "Apache-2.0",
+  "main": "src/back-end/startServer.js",
+  "engines": {
+    "node": "9.11.1"
+  },
   "scripts": {
     "mongod": "mongod --auth",
     "dev-server": "set NODE_ENV=development&& nodemon src/back-end/startServer.js",
@@ -18,7 +26,7 @@
     "md": "npm run mongod",
     "dev-s": "npm run dev-server",
     "dev-c": "npm run dev-client",
-    "server": "set NODE_ENV=production&& node src/back-end/startServer.js",
+    "start": "node src/back-end/startServer.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
