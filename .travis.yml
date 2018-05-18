@@ -8,7 +8,7 @@ script:
   - npm run build
 deploy:
   provider: heroku
-  api_key:
-    secure: "1fe30461-2c09-44be-8301-8691153ed36b"
   app: bibl-io
-
+  api_key:
+    secure: "1fe30461-2c09-44be-8301-8691153ed36b"  
+  skip_cleanup: true
