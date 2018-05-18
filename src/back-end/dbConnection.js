@@ -3,15 +3,12 @@
 const mongoose = require("mongoose");
 
 const OPTIONS = {
-    user: process.env.DB_USER,
-    pass: process.env.DB_PASS,
-    dbName: process.env.DB_NAME,
     autoReconnect: true,
     keepAlive: 120
 };
 
 function connect() {
-    mongoose.connect(process.env.DB_CONNECTION_STRING, OPTIONS)
+    mongoose.connect(process.env.MONGODB_URI, OPTIONS)
         .then(
             () => console.log("Connected to MongoDB"),
             err => {
