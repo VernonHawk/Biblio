@@ -40,7 +40,7 @@ class SignUp extends React.Component {
                     const acceptCodes = [400];
                     const errorMsg = errors.SIGN_UP;
 
-                    return fetcher.post({ url: "/signup", data, acceptCodes, errorMsg })
+                    return fetcher.post({ url: "signup", data, acceptCodes, errorMsg })
                         .then( json => {
                             const error = json.error;
 

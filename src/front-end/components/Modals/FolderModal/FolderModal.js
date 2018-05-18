@@ -47,7 +47,7 @@ class FolderModal extends React.Component {
 
             const data = { name: form.name, folderId };
             
-            return fetcher.post({ url: "/folder", data, acceptCodes, errorMsg })
+            return fetcher.post({ url: "folder", data, acceptCodes, errorMsg })
                 .then( json => { // error || { name, token }
                     const error = json.error;
                     

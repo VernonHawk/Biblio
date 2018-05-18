@@ -47,7 +47,7 @@ class RenameModal extends React.Component {
             
             const data = { name: form.name, id: _id };
             
-            return fetcher.patch({ url: `/${type}`, data, acceptCodes, errorMsg })
+            return fetcher.patch({ url: `${type}`, data, acceptCodes, errorMsg })
                 .then( json => { // error || { name, token }
                     const error = json.error;
                     

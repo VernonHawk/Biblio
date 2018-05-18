@@ -22,7 +22,7 @@
   },
   "scripts": {
     "mongod": "mongod --auth",
-    "dev-server": "set NODE_ENV=development&& nodemon src/back-end/startServer.js",
+    "dev-server": "nodemon src/back-end/startServer.js",
     "dev-client": "node scripts/start.js",
     "md": "npm run mongod",
     "dev-s": "npm run dev-server",
