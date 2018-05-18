@@ -1,12 +1,13 @@
 language: node_js
 node_js:
   - "9.11.1"
-services:
-  - mongodb
+cache:
+  directories:
+    - "node_modules"
 script:
   - npm run build
 deploy:
-  prodiver: heroku
+  provider: heroku
   api_key:
     secure: "1fe30461-2c09-44be-8301-8691153ed36b"
   app: bibl-io
