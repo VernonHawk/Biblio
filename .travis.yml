@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - "9.11.1"
+- 9.11.1
 cache:
   directories:
-    - "node_modules"
+  - node_modules
 script:
-  - npm run build
+- npm run build
 deploy:
   provider: heroku
   app: bibl-io
   api_key:
-    secure: "1fe30461-2c09-44be-8301-8691153ed36b"  
+    secure: MGUQq8twoaEqwiNQM9nyEZ82jppjG52KMXfOvMdd/c0/wlpDeAI3DmcRqLzKTd+2ckIUgvf4KmGG022xRgG+gIIAdQqO6v2AhZB9b1WiVLmxdWjTLoklHsatjXzburiTV/ZgrPHyf1+2jzVX1di3YMQ1uNaFF6kF+amhLzTXeSI9ibWuQtFJXkTlCGQxcZCzHAndSgdoGiQoXtIiXyLmLbII1Pv7rV07/y3j7C3bqlAYvI0eEOyZlqfGL4+CwNlizpeUdPyXAmo8deKL8P7kqqrXJip6aWwJvCAnHrfIR/2Gp1+8RoNbQlJpL+ebiOFiSBh3IXZK/ljJFsxtectAslzI/I4Hm0j16aaSrOiUDgFE3fBl00WcRF4yhKiPvdHa32yuryAuXDXdJ/Qv/eXrjRrOjPlQygU0eloPF6jFJUqUn2nsMvtcywBUljeblPL98yk1iY3yn2H6T3BCjbpR5ByidkWVch1otVFnkKRk6a82AZCgaTC1e7s7BWKzDPXCS5qoMJ6bGlhsVerGvHk0kNAx/5t/RX7uFJT2p/qmvD/zcSMDdu12nUkh7IxctAbhgeb+x8TbRSZ4AsWAdFvE2NmcLrIE+lLubhPASoP6mUMP4+Kbd5bZ7nVHpUXR98IevNHu9f/b8AaJHWY/T+m3/CoUCka0YemYVfTxTcrxN60=
   skip_cleanup: true

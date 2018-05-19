@@ -2,6 +2,8 @@
 
 A bibliography management service
 
+[![Build Status](https://travis-ci.org/VernonHawk/Biblio.svg?branch=master)](https://travis-ci.org/VernonHawk/Biblio)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
