@@ -4,15 +4,15 @@ import { Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
 
 import AllSidebar from "./AllSidebar";
 
-import { 
-    fetchData, updateItems, getSelected, getItemsAfterSelection
+import {
+    fetchData, updateItems,
+    getItemsAfterSelection, getSelected,
+    archiveSelected, starSelected
 } from "../Helper";
 
 import ItemsContainer from "../ItemsContainer/ItemsContainer";
 
-import errors  from "assets/errorMessages.json";
-import success from "assets/successMessages.json";
-import alerts  from "components/GlobalAlert/alert-types.json";
+import alerts from "components/GlobalAlert/alert-types.json";
 
 const propTypes = {
     // Injected by router
@@ -41,7 +41,6 @@ class All extends React.PureComponent {
         const { match, history, location } = this.props;
 
         if (match.params.folder !== prevProps.match.params.folder) {
-            
             history.push(prevProps.location.pathname);
             history.push(location.pathname);
             
@@ -57,37 +56,21 @@ class All extends React.PureComponent {
             
         const folderId = (match && match.params.folder) || userId;
 
-        return fetchData({ path: folderId, onSignOut, onAlert })
+        return fetchData({ url: folderId, onSignOut, onAlert })
             .then( data => this.setState({ data, folderId }) );
-    }
-
-    onStarSelected = () => {
-        const params = { isStarred: true };
-        const errorMsg = errors.STAR_ITEMS;
-        const succMsg = success.ITEMS_STARRED;
-        
-        this.updateSelected({ params, errorMsg, succMsg });
-    }
-
-    onArchiveSelected = () => {
-        const params = { isArchived: true, isStarred: false };
-        const errorMsg = errors.ARCHIVE_ITEMS;
-        const succMsg = success.ITEMS_ARCHIVED;
-        
-        this.updateSelected({ params, errorMsg, succMsg });
     }
 
     updateSelected = params => {
         const items = getSelected(this.state.data);
 
-        this.updateData({ items, ...params });
+        return this.updateData({ items, ...params });
     }
 
     updateData = ({ items, params, errorMsg, succMsg }) => {
         const { onSignOut, onAlert } = this.props;
         const data = { items, params };
 
-        updateItems({ data, errorMsg, onSignOut })
+        return updateItems({ data, errorMsg, onSignOut })
             .then( this.fetchDataState )
             .then( onAlert({ type: alerts.SUCCESS, msg: succMsg }) );
     }
@@ -118,8 +101,8 @@ class All extends React.PureComponent {
                         selectedItems={ selected }
                         folderId={ folderId }
 
-                        onStarSelected={ this.onStarSelected }
-                        onArchiveSelected={ this.onArchiveSelected }
+                        onStarSelected={ () => starSelected(this.updateSelected) }
+                        onArchiveSelected={ () => archiveSelected(this.updateSelected) }
                         onDataUpdate={ this.fetchDataState }
 
                         onSignOut={ this.props.onSignOut }

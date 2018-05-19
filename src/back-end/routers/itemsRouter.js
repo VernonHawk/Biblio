@@ -50,13 +50,9 @@ router.patch("/", (req, res) => {
         )
         .catch( err => {
             if (err instanceof TokenError) {
-                error = { cause: err.cause, message: err.message };
-
-                return res.status(403).json({ error });
+                return res.status(403).json({ error: err });
             } else if (err instanceof PropError) {
-                error = { cause: err.cause, message: err.message };
-
-                return res.status(400).json({ error });
+                return res.status(400).json({ error: err });
             }
             
             error = { cause: "items", message: "Couldn't update the items" };

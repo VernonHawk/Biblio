@@ -22,9 +22,7 @@ router.get("/", (req, res) => {
         )
         .catch( err => {
             if (err instanceof TokenError) {
-                error = { cause: err.cause, message: err.message };
-
-                return res.status(403).json({ error });
+                return res.status(403).json({ error: err });
             }
 
             error = { cause: "id", message: "No user found with such Id" };
