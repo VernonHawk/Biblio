@@ -6,13 +6,14 @@ import Menu    from "./Menu/Menu";
 import Content from "./Content/Content";
 
 const propTypes = {
-    userId:  PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
 
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
 };
 
-function Body({ userId, onAlert, onSignOut }) {
+function Body({ userId, search, onAlert, onSignOut }) {
     return (
         <Row className="h-100">
             <Col xs="3">
@@ -21,6 +22,7 @@ function Body({ userId, onAlert, onSignOut }) {
             <Col xs="9">
                 <Content
                     userId={ userId }
+                    search={ search }
                     onAlert={ onAlert }
                     onSignOut={ onSignOut }
                 />

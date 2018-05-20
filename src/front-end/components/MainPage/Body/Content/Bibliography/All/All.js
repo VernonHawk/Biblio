@@ -20,7 +20,8 @@ const propTypes = {
     location: PropTypes.object,
     history:  PropTypes.object,
 
-    userId:  PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
     
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
@@ -77,8 +78,15 @@ class All extends React.PureComponent {
 
     render() {
         const { data, folderId } = this.state;
+        const { search, onSignOut, onAlert } = this.props;
 
-        const selected = data ? getSelected(this.state.data) : [];
+        let selected = [];
+        let filteredData = data;
+
+        if (data) {
+            filteredData = data.filter( item => item.name.includes(search) );
+            selected = getSelected(filteredData);
+        }
 
         return (
             <Row>
@@ -88,12 +96,12 @@ class All extends React.PureComponent {
                     </Breadcrumb>
                     <hr />
                     <ItemsContainer
-                        data={ data }
+                        data={ filteredData }
                         updateData={ this.updateData }
                         onItemSelect={ this.onItemSelect }
                         onDataUpdate={ this.fetchDataState }
-                        onSignOut={ this.props.onSignOut }
-                        onAlert={ this.props.onAlert }
+                        onSignOut={ onSignOut }
+                        onAlert={ onAlert }
                     />
                 </Col>
                 <Col xs="3">
@@ -105,8 +113,8 @@ class All extends React.PureComponent {
                         onArchiveSelected={ () => archiveSelected(this.updateSelected) }
                         onDataUpdate={ this.fetchDataState }
 
-                        onSignOut={ this.props.onSignOut }
-                        onAlert={ this.props.onAlert }
+                        onSignOut={ onSignOut }
+                        onAlert={ onAlert }
                     />
                 </Col>
             </Row>

@@ -12,39 +12,48 @@ import NotFound from "components/Common/NotFound";
 
 const propTypes = {
     userId:  PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
 
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
 };
 
-function BibliographyRouter({ userId, onAlert, onSignOut }) {
+const routes = [{
+    path: "/recent",
+    component: Recent
+},
+{
+    path: "/starred",
+    component: Starred
+},
+{
+    path: "/archive",
+    component: Archive
+},
+{
+    path: "/:folder?",
+    component: All
+}];
+
+function BibliographyRouter({ userId, search, onAlert, onSignOut }) {
+    const content = routes.map( ({ path, component: Component }) => 
+        (
+            <Route
+                key={ path }
+                exact path={ path }
+                render={ props => 
+                    <Component 
+                        {...props} 
+                        userId={userId} search={ search }
+                        onAlert={onAlert} onSignOut={ onSignOut } 
+                    /> }
+            />
+        ));
+
     return (
         <DragDropContextProvider backend={ Backend }>
             <Switch>
-                <Route exact path="/recent"  
-                        render={ props => 
-                            <Recent {...props} userId={userId} 
-                                    onAlert={onAlert} onSignOut={ onSignOut } 
-                            /> } 
-                />
-                <Route exact path="/starred" 
-                        render={ props => 
-                            <Starred {...props} userId={userId} 
-                                    onAlert={onAlert} onSignOut={ onSignOut } 
-                            /> } 
-                />
-                <Route exact path="/archive" 
-                        render={ props => 
-                            <Archive {...props} userId={userId} 
-                                    onAlert={onAlert} onSignOut={ onSignOut } 
-                            /> } 
-                />
-                <Route exact path="/:folder?" 
-                        render={ props => 
-                            <All {...props} userId={userId} 
-                                onAlert={onAlert} onSignOut={ onSignOut } 
-                            /> } 
-                />
+                { content }
                 <Route component={ NotFound } />
             </Switch>
         </DragDropContextProvider>

@@ -22,10 +22,11 @@ const propTypes = {
 
 class MainPage extends React.Component {
 
-    // user data
+    // user data and search string
     state = {
         id: null,
-        username: null
+        username: null,
+        search: ""
     }
 
     componentDidMount() {
@@ -53,12 +54,10 @@ class MainPage extends React.Component {
             });
     }
 
-    onSearch = val => {
-        console.log("SEARCH", val);
-    }
+    onSearch = search => this.setState({ search });
 
     render() {
-        const { username, id } = this.state;
+        const { username, id, search } = this.state;
 
         return (!username || !id) ? 
             <Loader /> :
@@ -71,6 +70,7 @@ class MainPage extends React.Component {
                 />
                 <Body
                     userId={ id }
+                    search={ search }
                     onAlert={ this.props.onAlert }
                     onSignOut={ this.props.onSignOut }
                 />

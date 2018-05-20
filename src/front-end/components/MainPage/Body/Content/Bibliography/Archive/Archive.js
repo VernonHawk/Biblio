@@ -20,6 +20,8 @@ const propTypes = {
     match:    PropTypes.object,
     location: PropTypes.object,
     history:  PropTypes.object,
+
+    search: PropTypes.string.isRequired,
     
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
@@ -73,8 +75,15 @@ class Archive extends React.PureComponent {
 
     render() {
         const { data } = this.state;
+        const { search, onSignOut, onAlert } = this.props;
 
-        const selected = data ? getSelected(this.state.data) : [];
+        let selected = [];
+        let filteredData = data;
+
+        if (data) {
+            filteredData = data.filter( item => item.name.includes(search) );
+            selected = getSelected(filteredData);
+        }
 
         return (
             <Row>
@@ -82,13 +91,13 @@ class Archive extends React.PureComponent {
                     <h3>Archive</h3>
                     <hr />
                     <ItemsContainer
-                        data={ data }
+                        data={ filteredData }
                         updateData={ this.updateData }
                         onItemSelect={ this.onItemSelect }
                         onDataUpdate={ this.fetchDataState }
 
-                        onSignOut={ this.props.onSignOut }
-                        onAlert={ this.props.onAlert }
+                        onSignOut={ onSignOut }
+                        onAlert={ onAlert }
                     />
                 </Col>
                 <Col xs="3">
@@ -100,8 +109,8 @@ class Archive extends React.PureComponent {
                         onDeleteSelected={ this.deleteSelected }
                         onDataUpdate={ this.fetchDataState }
 
-                        onSignOut={ this.props.onSignOut }
-                        onAlert={ this.props.onAlert }
+                        onSignOut={ onSignOut }
+                        onAlert={ onAlert }
                     />
                 </Col>
             </Row>

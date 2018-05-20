@@ -7,31 +7,43 @@ import Profile from "./Profile/Profile";
 
 const propTypes = {
     userId:  PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
 
     onAlert:   PropTypes.func.isRequired,
     onSignOut: PropTypes.func.isRequired
 };
 
-function Content({ userId, onAlert, onSignOut }) {
+const routes = [{
+    path: "/profile",
+    exact: true,
+    component: Profile
+},
+{
+    path: "/",
+    exact: false,
+    component: BibliographyRouter
+}];
+
+function Content({ userId, search, onAlert, onSignOut }) {
+    const content = routes.map( ({ path, exact, component: Component }) => 
+        (
+            <Route
+                key={ path }
+                exact={ exact }
+                path={ path }
+                render={ props => 
+                    <Component 
+                        {...props} 
+                        userId={userId} search={ search }
+                        onAlert={onAlert} onSignOut={ onSignOut } 
+                    /> }
+            />
+        ));
+
     return (
         <div className="h-100 pl-3 pt-4">
             <Switch>
-                <Route
-                    exact
-                    path="/profile"
-                    render={ props => 
-                        <Profile {...props} userId={userId} 
-                                    onAlert={onAlert} onSignOut={ onSignOut } 
-                        /> }
-                />
-                <Route
-                    path="/"
-                    render={ props => 
-                        <BibliographyRouter 
-                            {...props} userId={userId} 
-                            onAlert={onAlert} onSignOut={ onSignOut } 
-                        /> }
-                />
+                { content }
             </Switch>
         </div>
     );
