@@ -58,10 +58,12 @@ router.post("/", (req, res) => {
             res.status(200).json({ name, token: getJWToken(userId) })
         )
         .catch( err => {
+            error = { cause: err.cause, message: err.message };
+
             if (err instanceof TokenError) {
-                return res.status(403).json({ error: err });
+                return res.status(403).json({ error });
             } else if (err instanceof PropError) {
-                return res.status(400).json({ error: err });
+                return res.status(400).json({ error });
             }
 
             error = { cause: "folder", message: "Couldn't add new folder" };
@@ -104,10 +106,12 @@ router.patch("/", (req, res) => {
             res.status(200).json({ name, token: getJWToken(userId) })
         )
         .catch( err => {
+            error = { cause: err.cause, message: err.message };
+
             if (err instanceof TokenError) {
-                return res.status(403).json({ error: err });
+                return res.status(403).json({ error });
             } else if (err instanceof PropError) {
-                return res.status(400).json({ error: err });
+                return res.status(400).json({ error });
             }
 
             error = { cause: "folder", message: "Couldn't update the folder" };

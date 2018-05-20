@@ -1,0 +1,10 @@
+[
+    {
+        "id": "username",
+        "type": "text",
+        "placeholder": "New username",
+        "maxLength": 50,
+        "size": "40",
+        "required": true
+    }
+]

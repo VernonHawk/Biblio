@@ -25,7 +25,7 @@ class GenericForm extends React.Component {
         super(props);
 
         this.state = {};
-
+        
         for (const { id } of props.params) {
             this.state[id] = props.values[id] || "";
         }

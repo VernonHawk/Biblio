@@ -1,0 +1,10 @@
+[
+    {
+        "id": "email",
+        "type": "email",
+        "placeholder": "New email",
+        "maxLength": 50,
+        "size": "40",
+        "required": true
+    }
+]

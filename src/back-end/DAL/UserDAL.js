@@ -36,8 +36,22 @@ const getByEmail = email => User.findOne({ email });
  */
 const save = params => new User(params).save();
 
+/**
+ * Update user
+ * 
+ * @async
+ * 
+ * @param {Object} params User id and new fields
+ * @param {String} params.id     Id of the user to update
+ * @param {Object} params.params Fields with new values
+ * 
+ * @returns {Promise.<User, Error>} Promise of user
+ */
+const update = ({ id, params }) => User.findByIdAndUpdate(id, params);
+
 module.exports = {
     getById,
     getByEmail,
-    save
+    save,
+    update
 };

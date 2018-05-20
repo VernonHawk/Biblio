@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const propTypes = {
     id:    PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     help:  PropTypes.string,
     error: PropTypes.string
 };
@@ -12,7 +12,7 @@ const propTypes = {
 function GenericFormGroup({ id, label, help, error, ...rest }) {
     return (
         <FormGroup row>
-            <Label for={id} sm={3}>{ label }</Label>
+            { label && <Label for={id} sm={3}>{ label }</Label> }
             <Col sm={9}>
                 <Input 
                     id={id}

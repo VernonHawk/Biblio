@@ -46,7 +46,8 @@ router.post("/signin", (req, res) => {
         })
         .catch( err => {
             if (err instanceof PropError) {
-                return res.status(400).json({ error: err });
+                error = { cause: err.cause, message: err.message };
+                return res.status(400).json({ error });
             }
 
             error = { cause: "signin", message: err.message };
@@ -118,7 +119,8 @@ router.post("/signup", (req, res) => {
         )
         .catch( err => {
             if (err instanceof PropError) {
-                return res.status(400).json({ error: err });
+                error = { cause: err.cause, message: err.message };
+                return res.status(400).json({ error });
             }
 
             error = { cause: "signup", message: err.message };

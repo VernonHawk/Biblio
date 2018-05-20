@@ -7,5 +7,9 @@
     "ITEMS_ARCHIVED": "Items were successfuly archived. You can see them in the Archived tab",
     "ITEMS_UNSTARRED":  "Items were successfuly unstarred.",
     "ITEMS_UNARCHIVED": "Items were successfuly unarchived. You can now see them in the All tab",
-    "ITEMS_DELETED": "Items were successfuly deleted."
+    "ITEMS_DELETED": "Items were successfuly deleted.",
+
+    "USERNAME_CHANGED": "Your username was successfuly changed.",
+    "EMAIL_CHANGED":    "Your email was successfuly changed.",
+    "PASSWORD_CHANGED": "Your password was successfuly changed."
 }

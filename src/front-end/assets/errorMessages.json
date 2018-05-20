@@ -18,5 +18,9 @@
     "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
     "ADD_REFERENCE": "A problem occured while trying to add new reference. Sorry for this, try again later, please",
 
+    "CHANGE_USERNAME": "A problem occured while trying to change your username. Sorry for this, try again later, please",
+    "CHANGE_EMAIL":    "A problem occured while trying to change your email. Sorry for this, try again later, please",
+    "CHANGE_PASSWORD": "A problem occured while trying to change your password. Sorry for this, try again later, please",
+
     "TOKEN_EXPIRED": "Your session expired. Authorize again, please"
 }

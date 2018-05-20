@@ -40,12 +40,11 @@ function updateItems(req, res) {
     const cause = "update items";
     const serverError = { cause, message: "Couldn't update the items" };
     
-    if (!items) {
+    if (!items || !params) {
         error = { cause, message: "Not all obligatory arguments were specified" };
 
         return res.status(400).json({ error });
     }
-
     
     decodeRequestToken(req)
         .then( ({ data }) => {
