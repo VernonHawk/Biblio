@@ -34,7 +34,7 @@ function validation(params) {
         return resolve(true);
     });
 
-    const { username, password } = params;
+    const { username, pass } = params;
 
     const validName = () => new Promise( resolve => {
         if (username && !username.trim()) {
@@ -47,17 +47,17 @@ function validation(params) {
     });
 
     const validPassword = () => new Promise( resolve => { 
-        if (password) {
+        if (pass) {
             const passLength = {
                 min: 6,
                 max: 50
             };
 
-            if (password.length < passLength.min) {
+            if (pass.length < passLength.min) {
                 error = { cause: "pass", message: `Password is too short. Min length is ${passLength.min}` };
         
                 return resolve(false);
-            } else if (password.length > passLength.max) {
+            } else if (pass.length > passLength.max) {
                 error = { cause: "pass", message: `Password is too long. Max length is ${passLength.max}` };
         
                 return resolve(false);
@@ -119,14 +119,14 @@ function updateUser(req, res) {
             return Promise.resolve({ _id: userId });
         })
         .then( ({ _id }) => {
-            if (params.password) {
+            if (params.pass) {
                 // Encrypt user password
                 params.salt = crypto.randomBytes(16).toString("hex"); 
 
-                params.pass = crypto.createHmac("sha512", params.password)
+                params.pass = crypto.createHmac("sha512", params.pass)
                                     .update(params.salt).digest("hex");
             }
-            
+            console.log(params);
             return User.update({ id: _id, params });
         })
         .then( ({ _id }) => res.status(200).json({ token: getJWToken(_id) }) )
