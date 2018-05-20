@@ -2,6 +2,8 @@
 
 const mongoose = require("mongoose");
 
+const Reference = require("./Reference");
+
 const { validateId, validateName } = require("./validator");
 
 const folderSchema = mongoose.Schema({
@@ -54,6 +56,14 @@ folderSchema.pre("updateMany", function(next) {
     
     next();
 });
+
+folderSchema.post("findOneAndRemove", function(doc) {
+    // TODO: Implement recursive folder remove
+    //Folder.remove({ client_id: this._id }).exec();
+    
+    Reference.deleteMany({ folderId: doc._id }).exec();
+});
+
 const Folder = mongoose.model("Folder", folderSchema);
 
 module.exports = exports = Folder;

@@ -13,6 +13,7 @@
     "ARCHIVE_ITEMS": "A problem occured while trying to archive selected items. Sorry for this, try staring them one by one",
     "UNSTAR_ITEMS": "A problem occured while trying to unstar selected items. Sorry for this, try unstaring them one by one",
     "UNARCHIVE_ITEMS": "A problem occured while trying to unarchive selected items. Sorry for this, try unarchiving them one by one",
+    "DELETE_ITEMS": "A problem occured while trying to delete selected items. Sorry for this, try deleting them one by one",
 
     "ADD_FOLDER": "A problem occured while trying to add new folder. Sorry for this, try again later, please",
     "ADD_REFERENCE": "A problem occured while trying to add new reference. Sorry for this, try again later, please",

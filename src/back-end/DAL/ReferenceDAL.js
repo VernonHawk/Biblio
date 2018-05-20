@@ -53,16 +53,27 @@ const save = params => new Reference(params).save();
  * @async
  * 
  * @param {Object} params Reference attributes
- * @param {String} params.ids    Ids of references to update
- * @param {String} params.params Fields with new values
+ * @param {String[]} params.ids    Ids of references to update
+ * @param {Object}   params.params Fields with new values
  * 
  * @returns {Promise.<Reference[], Error>} Promise of references
  */
 const updateManyByIds = ({ ids, params }) => Reference.updateMany(params).where("_id").in(ids).exec();
 
+/**
+ * Delete many references by their ids
+ * 
+ * @async
+ * 
+ * @param {Object} params Reference attributes
+ * @param {String[]} params.ids Ids of references to update
+ */
+const deleteManyByIds = ids => Reference.deleteMany().where("_id").in(ids).exec();
+
 module.exports = {
     getById,
     getByFiltersWithSort,
     save,
-    updateManyByIds
+    updateManyByIds,
+    deleteManyByIds
 };

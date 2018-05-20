@@ -70,7 +70,7 @@ class All extends React.PureComponent {
         const { onSignOut, onAlert } = this.props;
         const data = { items, params };
 
-        return updateItems({ data, errorMsg, onSignOut })
+        return updateItems({ data, errorMsg, onSignOut, onAlert })
             .then( this.fetchDataState )
             .then( onAlert({ type: alerts.SUCCESS, msg: succMsg }) );
     }

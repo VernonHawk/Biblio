@@ -9,6 +9,7 @@ const PropError  = require("../errors/PropError");
 
 const { FOLDER, REFERENCE } = require("../assets/itemTypes.json");
 
+// #region Help
 function getItems({ filters, sort }) {
     const getFolders = () => Folder.getByFiltersWithSort({ filters, sort });
     const getRefs    = () => Reference.getByFiltersWithSort({ filters, sort });
@@ -39,6 +40,26 @@ const processError = ({ res, serverError }) =>
     return res.status(500).json({ error: serverError });
 };
 
+function getDataByFiltersWithSort({ req, res, filters = {}, sort = { name: 1 },
+                                    serverError = {} }) {
+    let userId = "";
+
+    decodeRequestToken(req)
+        .then( ({ data }) => {
+            userId = data;
+            
+            filters.userId = userId;
+
+            return Promise.resolve({ filters, sort });
+        })
+        .then( getItems )
+        .then( mapWithType )
+        .then( items => sendData({ res, userId })(items) )
+        .catch( err => processError({ res, serverError })(err) );
+}
+//#endregion
+
+// #region Controllers
 function getRecent(req, res) {
     const lastWeek = Date.now() - 7 * 1000 * 60 * 60 * 24;
 
@@ -58,6 +79,14 @@ function getStarred(req, res) {
     const filters = { isStarred: true };
     const serverError = { cause: "starred", 
                           message: "Couldn't fetch starred items" };
+    
+    return getDataByFiltersWithSort({ req, res, filters, serverError });
+}
+
+function getArchived(req, res) {
+    const filters = { isArchived: true };
+    const serverError = { cause: "archive", 
+                          message: "Couldn't fetch archived items" };
     
     return getDataByFiltersWithSort({ req, res, filters, serverError });
 }
@@ -103,27 +132,11 @@ function getFolderContent(req, res) {
         .then( items => sendData({ res, userId })(items) )
         .catch( err => processError({ res, serverError })(err) );
 }
-
-function getDataByFiltersWithSort({ req, res, filters = {}, sort = { name: 1 },
-                                    serverError = {} }) {
-    let userId = "";
-
-    decodeRequestToken(req)
-        .then( ({ data }) => {
-            userId = data;
-            
-            filters.userId = userId;
-
-            return Promise.resolve({ filters, sort });
-        })
-        .then( getItems )
-        .then( mapWithType )
-        .then( items => sendData({ res, userId })(items) )
-        .catch( err => processError({ res, serverError })(err) );
-}
+// #endregion
 
 module.exports = exports = {
     getRecent,
     getStarred,
+    getArchived,
     getFolderContent
 };

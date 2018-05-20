@@ -44,16 +44,27 @@ const save = params => new Folder(params).save();
  * @async
  * 
  * @param {Object} params Folder attributes
- * @param {String} params.ids    Ids of folders to update
- * @param {String} params.params Fields with new values
+ * @param {String[]} params.ids    Ids of folders to update
+ * @param {Object}   params.params Fields with new values
  * 
  * @returns {Promise.<Folder[], Error>} Promise of folders
  */
 const updateManyByIds = ({ ids, params }) => Folder.updateMany(params).where("_id").in(ids).exec();
 
+/**
+ * Delete many folders by their ids
+ * 
+ * @async
+ * 
+ * @param {Object} params Reference attributes
+ * @param {String[]} params.ids Ids of folders to update
+ */
+const deleteManyByIds = ids => Promise.all( ids.map( id => Folder.findByIdAndRemove(id) ));
+
 module.exports = {
     getById,
     getByFiltersWithSort,
     save,
-    updateManyByIds
+    updateManyByIds,
+    deleteManyByIds
 };

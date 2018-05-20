@@ -33,7 +33,7 @@ function fetchData({ url, onSignOut, onAlert }) {
         .catch( err => onAlert({ type: alerts.DANGER, msg: err.message }) );
 }
 
-function updateItems({ data, errorMsg, onSignOut }) {
+function updateItems({ data, errorMsg, onSignOut, onAlert }) {
     const acceptCodes = [403];
     
     return fetcher.patch({ url: "items", data, acceptCodes, errorMsg })
@@ -49,7 +49,29 @@ function updateItems({ data, errorMsg, onSignOut }) {
                 
                 return Promise.resolve();
             }
-        });
+        })
+        .catch( err => onAlert({ type: alerts.DANGER, msg: err.message }) );
+}
+
+function deleteItems({ data, onSignOut, onAlert }) {
+    const acceptCodes = [403];
+    const errorMsg = errors.DELETE_ITEMS;
+    
+    return fetcher.delete({ url: "items", data, acceptCodes, errorMsg })
+        .then( json => { // error || { token }
+            const error = json.error;
+            
+            if (error) {
+                onSignOut();
+
+                throw new Error(errors.TOKEN_EXPIRED);
+            } else {
+                localStorage.setItem("token", json.token);
+                
+                return Promise.resolve();
+            }
+        })
+        .catch( err => onAlert({ type: alerts.DANGER, msg: err.message }) );
 }
 
 function getItemsAfterSelection({ id, data }) {
@@ -104,5 +126,6 @@ export {
     unarchiveSelected,
     starSelected,
     unstarSelected,
+    deleteItems,
     getSelected
 };
