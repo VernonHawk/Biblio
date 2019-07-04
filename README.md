@@ -125,7 +125,7 @@ We use [Git](https://git-scm.com) for versioning. For the versions available, se
 
 ## Authors
 
-- **Igor Morenec** - *Main developer* - [VernonHawk](https://github.com/VernonHawk)
+- **Igor Morenets** - *Main developer* - [VernonHawk](https://github.com/VernonHawk)
 
 See also the list of [contributors](https://github.com/VernonHawk/Biblio/contributors) who participated in this project.
 
